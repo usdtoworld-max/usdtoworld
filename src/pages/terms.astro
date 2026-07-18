@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'Terms & Conditions', item: new URL('/terms', site).toString() },
+  ],
+};
+---
+<Layout
+  title="Terms & Conditions | UsdtoWorld"
+  description="The terms and conditions governing use of the UsdtoWorld currency converter website."
+  path="/terms"
+  schema={[breadcrumbSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'Terms & Conditions', href: '/terms' }]} />
+  </div>
+  <section class="section section--tight">
+    <div class="container prose">
+      <span class="section-eyebrow">Legal</span>
+      <h1>Terms &amp; Conditions</h1>
+      <p class="updated-note">Last updated: July 17, 2026</p>
+
+      <h2>Acceptance of terms</h2>
+      <p>
+        By accessing or using UsdtoWorld (the "Site"), operated by BooksnPDF, you
+        agree to be bound by these Terms &amp; Conditions. If you do not agree, please discontinue use of the Site.
+      </p>
+
+      <h2>Use of the service</h2>
+      <p>
+        UsdtoWorld provides a free currency conversion tool for personal, informational use. You agree not to
+        misuse the Site, including attempting to disrupt its operation, scrape data at a rate that degrades
+        service for others, or use it for any unlawful purpose.
+      </p>
+
+      <h2>No financial advice</h2>
+      <p>
+        Nothing on this Site constitutes financial, investment, or legal advice. See our full
+        <a href="/disclaimer">Disclaimer</a> for details on the limitations of the data provided.
+      </p>
+
+      <h2>Intellectual property</h2>
+      <p>
+        The design, layout, and original content of this Site are owned by BooksnPDF
+        unless otherwise noted. Exchange rate data is sourced from third-party providers and remains their
+        property.
+      </p>
+
+      <h2>Availability</h2>
+      <p>
+        We aim to keep UsdtoWorld available at all times but do not guarantee uninterrupted access. The Site
+        may be temporarily unavailable for maintenance or due to factors outside our control.
+      </p>
+
+      <h2>Limitation of liability</h2>
+      <p>
+        To the fullest extent permitted by law, BooksnPDF is not liable for any
+        indirect, incidental, or consequential damages arising from use of the Site.
+      </p>
+
+      <h2>Changes to these terms</h2>
+      <p>We may revise these Terms &amp; Conditions from time to time. Continued use of the Site after changes constitutes acceptance of the revised terms.</p>
+
+      <h2>Governing law</h2>
+      <p>These terms are governed by the laws of the State of New York, United States.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about these terms can be sent via our <a href="/contact">Contact page</a>.</p>
+    </div>
+  </section>
+</Layout>

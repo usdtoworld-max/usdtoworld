@@ -1,0 +1,137 @@
+---
+import { supportedLocales } from '../data/translations.js';
+---
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="brand" aria-label="UsdtoWorld home">
+      <span class="brand__mark" aria-hidden="true">
+        <img src="/favicon/logo-header.png" alt="" width="40" height="40" />
+      </span>
+      <span class="brand__name">UsdtoWorld</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/" data-i18n="nav_home">Home</a>
+      <a href="/#converter" data-i18n="nav_convert">USD to RMB</a>
+      <a href="/#rates" data-i18n="nav_rates">Exchange Rates</a>
+      <a href="/#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="/about" data-i18n="nav_about">About</a>
+      <a href="/contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <div class="locale-wrap">
+        <label class="visually-hidden" for="locale-select">Language</label>
+        <select id="locale-select" class="locale-select" data-locale-select>
+          {supportedLocales.map((l) => <option value={l.code}>{l.label}</option>)}
+        </select>
+        <svg class="locale-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M3 12h18M12 3c2.4 2.6 3.6 5.8 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.8-3.6-9s1.2-6.4 3.6-9Z" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </div>
+
+      <button type="button" class="btn-icon theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5V5M12 19V21.5M4.2 4.2L6 6M18 18L19.8 19.8M2.5 12H5M19 12H21.5M4.2 19.8L6 18M18 6L19.8 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </button>
+
+      <button type="button" class="nav-burger" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile">
+    <a href="/" data-i18n="nav_home">Home</a>
+    <a href="/#converter" data-i18n="nav_convert">USD to RMB</a>
+    <a href="/#rates" data-i18n="nav_rates">Exchange Rates</a>
+    <a href="/#faq" data-i18n="nav_faq">FAQ</a>
+    <a href="/about" data-i18n="nav_about">About</a>
+    <a href="/contact" data-i18n="nav_contact">Contact</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface-solid);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+  .site-header__inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand__mark { display: flex; align-items: center; flex-shrink: 0; }
+  .brand__mark img { width: 40px; height: 40px; object-fit: contain; display: block; }
+  .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+
+  .site-nav { display: flex; gap: 28px; }
+  .site-nav a { font-size: 0.93rem; font-weight: 500; color: var(--text-muted); transition: color 0.15s ease; }
+  .site-nav a:hover { color: var(--accent); }
+
+  .site-header__actions { display: flex; align-items: center; gap: 10px; }
+  .locale-wrap { position: relative; display: flex; align-items: center; }
+  .locale-select {
+    font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 10px;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--surface-solid); color: var(--text);
+  }
+  .locale-icon { display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--text-muted); pointer-events: none; }
+
+  .theme-toggle .icon-moon { display: none; }
+  :root[data-theme='dark'] .theme-toggle .icon-sun { display: none; }
+  :root[data-theme='dark'] .theme-toggle .icon-moon { display: block; }
+
+  .nav-burger { display: none; flex-direction: column; gap: 4px; width: 40px; height: 40px; border: none; background: none; cursor: pointer; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nav-burger span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
+
+  .mobile-nav { display: none; flex-direction: column; padding: 8px 24px 18px; border-top: 1px solid var(--border); }
+  .mobile-nav a { padding: 10px 0; font-weight: 500; color: var(--text); border-bottom: 1px solid var(--border); }
+  .mobile-nav a:last-child { border-bottom: none; }
+
+  @media (max-width: 860px) {
+    .site-nav { display: none; }
+    .nav-burger { display: flex; }
+    .mobile-nav.is-open { display: flex; }
+  }
+
+  /* Small phones: shrink the logo and collapse the language <select> down to
+     an icon-only control so the header never overflows. */
+  @media (max-width: 480px) {
+    .site-header__inner { height: 64px; }
+    .container.site-header__inner { padding-left: 16px; padding-right: 16px; }
+    .brand { gap: 6px; }
+    .brand__mark img { width: 30px; height: 30px; }
+    .brand__name { font-size: 1.02rem; }
+
+    .site-header__actions { gap: 6px; }
+    .btn-icon.theme-toggle { width: 38px; height: 38px; }
+    .nav-burger { width: 36px; height: 36px; }
+
+    .locale-select {
+      width: 38px; height: 38px; padding: 0; color: transparent; background: var(--surface-solid);
+      text-align: center; cursor: pointer;
+    }
+    .locale-icon { display: block; }
+  }
+</style>
+
+<script>
+  function initNavToggle() {
+    const btn = document.querySelector('[data-nav-toggle]');
+    const nav = document.getElementById('mobile-nav');
+    if (!btn || !nav) return;
+    btn.addEventListener('click', () => {
+      const open = nav.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }));
+  }
+  document.addEventListener('astro:page-load', initNavToggle);
+  initNavToggle();
+</script>

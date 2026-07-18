@@ -1,0 +1,29 @@
+---
+export interface Crumb { name: string; href: string; }
+export interface Props { trail: Crumb[]; }
+const { trail } = Astro.props as Props;
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {trail.map((c, i) => (
+      <li>
+        {i < trail.length - 1 ? (
+          <a href={c.href}>{c.name}</a>
+        ) : (
+          <span aria-current="page">{c.name}</span>
+        )}
+        {i < trail.length - 1 && <span class="sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs { padding: 18px 0 0; }
+  .breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; font-size: 0.82rem; }
+  .breadcrumbs li { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+  .breadcrumbs a { color: var(--text-muted); }
+  .breadcrumbs a:hover { color: var(--accent); }
+  .breadcrumbs .sep { color: var(--border); }
+  .breadcrumbs [aria-current='page'] { color: var(--text); font-weight: 500; }
+</style>

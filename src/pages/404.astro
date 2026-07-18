@@ -1,0 +1,66 @@
+---
+import ErrorLayout from '../components/ErrorLayout.astro';
+import SiteSearch from '../components/SiteSearch.astro';
+import RecentPagesWidget from '../components/RecentPagesWidget.astro';
+
+const popularConversions = [
+  { label: 'USD to RMB', from: 'USD', to: 'CNY' },
+  { label: 'INR to USD', from: 'INR', to: 'USD' },
+  { label: 'USD to PKR', from: 'USD', to: 'PKR' },
+];
+---
+<ErrorLayout
+  code="404"
+  title="404 - Page Not Found | UsdtoWorld"
+  description="The page you're looking for doesn't exist. Search for a currency pair or head back to the UsdtoWorld homepage."
+  path="/404"
+  pageName="Page Not Found"
+>
+  <h1 data-i18n="error_404_title">Page not found</h1>
+  <p data-i18n="error_404_message">Oops! The page you're looking for doesn't exist.</p>
+
+  <SiteSearch />
+
+  <div class="error-actions">
+    <a href="/" class="btn btn-primary" data-i18n="go_home">Go to Homepage</a>
+  </div>
+
+  <div class="not-found-grid">
+    <div class="not-found-col">
+      <h2 data-i18n="popular_conversions">Popular conversions</h2>
+      <div class="not-found-pills">
+        {popularConversions.map((p) => (
+          <a class="pill" href={`/?from=${p.from}&to=${p.to}#converter`}>{p.label}</a>
+        ))}
+      </div>
+
+      <h2 class="suggested-links-heading" data-i18n="suggested_links">You might also want</h2>
+      <div class="not-found-pills">
+        <a class="pill" href="/#faq">FAQ</a>
+        <a class="pill" href="/#rates">Exchange rate trends</a>
+        <a class="pill" href="/about">About us</a>
+        <a class="pill" href="/contact">Contact us</a>
+      </div>
+    </div>
+
+    <div class="not-found-col">
+      <RecentPagesWidget />
+    </div>
+  </div>
+</ErrorLayout>
+
+<style>
+  .not-found-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; margin-top: 34px;
+    padding-top: 30px; border-top: 1px solid var(--border); width: 100%;
+  }
+  .not-found-col h2 {
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+    font-family: var(--font-body); margin-bottom: 10px;
+  }
+  .suggested-links-heading { margin-top: 22px; }
+  .not-found-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 700px) {
+    .not-found-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+
+export interface Props {
+  code: string | number;
+  title: string;
+  description: string;
+  path: string;
+  pageName: string;
+  tone?: 'error' | 'warn' | 'info';
+  noindex?: boolean;
+}
+
+const { code, title, description, path, pageName, tone = 'error', noindex = true } = Astro.props;
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: pageName, item: new URL(path, site).toString() },
+  ],
+};
+---
+<Layout title={title} description={description} path={path} schema={[breadcrumbSchema]} noindex={noindex}>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: pageName, href: path }]} />
+  </div>
+
+  <section class="section error-section" data-tone={tone}>
+    <div class="container error-shell">
+      <span class="error-code mono" aria-hidden="true">{code}</span>
+      <div class="error-body">
+        <slot />
+      </div>
+      <h2 class="visually-hidden">More help</h2>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .error-section { padding: 20px 0 80px; }
+  .error-shell {
+    max-width: 720px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center;
+    animation: rise 0.5s ease both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .error-code {
+    font-size: clamp(3.4rem, 12vw, 6.5rem); font-weight: 700; line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 4px;
+  }
+  .error-section[data-tone='warn'] .error-code {
+    background: linear-gradient(135deg, #c8952e, #e8b95e);
+    -webkit-background-clip: text; background-clip: text;
+  }
+  .error-body { width: 100%; }
+  .error-body :global(h1) { margin-bottom: 10px; }
+  .error-body :global(p) { max-width: 52ch; margin-left: auto; margin-right: auto; }
+  .error-body :global(.error-actions) {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 26px 0;
+  }
+  @media (max-width: 640px) {
+    .error-body :global(.error-actions) .btn { flex: 1; min-width: 160px; }
+  }
+</style>

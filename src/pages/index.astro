@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+// scripts imported in <script> block below
+import Features from '../components/Features.astro';
+import RateChart from '../components/RateChart.astro';
+import EditorialSections from '../components/EditorialSections.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import { faqs } from '../data/faq.js';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+  ],
+};
+---
+<Layout
+  title="USD to RMB Converter (Live Exchange Rate) | UsdtoWorld"
+  description="Convert USD to RMB instantly with live exchange rates. Check 1 USD to RMB, 1000 USD to RMB, and historical trends with our free converter."
+  path="/"
+  schema={[faqSchema, breadcrumbSchema]}
+>
+  <ConverterHero />
+  <Features />
+  <RateChart />
+  <EditorialSections />
+  <FAQAccordion />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>

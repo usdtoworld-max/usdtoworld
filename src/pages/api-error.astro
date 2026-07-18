@@ -1,0 +1,71 @@
+---
+import ErrorLayout from '../components/ErrorLayout.astro';
+---
+<ErrorLayout
+  code="API"
+  title="Rate Service Unavailable | UsdtoWorld"
+  description="We couldn't reach the live exchange rate service. Here's the last rate we saved."
+  path="/api-error"
+  pageName="Rate Service Unavailable"
+  tone="warn"
+>
+  <h1 data-i18n="error_api_title">Rate service unavailable</h1>
+  <p data-i18n="error_api_message">We couldn't reach the live rate service. Here's the last rate we saved.</p>
+
+  <div class="card cached-rate-card" data-cached-rate>
+    <span class="cached-rate-card__label" data-i18n="last_known_rate">Last known rate</span>
+    <div class="cached-rate-card__value">
+      <span class="num" data-cached-amount>—</span>
+      <span class="mono" data-cached-code>CNY</span>
+    </div>
+    <p class="cached-rate-card__meta">
+      <span data-i18n="last_updated_short">Last updated</span>: <span data-cached-time class="mono">—</span>
+    </p>
+  </div>
+
+  <div class="error-actions">
+    <button type="button" class="btn btn-primary" data-retry data-i18n="retry">Try again</button>
+    <a href="/contact" class="btn btn-ghost" data-i18n="contact_support">Contact Support</a>
+    <a href="/" class="btn btn-ghost" data-i18n="go_home">Go to Homepage</a>
+  </div>
+</ErrorLayout>
+
+<script>
+  function formatTime(ts) {
+    if (!ts) return '—';
+    return new Date(ts).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function renderCachedRate() {
+    const amountEl = document.querySelector('[data-cached-amount]');
+    const codeEl = document.querySelector('[data-cached-code]');
+    const timeEl = document.querySelector('[data-cached-time]');
+    if (!amountEl) return;
+
+    try {
+      const rates = JSON.parse(localStorage.getItem('usdtoworld:rates') || 'null');
+      const time = Number(localStorage.getItem('usdtoworld:rates:time') || 0);
+      if (rates && rates.CNY) {
+        amountEl.textContent = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(rates.CNY);
+        codeEl.textContent = 'CNY per 1 USD';
+        timeEl.textContent = formatTime(time);
+      } else {
+        amountEl.textContent = 'No cached rate yet';
+        codeEl.textContent = '';
+      }
+    } catch (e) {
+      amountEl.textContent = 'No cached rate yet';
+    }
+  }
+  renderCachedRate();
+
+  document.querySelector('[data-retry]')?.addEventListener('click', () => window.location.reload());
+</script>
+
+<style>
+  .cached-rate-card { margin: 26px 0; text-align: left; max-width: 340px; margin-left: auto; margin-right: auto; }
+  .cached-rate-card__label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .cached-rate-card__value { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 4px; }
+  .cached-rate-card__value .num { font-size: 2rem; font-weight: 600; }
+  .cached-rate-card__meta { font-size: 0.8rem; margin: 0; }
+</style>

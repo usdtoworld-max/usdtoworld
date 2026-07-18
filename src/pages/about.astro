@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'About Us', item: new URL('/about', site).toString() },
+  ],
+};
+---
+<Layout
+  title="About Us | UsdtoWorld Currency Converter"
+  description="Learn about UsdtoWorld, a free live currency converter for USD to RMB and 180+ other currency pairs."
+  path="/about"
+  schema={[breadcrumbSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about' }]} />
+  </div>
+  <section class="section section--tight">
+    <div class="container prose">
+      <span class="section-eyebrow">About</span>
+      <h1>About UsdtoWorld</h1>
+      <p>
+        UsdtoWorld started as a simple idea: currency conversion tools online are often cluttered with ads,
+        slow to load, or buried behind sign-up walls. We built a fast, free, and accurate converter focused on
+        the pair people search for most — USD to RMB — while supporting 180+ other currencies for everyday use.
+      </p>
+
+      <h2>What we do</h2>
+      <p>
+        UsdtoWorld pulls live exchange-rate data and presents it in a clean, mobile-first interface. Every
+        conversion runs instantly in your browser, your recent lookups are saved locally on your device, and
+        the site works even when you briefly lose connection by falling back to the last saved rate.
+      </p>
+
+      <h2>Our tools</h2>
+      <p>
+        Everything on UsdtoWorld is built around one goal: getting you a trustworthy number in as few taps as
+        possible. Rather than bundling a single generic calculator, we've broken the experience into a handful
+        of small, focused tools that each solve a specific part of the currency-conversion problem — whether
+        you're checking today's USD to RMB rate, planning a transfer, or just curious how the yuan has moved
+        over the past year.
+      </p>
+
+      <h3>Live currency converter</h3>
+      <p>
+        The core tool is the converter itself, front and center on the homepage. Type an amount, choose a
+        "from" and "to" currency from more than a dozen supported options — including USD, RMB/CNY, PKR, MXN,
+        INR, EUR, GBP, JPY, and more — and the result updates instantly using a live market data feed. We've
+        also added one-tap shortcuts for the conversions people ask for most: 1 USD to RMB, 100 USD to RMB,
+        1000 USD to RMB, and quick-access buttons for popular pairs like INR to USD and USD to PKR, so you
+        don't have to re-type an amount every time you want to check a common figure.
+      </p>
+
+      <h3>Historical rate trends</h3>
+      <p>
+        A single number rarely tells the whole story. That's why we pair the live converter with a simplified
+        12-month trend view, so you can see at a glance whether a pair like USD to RMB has been drifting up,
+        drifting down, or holding roughly steady before you rely on today's figure for a bigger decision. It's
+        intentionally lightweight — a quick visual gut-check, not a full charting platform — with a link back
+        to the live converter for the precise, current rate.
+      </p>
+
+      <h3>Multi-language, multi-currency support</h3>
+      <p>
+        Currency conversion is a global need, so the interface itself isn't locked to English. You can switch
+        the converter, navigation, and result labels into Hindi, Chinese, Spanish, or Japanese from the
+        language selector in the header, with your choice remembered on your next visit. On the currency side,
+        we go well beyond the headline USD/RMB pair, supporting dozens of currencies so the same tool that
+        handles "1000 USD to RMB" can just as easily handle a Mexican peso, Philippine peso, or Hong Kong
+        dollar conversion without switching sites.
+      </p>
+
+      <h3>Built to work offline and remember your history</h3>
+      <p>
+        UsdtoWorld is set up as a lightweight installable web app. The last successfully fetched exchange
+        rates are cached on your device, so if you lose signal mid-trip or your connection briefly drops, the
+        converter keeps working with the most recent numbers it has, and clearly flags that you're viewing a
+        cached rate rather than a live one. Alongside that, a small "recently viewed" panel keeps track of the
+        pairs and amounts you've checked most recently, so a repeat lookup — like your usual USD to RMB
+        transfer amount — is one tap away instead of a fresh search.
+      </p>
+
+      <h3>Copy, share, and quick actions</h3>
+      <p>
+        Once you have a result, getting it out of the browser and into a message, spreadsheet, or email should
+        be effortless. Every conversion includes a one-tap copy button that grabs a clean, formatted summary
+        of the amount and rate, plus a share option on devices that support it, so you can send a conversion
+        straight to a friend, client, or colleague without manually retyping numbers.
+      </p>
+
+      <h3>A growing answer bank</h3>
+      <p>
+        Beyond the calculator itself, we maintain a set of straightforward answers to the questions people
+        actually search for around USD, RMB, and other major pairs — things like why the yuan moves the way
+        it does, how it compares to currencies like the Indian rupee, and what factors tend to push exchange
+        rates up or down. The goal is the same as with the tools: give you a fast, honest, well-sourced answer
+        rather than a wall of jargon, and point you toward professional advice when a decision genuinely
+        depends on it. We keep adding to this over time as new questions and new currency pairs come up, so
+        it's worth checking back if the pair or topic you're after isn't covered yet.
+      </p>
+
+      <h2>Our approach</h2>
+      <ul>
+        <li>No account required, no paywalls, no dark patterns.</li>
+        <li>Rates sourced from a live market data feed, refreshed regularly.</li>
+        <li>Built with performance and accessibility as first-class requirements, not afterthoughts.</li>
+        <li>Available in English, Hindi, Chinese, Spanish, and Japanese.</li>
+      </ul>
+
+      <h2>A note on accuracy</h2>
+      <p>
+        We aim for accuracy, but exchange rates shift constantly and every provider — including banks and card
+        networks — applies its own margin. Please read our <a href="/disclaimer">Disclaimer</a> before making
+        financial decisions based on figures shown here.
+      </p>
+
+      <h2>Get in touch</h2>
+      <p>
+        Questions, feedback, or a currency pair you'd like added? Visit our <a href="/contact">Contact page</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

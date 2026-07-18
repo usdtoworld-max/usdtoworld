@@ -1,0 +1,161 @@
+---
+import { currencies, popularPairs, quickChips } from '../data/currencies.js';
+---
+<section class="hero" id="converter">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="section-eyebrow">Live · Updated every 30 minutes</span>
+      <h1 data-i18n="hero_title">USD to RMB Converter (Live Exchange Rates)</h1>
+      <p class="hero-sub" data-i18n="hero_sub">
+        Convert US Dollars to Chinese Yuan (RMB) instantly using real-time exchange rates. Fast, accurate, and mobile-friendly currency conversion.
+      </p>
+
+      <div class="chip-row" role="group" aria-label="Quick USD to RMB conversions">
+        <span class="chip-row__label" data-i18n="quick_title">Quick conversions</span>
+        <div class="chips">
+          {quickChips.map((n) => (
+            <button type="button" class="pill" data-chip={n} data-from="USD" data-to="CNY">
+              {n} USD → RMB
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="pair-row" role="group" aria-label="Popular currency pairs">
+        {popularPairs.map((p) => (
+          <button type="button" class="tag" data-pair data-from={p.from} data-to={p.to}>{p.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="hero-panel glass">
+      <form data-converter class="converter-form" aria-label="Currency converter">
+        <div class="field">
+          <label for="amount" data-i18n="amount_label">Amount</label>
+          <input id="amount" type="number" min="0" step="any" value="1000" data-amount inputmode="decimal" />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="from" data-i18n="from_label">From</label>
+            <select id="from" data-from>
+              {currencies.map((c) => (
+                <option value={c.code} selected={c.code === 'USD'}>{c.flag} {c.code} — {c.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <button type="button" class="swap-btn" data-swap data-i18n-placeholder="swap" aria-label="Swap currencies">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 7h11l-3-3M17 17H6l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="field">
+            <label for="to" data-i18n="to_label">To</label>
+            <select id="to" data-to>
+              {currencies.map((c) => (
+                <option value={c.code} selected={c.code === 'CNY'}>{c.flag} {c.code} — {c.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary convert-btn" data-i18n="convert">Convert</button>
+
+        <div class="result-card">
+          <span class="result-card__label" data-i18n="result_label">Converted amount</span>
+          <div class="result-card__value">
+            <span class="num" data-result-value>—</span>
+            <span class="result-card__code" data-result-label>CNY</span>
+            <span class="trend" data-trend aria-hidden="true"></span>
+          </div>
+          <div class="result-card__meta">
+            <span data-i18n="updated_label">Last updated</span>: <span data-updated class="mono">—</span>
+          </div>
+          <p class="status-line" data-status role="status" aria-live="polite"></p>
+
+          <div class="result-actions">
+            <button type="button" class="btn btn-ghost" data-copy data-i18n="copy">Copy result</button>
+            <button type="button" class="btn btn-ghost" data-share data-i18n="share">Share</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="recent-block">
+        <h2>Recently viewed</h2>
+        <div data-recent-list class="recent-list">
+          <p class="recent-empty">Your recent conversions will show up here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding: 56px 0 40px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: start; }
+
+  .hero-sub { font-size: 1.08rem; max-width: 46ch; }
+
+  .chip-row { margin-top: 30px; }
+  .chip-row__label { display: block; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .pair-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tag {
+    font-size: 0.8rem; padding: 6px 12px; border-radius: 999px; border: 1px dashed var(--border);
+    background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s ease;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); border-style: solid; }
+
+  .hero-panel { padding: 28px; }
+  .converter-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+  .field label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+  .field input, .field select {
+    padding: 13px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+    background: var(--surface-solid); color: var(--text); font-size: 1rem; font-family: var(--font-mono);
+    width: 100%;
+  }
+  #amount { font-size: 1.4rem; font-weight: 600; }
+
+  .field-row { display: flex; align-items: end; gap: 10px; }
+  .swap-btn {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--surface-solid); color: var(--accent); cursor: pointer; display: flex; align-items: center;
+    justify-content: center; transition: transform 0.2s ease, background 0.15s ease; margin-bottom: 1px;
+  }
+  .swap-btn:hover { transform: rotate(180deg); background: var(--bg-alt); }
+
+  .convert-btn { width: 100%; padding: 15px; font-size: 1rem; }
+
+  .result-card {
+    border-top: 1px dashed var(--border); padding-top: 18px; margin-top: 4px;
+  }
+  .result-card__label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .result-card__value { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 4px; }
+  .result-card__value .num {
+    font-size: clamp(2rem, 5vw, 2.6rem); font-weight: 600; color: var(--text); transition: opacity 0.15s ease;
+  }
+  .result-card__value .num.is-updating { opacity: 0.4; }
+  .result-card__code { font-family: var(--font-mono); color: var(--text-muted); font-size: 1.1rem; }
+  .trend { font-size: 1rem; margin-left: auto; }
+  .trend[data-trend='up'] { color: var(--usd); }
+  .trend[data-trend='down'] { color: var(--rmb); }
+  .result-card__meta { font-size: 0.8rem; color: var(--text-muted); }
+  .status-line { min-height: 1.2em; font-size: 0.82rem; margin: 8px 0 0; }
+  .status-line[data-tone='error'] { color: var(--rmb); }
+  .status-line[data-tone='warn'] { color: #c8952e; }
+
+  .result-actions { display: flex; gap: 10px; margin-top: 14px; }
+  .result-actions .btn { flex: 1; padding: 10px; font-size: 0.85rem; }
+
+  .recent-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+  .recent-block h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px; font-family: var(--font-body); }
+  .recent-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .recent-empty { font-size: 0.85rem; margin: 0; }
+
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+</style>

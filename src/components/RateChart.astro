@@ -1,0 +1,55 @@
+---
+const points = [62, 64, 61, 66, 70, 74, 71, 76, 79, 75, 81, 84];
+const max = Math.max(...points);
+const min = Math.min(...points);
+const toY = (v) => 100 - ((v - min) / (max - min)) * 80 - 10;
+const path = points
+  .map((p, i) => `${i === 0 ? 'M' : 'L'} ${(i / (points.length - 1)) * 100} ${toY(p)}`)
+  .join(' ');
+const area = `${path} L 100 100 L 0 100 Z`;
+---
+<section class="section section--tight" id="rates">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Historical trend</span>
+      <h2>USD to RMB — 12-month direction</h2>
+      <p>A simplified view of how the pair has moved. Open the full converter above for the live, precise rate.</p>
+    </div>
+
+    <div class="chart-card card">
+      <div class="chart-card__head">
+        <div>
+          <span class="mono chart-rate">7.19 CNY</span>
+          <span class="chart-sub">per 1 USD · illustrative trend</span>
+        </div>
+        <span class="chart-badge">+2.1% / 12mo</span>
+      </div>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="sparkline" role="img" aria-label="Illustrative 12 month USD to RMB trend line trending gently upward">
+        <defs>
+          <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35" />
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={area} fill="url(#sparkFill)" stroke="none" />
+        <path d={path} fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+      </svg>
+      <div class="chart-months">
+        <span>12mo ago</span><span>6mo ago</span><span>Today</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chart-card { padding: 24px 24px 16px; }
+  .chart-card__head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .chart-rate { font-size: 1.5rem; font-weight: 700; display: block; }
+  .chart-sub { font-size: 0.8rem; color: var(--text-muted); }
+  .chart-badge {
+    font-family: var(--font-mono); font-size: 0.78rem; padding: 6px 12px; border-radius: 999px;
+    background: color-mix(in srgb, var(--usd) 15%, transparent); color: var(--usd); font-weight: 600;
+  }
+  .sparkline { width: 100%; height: 160px; }
+  .chart-months { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; font-family: var(--font-mono); }
+</style>

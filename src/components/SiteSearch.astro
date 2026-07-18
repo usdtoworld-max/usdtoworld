@@ -1,0 +1,101 @@
+---
+import { currencies } from '../data/currencies.js';
+---
+<div class="site-search">
+  <label class="visually-hidden" for="site-search-input">Search</label>
+  <div class="site-search__box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <input
+      id="site-search-input"
+      type="text"
+      data-i18n-placeholder="search_placeholder"
+      placeholder="Search currencies or pages…"
+      autocomplete="off"
+      data-site-search
+    />
+  </div>
+  <ul class="site-search__results" data-site-search-results hidden></ul>
+</div>
+
+<script define:vars={{ currencyList: currencies.map((c) => ({ code: c.code, name: c.name, flag: c.flag })) }}>
+  function initSiteSearch() {
+    const input = document.querySelector('[data-site-search]');
+    const results = document.querySelector('[data-site-search-results]');
+    if (!input || !results) return;
+
+    const pages = [
+      { title: 'Home', path: '/' },
+      { title: 'USD to RMB Converter', path: '/#converter' },
+      { title: 'Exchange Rate Trends', path: '/#rates' },
+      { title: 'FAQ', path: '/#faq' },
+      { title: 'About Us', path: '/about' },
+      { title: 'Contact Us', path: '/contact' },
+      { title: 'Privacy Policy', path: '/privacy-policy' },
+      { title: 'Disclaimer', path: '/disclaimer' },
+      { title: 'Terms & Conditions', path: '/terms' },
+    ];
+
+    const currencyItems = window.__searchCurrencies || currencyList;
+
+    function render(items) {
+      if (!items.length) {
+        results.innerHTML = '<li class="site-search__empty">No matches. Try a currency code like "RMB" or "PKR".</li>';
+        results.hidden = false;
+        return;
+      }
+      results.innerHTML = items
+        .slice(0, 8)
+        .map((i) => `<li><a href="${i.path}">${i.icon || ''} ${i.title}</a></li>`)
+        .join('');
+      results.hidden = false;
+    }
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) {
+        results.hidden = true;
+        results.innerHTML = '';
+        return;
+      }
+      const pageMatches = pages
+        .filter((p) => p.title.toLowerCase().includes(q))
+        .map((p) => ({ title: p.title, path: p.path }));
+
+      const currencyMatches = currencyItems
+        .filter((c) => c.code.toLowerCase().includes(q) || c.name.toLowerCase().includes(q))
+        .map((c) => ({ title: `${c.name} (${c.code})`, path: `/#converter?to=${c.code}`, icon: c.flag }));
+
+      render([...pageMatches, ...currencyMatches]);
+    });
+
+    input.addEventListener('blur', () => {
+      setTimeout(() => (results.hidden = true), 150);
+    });
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) results.hidden = false;
+    });
+  }
+
+  document.addEventListener('astro:page-load', initSiteSearch);
+  initSiteSearch();
+</script>
+
+<style>
+  .site-search { position: relative; max-width: 420px; margin: 0 auto; }
+  .site-search__box {
+    display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface-solid); color: var(--text-muted);
+  }
+  .site-search__box input {
+    border: none; outline: none; background: transparent; color: var(--text); font-size: 0.95rem; width: 100%;
+    font-family: var(--font-body);
+  }
+  .site-search__results {
+    position: absolute; top: calc(100% + 8px); left: 0; right: 0; list-style: none; margin: 0; padding: 8px;
+    background: var(--surface-solid); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    box-shadow: var(--shadow); z-index: 20; text-align: left; max-height: 260px; overflow-y: auto;
+  }
+  .site-search__results li a { display: block; padding: 9px 10px; border-radius: 8px; font-size: 0.9rem; }
+  .site-search__results li a:hover { background: var(--bg-alt); color: var(--accent); }
+  .site-search__empty { padding: 9px 10px; font-size: 0.85rem; color: var(--text-muted); }
+</style>

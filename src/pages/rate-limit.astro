@@ -1,0 +1,51 @@
+---
+import ErrorLayout from '../components/ErrorLayout.astro';
+---
+<ErrorLayout
+  code="429"
+  title="Too Many Requests | UsdtoWorld"
+  description="Too many requests. Please wait a moment and try again."
+  path="/rate-limit"
+  pageName="Rate Limited"
+  tone="warn"
+>
+  <h1 data-i18n="error_ratelimit_title">Slow down a little</h1>
+  <p data-i18n="error_ratelimit_message">Too many requests. Please wait a moment and try again.</p>
+
+  <p class="countdown-note" data-cooldown-note>You can try again in <span data-cooldown>30</span>s.</p>
+
+  <div class="error-actions">
+    <button type="button" class="btn btn-primary" data-retry disabled data-i18n="retry">Try again</button>
+    <a href="/" class="btn btn-ghost" data-i18n="go_home">Go to Homepage</a>
+  </div>
+</ErrorLayout>
+
+<script>
+  function startCooldown() {
+    let remaining = 30;
+    const span = document.querySelector('[data-cooldown]');
+    const btn = document.querySelector('[data-retry]');
+    if (!span || !btn) return;
+
+    const timer = setInterval(() => {
+      remaining -= 1;
+      span.textContent = String(Math.max(remaining, 0));
+      if (remaining <= 0) {
+        clearInterval(timer);
+        btn.removeAttribute('disabled');
+        document.querySelector('[data-cooldown-note]').hidden = true;
+      }
+    }, 1000);
+  }
+  startCooldown();
+
+  document.querySelector('[data-retry]')?.addEventListener('click', (e) => {
+    if (e.currentTarget.hasAttribute('disabled')) return;
+    window.location.reload();
+  });
+</script>
+
+<style>
+  .countdown-note { font-size: 0.85rem; color: var(--text-muted); }
+  [data-retry][disabled] { opacity: 0.5; cursor: not-allowed; }
+</style>

@@ -1,0 +1,35 @@
+---
+const features = [
+  { icon: '📡', title: 'Real-time Exchange Rates', copy: 'Rates refresh from a live market feed, so the number on screen reflects current trading conditions.' },
+  { icon: '🌐', title: '180+ Supported Currencies', copy: 'Beyond USD and RMB, convert between major and regional currencies including PKR, MXN, INR, and more.' },
+  { icon: '🌓', title: 'Dark Mode', copy: 'A dedicated dark theme with cyan accents, easy on the eyes for late-night rate checks.' },
+  { icon: '🗣️', title: 'Language Support', copy: 'Use the converter in English, Hindi, Chinese, Spanish, or Japanese.' },
+  { icon: '📈', title: 'Historical Trends', copy: 'See how a pair has moved over the past year at a glance before you convert.' },
+  { icon: '⚡', title: 'Lightning Fast Performance', copy: 'Built with Astro for a static, minimal-JS page that loads instantly on any connection.' },
+];
+---
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Why UsdtoWorld</span>
+      <h2>Built for speed, accuracy, and everyday use</h2>
+      <p>Everything you need for quick, trustworthy currency conversion — nothing you don't.</p>
+    </div>
+    <div class="grid-3 feature-grid">
+      {features.map((f) => (
+        <div class="card feature-card">
+          <span class="feature-icon" aria-hidden="true">{f.icon}</span>
+          <h3>{f.title}</h3>
+          <p>{f.copy}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-card { display: flex; flex-direction: column; gap: 8px; }
+  .feature-icon { font-size: 1.6rem; }
+  .feature-card h3 { margin-bottom: 2px; }
+  .feature-card p { margin-bottom: 0; font-size: 0.92rem; }
+</style>
