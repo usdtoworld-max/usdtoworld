@@ -1,13 +1,11 @@
 ---
-import { Image } from 'astro:assets';
 import { supportedLocales } from '../data/translations.js';
-import logo from '../assets/logo.png';
 ---
 <header class="site-header">
   <div class="container site-header__inner">
     <a href="/" class="brand" aria-label="UsdtoWorld home">
       <span class="brand__mark" aria-hidden="true">
-        <Image src={logo} alt="" width={40} height={40} loading="eager" fetchpriority="high" />
+        <img src="/favicon/logo-header.webp" alt="" width="40" height="40" loading="eager" fetchpriority="high" />
       </span>
       <span class="brand__name">UsdtoWorld</span>
     </a>
