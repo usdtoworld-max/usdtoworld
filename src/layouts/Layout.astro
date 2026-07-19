@@ -28,8 +28,7 @@ const ogImageURL = new URL(ogImage, site).toString();
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'BooksnPDF',
-  alternateName: 'UsdtoWorld',
+  name: 'UsdtoWorld',
   url: site.toString(),
   logo: new URL('/favicon/favicon-512.png', site).toString(),
   email: 'usdtoworld@gmail.com',
@@ -73,6 +72,30 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <!-- Fonts: preconnect + direct <link> so the browser's preload scanner
+         finds these immediately while parsing raw HTML, instead of only
+         after downloading and parsing the bundled CSS (which is what a CSS
+         @import would force). This is the single biggest lever on this
+         site's LCP, since the hero heading/text use these fonts. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+    />
+
+    <!-- Font Awesome (brand icons in the footer only) — loaded non-blocking
+         since these icons are below the fold and shouldn't affect LCP. -->
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    </noscript>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DXMLTX9F29"></script>
@@ -142,9 +165,6 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
-    <div class="offline-banner" data-offline-banner role="status" aria-live="polite" hidden>
-      <span data-i18n="offline_banner">You're offline — showing your last saved rates.</span>
-    </div>
     <Header />
     <main id="main">
       <slot />
@@ -152,20 +172,24 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <Footer />
 
     <script>
+      // Critical for correct visible state / immediate interactivity.
       import '../scripts/theme.js';
       import '../scripts/i18n.js';
-      import '../scripts/scroll-top.js';
-      import '../scripts/offline-banner.js';
-      import '../scripts/register-sw.js';
-      import '../scripts/recent-pages.js';
+
+      // Non-critical: deferred to idle time so they don't compete with the
+      // user's first tap/click (e.g. opening the mobile nav) for main-thread
+      // time right after load — this was showing up as elevated INP on
+      // #mobile-nav>a in field data.
+      const deferredScripts = () => {
+        import('../scripts/scroll-top.js');
+        import('../scripts/register-sw.js');
+        import('../scripts/recent-pages.js');
+      };
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(deferredScripts, { timeout: 2000 });
+      } else {
+        setTimeout(deferredScripts, 200);
+      }
     </script>
   </body>
 </html>
-
-<style is:global>
-  .offline-banner {
-    position: sticky; top: 0; z-index: 200; text-align: center; font-size: 0.85rem;
-    padding: 9px 16px; background: #c8952e; color: #221600; font-weight: 600;
-  }
-  .offline-banner[hidden] { display: none; }
-</style>

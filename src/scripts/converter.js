@@ -48,6 +48,8 @@ function formatTime(ts) {
 function initConverter() {
   const form = document.querySelector('[data-converter]');
   if (!form) return;
+  if (form.dataset.converterInit === 'true') return; // never wire up twice
+  form.dataset.converterInit = 'true';
 
   const amountInput = form.querySelector('[data-amount]');
   const fromSelect = form.querySelector('[data-from]');
@@ -81,8 +83,19 @@ function initConverter() {
       else setStatus('', 'muted');
       return result;
     } catch (err) {
-      setStatus("Couldn't reach the rate service. Try again in a moment.", 'error');
-      throw err;
+      // One silent retry after a short delay — smooths over transient
+      // first-load network hiccups (DNS not yet warm, brief connectivity blip).
+      try {
+        await new Promise((res) => setTimeout(res, 1200));
+        const retryResult = await getRates();
+        ratesCache = retryResult;
+        setStatus(retryResult.offline ? "You're offline. Showing the last saved rate." : '', retryResult.offline ? 'warn' : 'muted');
+        return retryResult;
+      } catch (retryErr) {
+        console.error('[usdtoworld] rate fetch failed after retry:', retryErr);
+        setStatus("Couldn't reach the rate service. Try again in a moment.", 'error');
+        throw retryErr;
+      }
     }
   }
 

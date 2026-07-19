@@ -5,7 +5,12 @@
    monospace (IBM Plex Mono) so rates read like real ticker data.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+/* Fonts are loaded via <link rel="preconnect"> + <link rel="stylesheet"> in
+   Layout.astro's <head>, not @import here. @import forces a second
+   sequential round-trip (browser must fetch+parse this stylesheet before it
+   even discovers the font CSS), which measurably delays LCP for any text
+   using these fonts. <link> tags are discovered immediately by the HTML
+   preload scanner while the page is still being parsed. */
 
 :root {
   /* Light mode -- white base, soft blue accent (per brief) */

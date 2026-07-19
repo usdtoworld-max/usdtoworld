@@ -1,0 +1,58 @@
+---
+const guides = [
+  { label: 'USD to INR', href: '/usd-to-inr' },
+  { label: 'USD to EUR', href: '/usd-to-eur' },
+  { label: 'USD to GBP', href: '/usd-to-gbp' },
+  { label: 'USD to JPY', href: '/usd-to-jpy' },
+  { label: 'USD to PKR', href: '/usd-to-pkr' },
+  { label: 'USD to CAD', href: '/usd-to-cad' },
+  { label: 'USD to AUD', href: '/usd-to-aud' },
+  { label: 'INR to USD', href: '/inr-to-usd' },
+  { label: 'EUR to USD', href: '/eur-to-usd' },
+  { label: 'GBP to USD', href: '/gbp-to-usd' },
+];
+---
+<section class="section section--tight" id="guides" aria-labelledby="guides-heading">
+  <div class="container guides-container">
+    <div class="section-head">
+      <span class="section-eyebrow">More pairs</span>
+      <h2 id="guides-heading">Currency guides</h2>
+      <p>Dedicated converters and context for the pairs people ask about most, beyond USD to RMB.</p>
+    </div>
+    <div class="guides-grid">
+      {guides.map((g) => (
+        <a class="guide-card" href={g.href}>
+          <span>{g.label}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .guides-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .guide-card {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--surface-solid); font-weight: 600; font-size: 0.9rem; color: var(--text);
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .guide-card:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .guide-card svg { flex-shrink: 0; opacity: 0.6; }
+
+  @media (max-width: 900px) {
+    .guides-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .guides-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  /* Tablet / iPad range: same breathing-room fix as phones, slightly wider margin */
+  @media (max-width: 1024px) {
+    .guides-container { padding-left: 16px; padding-right: 16px; }
+  }
+  @media (max-width: 480px) {
+    /* Extra breathing room so the cards don't sit flush against the screen edge */
+    .guides-container { padding-left: 10px; padding-right: 10px; }
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'Why does 1 USD equal so many yen?',
+    a: "The yen has always used a much smaller unit value than the dollar — this dates back to how Japan set its currency's denomination after major monetary reforms in the late 1800s and again after World War II. It has nothing to do with the health of Japan's economy; it simply takes more yen units to represent the same value as one dollar. The pair has generally traded somewhere in the range of 100 to 160 yen per dollar in recent decades, though check the live rate for today's figure.",
+  },
+  {
+    q: 'What is the "carry trade" and how does it affect USD/JPY?',
+    a: "For years, the Bank of Japan kept interest rates near zero while other central banks, including the Fed, held rates much higher. This created an incentive for investors to borrow yen cheaply and invest the proceeds in higher-yielding dollar assets — known as the carry trade. When that trade unwinds quickly (often during market stress, as investors rush to repay yen loans), it can cause sudden, sharp yen strengthening that looks disconnected from everyday economic news.",
+  },
+  {
+    q: 'Does the Bank of Japan intervene in the currency market?',
+    a: "Yes, periodically. Unlike some central banks that avoid direct market intervention, the Bank of Japan and Japan's Ministry of Finance have a history of stepping in to buy yen when they judge it has weakened too quickly, aiming to slow the pace of the move rather than reverse the underlying trend entirely. These interventions can cause a rapid, sharp move in the rate that catches short-term traders off guard.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to JPY', item: new URL('/usd-to-jpy', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to JPY Converter — Live Dollar to Yen Rate | UsdtoWorld"
+  description="Convert US Dollars to Japanese Yen with a live exchange rate. Get 1 USD to JPY, 100 USD to JPY, and 1000 USD to JPY instantly, plus what drives yen swings."
+  path="/usd-to-jpy"
+  schema={[breadcrumbSchema, faqSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to JPY', href: '/usd-to-jpy' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to JPY Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Japanese Yen instantly with a live market rate — one of the world's most actively traded pairs, and a favorite for travel to Japan."
+    defaultFrom="USD"
+    defaultTo="JPY"
+  />
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <h2>A pair known for sudden moves</h2>
+      <p>
+        USD/JPY has a reputation among currency traders for occasionally moving faster and further than other
+        major pairs, particularly around Bank of Japan policy announcements or global risk events. That
+        volatility stems partly from Japan's very different monetary policy path over the past few decades —
+        while other major central banks raised rates aggressively in recent years, the Bank of Japan held rates
+        near zero far longer than most, creating an unusually wide interest rate gap with the US that shaped
+        the pair's behavior.
+      </p>
+
+      <h2>What's actually driving the rate</h2>
+      <p>
+        The interest rate differential between the Federal Reserve and the Bank of Japan is the single biggest
+        factor most of the time — a wider gap tends to weaken the yen as investors chase higher returns
+        elsewhere, while a narrowing gap (as the Bank of Japan gradually moves away from ultra-low rates)
+        tends to support it. Beyond that, the yen has a long-standing reputation as a "safe haven" currency
+        during global market stress, meaning it can strengthen suddenly when investors are nervous, even if
+        Japan's own economic data hasn't changed. Japanese export competitiveness also factors in, since a
+        weaker yen makes Japanese goods cheaper abroad, which policymakers are aware of when deciding how
+        aggressively to intervene.
+      </p>
+
+      <h2>Planning a trip to Japan</h2>
+      <p>
+        Japan remains a largely cash-friendly country outside major cities, so it's worth converting some yen
+        before or shortly after arrival rather than relying entirely on cards, especially outside Tokyo and
+        Osaka. 7-Eleven ATMs are widely known among travelers as a reliable way to withdraw yen directly from
+        a foreign card at a reasonable rate, generally better than airport currency exchange counters.
+      </p>
+
+      <h2>Japan's decades of ultra-low interest rates</h2>
+      <p>
+        To understand why USD/JPY has behaved so differently from other major pairs in recent years, it helps
+        to know that Japan spent roughly three decades battling deflation and weak growth following the
+        bursting of its asset price bubble in the early 1990s. The Bank of Japan responded with progressively
+        more aggressive monetary easing — near-zero and eventually negative interest rates, large-scale asset
+        purchases, and yield curve control — measures other major central banks only adopted temporarily
+        during crises. As the Bank of Japan has gradually started moving away from this ultra-loose stance in
+        recent years, narrowing the gap with US rates, it has directly affected the yen's relative attractiveness
+        and contributed to some of the sharper swings seen in this pair.
+      </p>
+
+      <h2>Common mistakes when converting for Japan</h2>
+      <p>
+        Because the yen trades in such large unit numbers, a common mistake is misreading the number of zeros
+        when converting a budget — mentally dividing or multiplying incorrectly can throw off a travel budget
+        by a factor of ten. It's worth double-checking any manual calculation against the live converter above
+        rather than doing quick mental math with an unfamiliar currency. Another common mistake is
+        under-budgeting for cash needs by assuming Japan is as card-friendly as, say, the UK or Australia —
+        while this has improved significantly in recent years, smaller shops, older establishments, and rural
+        areas can still be cash-only, so arriving with zero yen and relying purely on cards can genuinely
+        cause problems outside major cities.
+      </p>
+
+      <h2>Why this pair reacts so strongly to global risk events</h2>
+      <p>
+        The yen's safe-haven reputation means USD/JPY often behaves differently from other dollar pairs during
+        global market stress. When investors get nervous — a geopolitical shock, a banking sector scare, a
+        sharp stock market selloff — money has historically flowed toward the yen even though Japan isn't
+        directly involved in whatever triggered the concern, partly because Japanese investors and
+        institutions tend to repatriate overseas assets during uncertain periods, and partly because of the
+        carry trade unwind dynamic described above. This means USD/JPY can move sharply on days when nothing
+        Japan-specific has happened at all, simply because global risk appetite shifted, which can catch
+        travelers or casual observers checking the rate off guard if they're only watching for Japan-related
+        news.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-jpy-faq"
+    eyebrow="USD/JPY FAQ"
+    heading="Common USD to JPY questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to AUD', href: '/usd-to-aud' },
+      { label: 'USD to EUR', href: '/usd-to-eur' },
+      { label: 'USD to CAD', href: '/usd-to-cad' },
+      { label: 'USD to RMB', href: '/' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

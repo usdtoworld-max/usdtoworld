@@ -1,11 +1,13 @@
 ---
+import { Image } from 'astro:assets';
 import { supportedLocales } from '../data/translations.js';
+import logo from '../assets/logo.png';
 ---
 <header class="site-header">
   <div class="container site-header__inner">
     <a href="/" class="brand" aria-label="UsdtoWorld home">
       <span class="brand__mark" aria-hidden="true">
-        <img src="/favicon/logo-header.png" alt="" width="40" height="40" />
+        <Image src={logo} alt="" width={40} height={40} loading="eager" fetchpriority="high" />
       </span>
       <span class="brand__name">UsdtoWorld</span>
     </a>
@@ -57,7 +59,8 @@ import { supportedLocales } from '../data/translations.js';
     position: sticky; top: 0; z-index: 100;
     background: var(--surface-solid);
     border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
   .site-header__inner {
     display: flex; align-items: center; justify-content: space-between;
@@ -79,6 +82,10 @@ import { supportedLocales } from '../data/translations.js';
     border-radius: 10px; border: 1px solid var(--border); background: var(--surface-solid); color: var(--text);
   }
   .locale-icon { display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--text-muted); pointer-events: none; }
+  /* Dark mode: the muted gray reads too low-contrast against the dark
+     surface once the control is collapsed to an icon on mobile — use the
+     accent color instead so it's easy to see. */
+  :root[data-theme='dark'] .locale-icon { color: var(--accent); }
 
   .theme-toggle .icon-moon { display: none; }
   :root[data-theme='dark'] .theme-toggle .icon-sun { display: none; }
@@ -98,7 +105,11 @@ import { supportedLocales } from '../data/translations.js';
   }
 
   /* Small phones: shrink the logo and collapse the language <select> down to
-     an icon-only control so the header never overflows. */
+     an icon-only control so the header never overflows. The select stays
+     fully visible/functional to the browser (and its native option list) —
+     only its own trigger box is made invisible via opacity, layered over a
+     plain icon. Using color:transparent here would also hide the dropdown's
+     option text in several mobile browsers, so opacity is used instead. */
   @media (max-width: 480px) {
     .site-header__inner { height: 64px; }
     .container.site-header__inner { padding-left: 16px; padding-right: 16px; }
@@ -110,13 +121,35 @@ import { supportedLocales } from '../data/translations.js';
     .btn-icon.theme-toggle { width: 38px; height: 38px; }
     .nav-burger { width: 36px; height: 36px; }
 
+    .locale-wrap {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface-solid);
+    }
+    :root[data-theme='dark'] .locale-wrap { border-color: var(--accent); }
     .locale-select {
-      width: 38px; height: 38px; padding: 0; color: transparent; background: var(--surface-solid);
-      text-align: center; cursor: pointer;
+      position: absolute; inset: 0; width: 100%; height: 100%; padding: 0;
+      opacity: 0; cursor: pointer; border: none; background: transparent;
     }
     .locale-icon { display: block; }
+
+    /* When the native picker opens in dark mode, make sure it actually
+       renders dark (black background, white text) instead of the OS's
+       default light popup. `color-scheme` is the primary lever — it tells
+       the browser to use its built-in dark palette for this control's
+       native UI, including the dropdown list. The explicit option colors
+       reinforce that on engines (mainly Chromium/Android) that also let
+       page CSS style option rows directly; iOS Safari's picker ignores
+       the option-level colors but still honors color-scheme. */
+    :root[data-theme='dark'] .locale-select {
+      color-scheme: dark;
+    }
+    :root[data-theme='dark'] .locale-select option {
+      background-color: #000000;
+      color: #ffffff;
+    }
   }
 </style>
+
 
 <script>
   function initNavToggle() {

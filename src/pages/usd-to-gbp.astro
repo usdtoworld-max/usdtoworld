@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'Why is GBP/USD nicknamed "cable"?',
+    a: "The nickname dates back to the mid-1800s, when the exchange rate between London and New York was transmitted via a transatlantic telegraph cable laid under the ocean. The name stuck around in trading floors long after the technology moved on, and you'll still hear \"cable\" used as shorthand for GBP/USD by professional traders and in financial news today.",
+  },
+  {
+    q: 'Is the British pound usually stronger than the dollar?',
+    a: "Historically, yes — one pound has traded above one dollar for most of the modern era, often somewhere between $1.20 and $1.40, though it has moved outside that range during periods of stress (briefly approaching parity in 2022, for instance). \"Stronger\" here just reflects how each currency's unit value was historically set, not which economy is doing better — always check the live rate for today's actual figure rather than assuming a fixed relationship.",
+  },
+  {
+    q: 'Does Brexit still affect this exchange rate?',
+    a: "The initial shock from the 2016 Brexit vote and the following negotiation period caused significant pound volatility, and the UK's altered trade relationship with the EU remains a background factor in how investors view the pound. That said, day-to-day movements in GBP/USD are now driven mostly by the same forces as any pair — interest rate decisions from the Bank of England and Federal Reserve, growth data, and global risk sentiment — rather than ongoing Brexit headlines specifically.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to GBP', item: new URL('/usd-to-gbp', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to GBP Converter — Live Dollar to Pound Rate | UsdtoWorld"
+  description="Convert US Dollars to British Pounds with a live exchange rate. Get 1 USD to GBP, 100 USD to GBP, and 1000 USD to GBP instantly, plus what moves 'cable'."
+  path="/usd-to-gbp"
+  schema={[breadcrumbSchema, faqSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to GBP', href: '/usd-to-gbp' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to GBP Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to British Pounds instantly with a live market rate — known on trading floors as 'cable,' one of the oldest and most closely watched pairs in currency markets."
+    defaultFrom="USD"
+    defaultTo="GBP"
+  />
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <h2>A pair with real history behind it</h2>
+      <p>
+        The dollar-pound relationship is one of the oldest continuously quoted exchange rates in the world,
+        tracing back to when Britain and the young United States first began trading at scale. That long
+        history is part of why "cable" still carries weight in financial markets today — London and New York
+        remain two of the world's largest financial centers, and this pair reflects the flow of capital between
+        them as much as it reflects simple trade.
+      </p>
+
+      <h2>What moves the pound against the dollar</h2>
+      <p>
+        The Bank of England's interest rate decisions are the most direct lever on the pound's value, working
+        the same way Federal Reserve decisions do for the dollar — higher UK rates relative to the US tend to
+        support the pound, and vice versa. UK inflation data, GDP growth figures, and the health of London's
+        financial sector all feed into how the Bank of England is expected to act, which markets price in
+        ahead of time. The pound is also known for reacting sharply to political events in a way some other
+        major currencies don't, given London's outsized role in global finance relative to the UK's overall
+        economic size.
+      </p>
+
+      <h2>If you're converting for a UK trip or purchase</h2>
+      <p>
+        The UK still primarily uses pounds rather than euros, so if you're traveling there specifically (as
+        opposed to elsewhere in Europe), make sure you're converting to GBP and not accidentally budgeting in
+        euros. As with most major currencies, paying by card in pounds at the point of sale tends to beat
+        exchanging cash in advance, and it's worth declining "dynamic currency conversion" offers at UK
+        card terminals — those convert to your home currency at a worse rate than simply letting your own
+        bank handle the conversion.
+      </p>
+
+      <h2>The pound's long post-war journey</h2>
+      <p>
+        The pound sterling was once the world's dominant reserve currency, a position it held for much of the
+        19th and early 20th centuries when the British Empire anchored a huge share of global trade. That
+        dominance faded gradually after World War II as the US dollar took over as the primary global reserve
+        currency, formalized through arrangements like the Bretton Woods system in 1944. The pound underwent
+        several significant devaluations in the decades that followed, including a notable one in 1967, as
+        Britain's economic position relative to the US shifted. Today the pound remains one of the world's
+        major reserve currencies, but the dollar's dominance in that role is a direct legacy of this
+        mid-20th-century transition.
+      </p>
+
+      <h2>Common mistakes with this pair</h2>
+      <p>
+        A frequent error is assuming the pound and euro move together simply because the UK is geographically
+        part of Europe — in reality GBP and EUR can diverge meaningfully, since they respond to different
+        central banks and different domestic conditions. Another common mistake is exchanging a large amount
+        of cash in a single transaction at a high-street currency exchange without comparing rates first;
+        exchange counters in tourist-heavy areas often carry some of the least competitive rates available,
+        even compared to a standard bank. Finally, business travelers sometimes forget to check whether their
+        corporate card charges a currency conversion fee separately from the underlying exchange rate, which
+        can add an unexpected few percent to travel expense reports.
+      </p>
+
+      <h2>What professional traders watch on this pair</h2>
+      <p>
+        Beyond the headline interest rate decisions, professional GBP/USD traders tend to watch UK employment
+        and wage growth data closely, since persistent wage growth feeds into the Bank of England's inflation
+        outlook and, by extension, its rate decisions. UK retail sales and purchasing managers' index (PMI)
+        readings are also closely tracked as early signals of economic momentum between the less frequent GDP
+        releases. None of this is necessary knowledge for someone simply converting money for a trip or a
+        one-off payment, but it explains why the rate sometimes moves on days when nothing obviously
+        newsworthy seems to have happened — a data release most casual observers never see can still move
+        markets meaningfully.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-gbp-faq"
+    eyebrow="USD/GBP FAQ"
+    heading="Common USD to GBP questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'GBP to USD', href: '/gbp-to-usd' },
+      { label: 'USD to EUR', href: '/usd-to-eur' },
+      { label: 'USD to CAD', href: '/usd-to-cad' },
+      { label: 'EUR to USD', href: '/eur-to-usd' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

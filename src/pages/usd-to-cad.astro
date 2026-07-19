@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'Why is the Canadian dollar called the "loonie"?',
+    a: "The nickname comes from the image of a common loon, a bird native to Canada, featured on the Canadian one-dollar coin since 1987. \"Loonie\" caught on as slang for both the coin and the currency more broadly, and you'll see it used casually in Canadian financial media and everyday conversation alike.",
+  },
+  {
+    q: 'Does the price of oil really affect USD/CAD?',
+    a: "It genuinely does, more than most people expect. Canada is a major oil exporter, and energy makes up a substantial share of its export economy, so the Canadian dollar has historically shown a real correlation with crude oil prices — rising oil prices tend to support the loonie, while falling oil prices tend to weigh on it, on top of whatever the usual interest-rate-driven dynamics are doing.",
+  },
+  {
+    q: 'Is 1 USD always worth more than 1 CAD?',
+    a: "In recent decades, yes, the US dollar has generally traded above the Canadian dollar, though the gap has varied — sometimes the loonie has come close to parity, and even briefly exceeded the US dollar in value in the mid-2000s and again around 2011. It's not a fixed or guaranteed relationship, so check the live rate for today's actual figure.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to CAD', item: new URL('/usd-to-cad', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to CAD Converter — Live Dollar to Canadian Dollar Rate | UsdtoWorld"
+  description="Convert US Dollars to Canadian Dollars with a live exchange rate. Get 1 USD to CAD, 100 USD to CAD, and 1000 USD to CAD instantly, plus why oil prices matter."
+  path="/usd-to-cad"
+  schema={[breadcrumbSchema, faqSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to CAD', href: '/usd-to-cad' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to CAD Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Canadian Dollars instantly with a live market rate — useful for cross-border shopping, travel, and business between two deeply linked economies."
+    defaultFrom="USD"
+    defaultTo="CAD"
+  />
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <h2>Two economies that trade constantly</h2>
+      <p>
+        The US and Canada share the world's longest international border and one of its largest bilateral
+        trading relationships, which makes USD/CAD a pair with unusually deep, everyday relevance for
+        businesses and individuals on both sides. Cross-border shopping, snowbird travel, freelance and
+        contractor payments, and supply chains that cross the border multiple times before a product is
+        finished all depend on this rate.
+      </p>
+
+      <h2>What makes this pair a little different</h2>
+      <p>
+        Beyond the usual interest rate story (the Bank of Canada vs. the Federal Reserve), the Canadian dollar
+        carries a real commodity link that many major currencies don't have to the same degree — Canada is a
+        significant exporter of crude oil, and the loonie has historically tended to move with oil prices to a
+        noticeable extent. That means USD/CAD can be influenced by energy market news that has little directly
+        to do with either country's monetary policy. Canada's broader resource export profile (energy,
+        minerals, timber) plays a similar, if smaller, role.
+      </p>
+
+      <h2>Tips for cross-border shopping and travel</h2>
+      <p>
+        Many Canadian and US retailers now display prices in both currencies or let you choose your billing
+        currency at checkout — when given the option, paying in the merchant's local currency and letting your
+        own card issuer handle the conversion usually beats letting the merchant do the conversion for you
+        (a practice called dynamic currency conversion), which typically applies a worse rate. If you cross
+        the border regularly, a card with no foreign transaction fees will save more over time than chasing
+        small day-to-day rate movements.
+      </p>
+
+      <h2>How trade policy shapes this relationship</h2>
+      <p>
+        The US and Canada have operated under successive free trade agreements for decades — the original
+        Canada-US Free Trade Agreement, followed by NAFTA in 1994, and its successor USMCA since 2020 — which
+        have progressively reduced trade barriers between the two countries. These agreements don't directly
+        set the exchange rate, but the sheer volume of trade they enable means that shifts in trade policy,
+        tariff disputes, or renegotiation talks can create real currency volatility as markets try to price in
+        the potential impact on cross-border commerce. Automotive manufacturing in particular has deeply
+        integrated supply chains that cross the border multiple times, making this one of the more trade-sensitive
+        major currency pairs.
+      </p>
+
+      <h2>Common mistakes with this pair</h2>
+      <p>
+        Because the US and Canadian dollars share the same currency symbol ($), a common and costly mistake is
+        forgetting to check whether a price quoted online is in USD or CAD before completing a purchase from a
+        Canadian retailer — the two aren't interchangeable despite looking identical on the page. Another
+        frequent error is assuming the two currencies move in lockstep because the economies are so closely
+        linked; in practice, the loonie's added sensitivity to oil prices means it can diverge from what
+        interest-rate differentials alone would suggest, especially during energy market swings.
+      </p>
+
+      <h2>Provincial and seasonal patterns worth knowing</h2>
+      <p>
+        Beyond the national-level drivers, it's worth knowing that Canada's economy isn't uniform across
+        provinces — oil-producing regions like Alberta are far more exposed to energy price swings than
+        service-heavy economies like Ontario or British Columbia, which can create internal debate about
+        monetary policy that doesn't apply the same way in more commodity-driven economies. There's also a
+        loose seasonal pattern some market watchers point to around "snowbird season," when large numbers of
+        Canadians heading to the US for winter months convert currency for extended stays, though this effect
+        is modest compared to the interest rate and commodity drivers that dominate most of the time. Treat
+        seasonal patterns as background context rather than a reliable trading signal, since they're easily
+        overwhelmed by a single unexpected interest rate decision or a sharp move in oil prices on any given
+        week.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-cad-faq"
+    eyebrow="USD/CAD FAQ"
+    heading="Common USD to CAD questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to AUD', href: '/usd-to-aud' },
+      { label: 'USD to EUR', href: '/usd-to-eur' },
+      { label: 'USD to GBP', href: '/usd-to-gbp' },
+      { label: 'GBP to USD', href: '/gbp-to-usd' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

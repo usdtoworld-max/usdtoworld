@@ -1,4 +1,7 @@
 function initThemeToggle() {
+  if (initThemeToggle._done) return;
+  initThemeToggle._done = true;
+
   const toggles = document.querySelectorAll('[data-theme-toggle]');
   if (!toggles.length) return;
 

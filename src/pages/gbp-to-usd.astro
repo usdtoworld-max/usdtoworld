@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'Is the pound always worth more than the dollar?',
+    a: "Historically the pound has traded above the dollar for most of the modern era, often somewhere between $1.20 and $1.40 per pound, though it moved close to parity during the market stress of late 2022. There's no fixed relationship guaranteeing this continues — check the live rate above for today's actual figure.",
+  },
+  {
+    q: 'Why is this pair still called "cable" from the British side too?',
+    a: "The nickname applies to GBP/USD regardless of which currency you list first — it refers to the pair as a whole, named after the transatlantic telegraph cable once used to transmit exchange rate information between London and New York in the 1800s. UK traders and US traders both use the term interchangeably.",
+  },
+  {
+    q: 'How does UK inflation data affect this rate?',
+    a: "UK inflation figures heavily influence what the Bank of England is expected to do with interest rates, and interest rate expectations are one of the biggest short-term drivers of any currency pair. Higher-than-expected UK inflation often leads markets to price in higher Bank of England rates, which can support the pound against the dollar — though the actual reaction also depends on what the Federal Reserve is simultaneously expected to do.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'GBP to USD', item: new URL('/gbp-to-usd', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="GBP to USD Converter — Live Pound to Dollar Rate | UsdtoWorld"
+  description="Convert British Pounds to US Dollars with a live exchange rate. Get 1 GBP to USD, 100 GBP to USD, and 1000 GBP to USD instantly, on 'cable' from the pound side."
+  path="/gbp-to-usd"
+  schema={[breadcrumbSchema, faqSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'GBP to USD', href: '/gbp-to-usd' }]} />
+  </div>
+
+  <ConverterHero
+    title="GBP to USD Converter (Live Exchange Rate)"
+    subtitle="Convert British Pounds to US Dollars instantly with a live market rate — for UK travelers heading to the US, businesses invoicing in dollars, and anyone tracking 'cable' from the pound side."
+    defaultFrom="GBP"
+    defaultTo="USD"
+  />
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <h2>Starting from pounds instead of dollars</h2>
+      <p>
+        The dollar-pound relationship works exactly the same whichever direction you start from — this page
+        exists for people thinking in pounds first: UK residents planning a US trip, businesses converting
+        pound revenue to pay dollar-denominated costs, or anyone checking what their pound savings are worth
+        in dollar terms before an international purchase or investment.
+      </p>
+
+      <h2>What tends to move the pound against the dollar</h2>
+      <p>
+        Bank of England interest rate decisions, relative to what the Federal Reserve is doing, remain the
+        core driver — the same dynamic as on the USD/GBP page, just viewed from the pound's perspective. UK
+        inflation and growth data shape expectations for future Bank of England moves, and those expectations
+        often move the rate before any actual policy change happens. London's position as one of the world's
+        largest financial centers also means the pound can be sensitive to shifts in global risk appetite and
+        capital flows in and out of UK financial markets, sometimes more so than a country of the UK's economic
+        size alone would suggest.
+      </p>
+
+      <h2>If you're heading to the US from the UK</h2>
+      <p>
+        US card acceptance is close to universal in cities and most towns, so carrying large amounts of cash
+        isn't usually necessary — a no-foreign-transaction-fee card will typically get you closer to the
+        mid-market rate than airport currency exchange counters, which tend to carry some of the widest
+        spreads of any exchange option. If you do want some dollars on arrival, a UK bank or the exchange
+        counter at your departure airport is generally cheaper than exchanging on the US side after you land.
+      </p>
+
+      <h2>Why London still matters so much to this rate</h2>
+      <p>
+        Despite the UK's economy being considerably smaller than the US economy, London's role as one of the
+        world's largest foreign exchange trading centers gives the pound outsized influence in currency
+        markets relative to the UK's overall economic size. A significant share of all global FX trading
+        volume passes through London trading desks, even for pairs that don't involve the pound at all, which
+        keeps London-based liquidity and sentiment closely tied to how GBP/USD behaves during the London
+        trading session specifically. This is part of why the pound can show distinct patterns of volatility
+        around London market hours compared to when Asian or purely US markets are dominant.
+      </p>
+
+      <h2>Common mistakes for UK travelers and businesses</h2>
+      <p>
+        A frequent mistake among UK travelers is pre-loading a prepaid travel card with dollars weeks before a
+        trip at a locked rate, then missing out if the pound strengthens before departure — for short-notice
+        trips, converting closer to travel dates often works out better unless you have a specific reason to
+        lock in a rate early. UK businesses invoicing US clients sometimes make the opposite mistake: failing
+        to lock in any rate at all on larger contracts, leaving the eventual GBP value of a dollar payment
+        entirely to chance over a payment term that might stretch weeks or months.
+      </p>
+
+      <h2>What to watch beyond the headline rate decisions</h2>
+      <p>
+        Alongside Bank of England and Federal Reserve meetings, it's worth keeping an eye on UK gilt yields
+        (the interest rate the UK government pays to borrow), since sharp moves there can independently affect
+        confidence in the pound, as seen dramatically during the market reaction to the UK's September 2022
+        mini-budget. US Treasury yields play a similar role on the dollar side. When gilt or Treasury yields
+        move sharply and unexpectedly, GBP/USD often reacts within minutes, sometimes more than it does to
+        scheduled economic data — a reminder that bond markets and currency markets are closely linked, even
+        though most casual currency converter users never look at bond yields directly.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="gbp-usd-faq"
+    eyebrow="GBP/USD FAQ"
+    heading="Common GBP to USD questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to GBP', href: '/usd-to-gbp' },
+      { label: 'EUR to USD', href: '/eur-to-usd' },
+      { label: 'USD to EUR', href: '/usd-to-eur' },
+      { label: 'USD to CAD', href: '/usd-to-cad' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

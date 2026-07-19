@@ -21,6 +21,9 @@ function applyLocale(locale) {
 }
 
 function initI18n() {
+  if (initI18n._done) return;
+  initI18n._done = true;
+
   const saved = localStorage.getItem('locale') || 'en';
   applyLocale(saved);
 

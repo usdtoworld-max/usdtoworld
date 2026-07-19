@@ -1,0 +1,8 @@
+# Cloudflare Pages redirects file
+# https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Explicitly force any unmatched route to serve the custom 404 page with a
+# real 404 status. Cloudflare Pages normally auto-detects a top-level
+# 404.html, but this rule guarantees it regardless of project/runtime
+# configuration (classic Pages vs. the newer Workers static-assets model).
+/*   /404.html   404

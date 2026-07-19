@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url><loc>https://www.usdtoworld.com/</loc></url>
+  <url><loc>https://www.usdtoworld.com/about/</loc></url>
+  <url><loc>https://www.usdtoworld.com/contact/</loc></url>
+  <url><loc>https://www.usdtoworld.com/disclaimer/</loc></url>
+  <url><loc>https://www.usdtoworld.com/privacy-policy/</loc></url>
+  <url><loc>https://www.usdtoworld.com/terms/</loc></url>
+  <url><loc>https://www.usdtoworld.com/faq/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-inr/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-eur/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-gbp/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-jpy/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-pkr/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-cad/</loc></url>
+  <url><loc>https://www.usdtoworld.com/usd-to-aud/</loc></url>
+  <url><loc>https://www.usdtoworld.com/inr-to-usd/</loc></url>
+  <url><loc>https://www.usdtoworld.com/eur-to-usd/</loc></url>
+  <url><loc>https://www.usdtoworld.com/gbp-to-usd/</loc></url>
+</urlset>

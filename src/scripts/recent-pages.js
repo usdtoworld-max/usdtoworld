@@ -1,6 +1,9 @@
 const EXCLUDED = ['/404', '/500', '/503', '/offline', '/rate-limit', '/api-error'];
 
 function recordVisit() {
+  if (recordVisit._done) return;
+  recordVisit._done = true;
+
   const path = window.location.pathname.replace(/\/$/, '') || '/';
   if (EXCLUDED.some((p) => path === p)) return;
 

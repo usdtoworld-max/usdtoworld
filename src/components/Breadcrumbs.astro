@@ -26,4 +26,13 @@ const { trail } = Astro.props as Props;
   .breadcrumbs a:hover { color: var(--accent); }
   .breadcrumbs .sep { color: var(--border); }
   .breadcrumbs [aria-current='page'] { color: var(--text); font-weight: 500; }
+
+  /* Tablet / iPad range (also covers phones as a base, refined below) */
+  @media (max-width: 1024px) {
+    .breadcrumbs { padding-left: 16px; padding-right: 16px; }
+  }
+  /* Phones: slightly tighter than the tablet value above */
+  @media (max-width: 480px) {
+    .breadcrumbs { padding-left: 10px; padding-right: 10px; }
+  }
 </style>

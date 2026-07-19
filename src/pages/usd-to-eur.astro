@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'Is USD to EUR the most traded currency pair in the world?',
+    a: "Yes — EUR/USD is consistently the single most traded currency pair on the global foreign exchange market, accounting for a large share of all daily FX trading volume. That liquidity generally means tighter spreads and more efficient pricing than you'll find on smaller, less-traded pairs, which is good news if you're converting for travel, business, or investing.",
+  },
+  {
+    q: 'Why do people call it a 1:1 rate sometimes?',
+    a: "The dollar and euro have occasionally traded at or near parity (1 EUR = 1 USD) during periods of significant dollar strength, most notably around 2022. It isn't a fixed or official rate, and the pair has traded well above parity for most of its history since the euro's introduction in 1999. Check the live converter for where things actually stand today rather than assuming parity.",
+  },
+  {
+    q: "What's the difference between the Fed and the ECB on this rate?",
+    a: "The US Federal Reserve sets interest rate policy for the dollar, while the European Central Bank does the same for the euro across the eurozone. When the Fed holds rates meaningfully higher than the ECB, dollar-denominated assets become more attractive to global investors, which tends to strengthen the dollar against the euro — and vice versa when the gap narrows or reverses.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to EUR', item: new URL('/usd-to-eur', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to EUR Converter — Live Dollar to Euro Rate | UsdtoWorld"
+  description="Convert US Dollars to Euros with a live exchange rate. Get 1 USD to EUR, 100 USD to EUR, and 1000 USD to EUR instantly, plus what drives the world's most-traded pair."
+  path="/usd-to-eur"
+  schema={[breadcrumbSchema, faqSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to EUR', href: '/usd-to-eur' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to EUR Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Euros instantly with a live market rate — the world's most heavily traded currency pair, used for travel, trade, and investing across the eurozone."
+    defaultFrom="USD"
+    defaultTo="EUR"
+  />
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <h2>Why this pair carries so much weight</h2>
+      <p>
+        EUR/USD isn't just popular with travelers — it's the backbone of the global foreign exchange market.
+        The eurozone and the United States together represent an enormous share of world trade and financial
+        activity, so this pair acts as a kind of barometer for the broader relationship between the US and
+        European economies. Because it's so heavily traded, the spread between buying and selling prices tends
+        to be tighter than on less common pairs, which generally works in your favor whether you're converting
+        a small travel budget or a large business payment.
+      </p>
+
+      <h2>What drives the dollar-euro relationship</h2>
+      <p>
+        Interest rate policy is the biggest lever: when the Federal Reserve holds US rates above what the
+        European Central Bank offers, global capital tends to flow toward dollar assets, strengthening the
+        dollar. Economic growth differentials matter too — stronger US data relative to eurozone data tends to
+        support the dollar, and vice versa. The eurozone's own internal dynamics add complexity that a single
+        national currency doesn't have to deal with: growth and inflation can vary significantly between member
+        countries like Germany, France, and Italy, and the ECB has to set one policy for all of them, which can
+        create periods of uncertainty that show up in the exchange rate.
+      </p>
+
+      <h2>Practical notes for travelers and shoppers</h2>
+      <p>
+        If you're heading to the eurozone, card payments in euros at the point of sale generally get you closer
+        to the mid-market rate than exchanging cash at an airport kiosk, which typically carries a wide spread.
+        For online purchases from European retailers, check whether your card charges a foreign transaction
+        fee on top of the conversion — that fee is separate from, and in addition to, any spread on the
+        exchange rate itself, so a "no foreign transaction fee" card is worth having if you shop across this
+        pair regularly.
+      </p>
+
+      <h2>How the euro replaced Europe's national currencies</h2>
+      <p>
+        The euro launched as an accounting currency in 1999 and entered physical circulation as banknotes and
+        coins in 2002, replacing currencies like the German mark, French franc, and Italian lira across
+        participating countries. The idea was to remove currency conversion friction within the eurozone and
+        create a monetary bloc large enough to rival the dollar's global weight. In practice, the euro has
+        become the second most-held reserve currency in the world, though still well behind the dollar. Not
+        every EU member uses the euro — a handful, including Denmark and several newer EU members, have
+        retained their own national currencies, which is a common source of confusion for travelers assuming
+        "the EU" and "the eurozone" are the same thing.
+      </p>
+
+      <h2>Reducing your exposure if you convert regularly</h2>
+      <p>
+        If you or your business converts between dollars and euros on a recurring basis — freelance income,
+        supplier payments, or a second home abroad — the biggest practical risk usually isn't a single bad
+        rate on one occasion, but unpredictable cash flow from rate swings over months or years. Some people
+        address this with a multi-currency account that lets them hold both currencies and convert
+        opportunistically rather than being forced to convert immediately on receipt. Others simply convert on
+        a fixed schedule (say, monthly) to average out rate fluctuations over time rather than trying to time
+        the market, which tends to be more reliable for non-professional currency users than guessing short-term
+        direction.
+      </p>
+
+      <h2>Reading short-term moves versus long-term trend</h2>
+      <p>
+        It's worth distinguishing between what moves EUR/USD minute-to-minute and what shapes it over months.
+        Day-to-day swings are usually driven by scheduled economic releases (US jobs data, eurozone inflation
+        figures) and central bank commentary, which can move the rate noticeably within minutes of release but
+        often mean relatively little for where the pair sits a few months later. Longer-term direction tends
+        to follow the broader interest rate cycle and relative economic health between the two economies. If
+        you're converting for a near-term need, the short-term noise matters more; if you're thinking about a
+        conversion planned months out, it's the broader trend that's worth paying closer attention to.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-eur-faq"
+    eyebrow="USD/EUR FAQ"
+    heading="Common USD to EUR questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'EUR to USD', href: '/eur-to-usd' },
+      { label: 'USD to GBP', href: '/usd-to-gbp' },
+      { label: 'USD to CAD', href: '/usd-to-cad' },
+      { label: 'GBP to USD', href: '/gbp-to-usd' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+
+const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'How many rupees make one dollar?',
+    a: "This is simply the inverse of the USD/INR rate, and it moves throughout the day along with it. Over recent years the rupee has generally required somewhere around 83 to 86 units to equal one dollar, but check the live converter above for the precise figure right now rather than relying on a remembered number.",
+  },
+  {
+    q: 'Why convert INR to USD instead of just using USD/INR?',
+    a: "Both directions use the exact same underlying exchange rate — INR to USD just flips which currency you're starting from. It's most useful if you're an Indian resident or NRI figuring out what your rupee savings, salary, or property sale proceeds are worth in dollars, for example before a US education expense, investment, or relocation.",
+  },
+  {
+    q: "Can I hold US dollars if I'm an Indian resident?",
+    a: "Indian residents can generally acquire and hold foreign currency within limits set under India's Liberalised Remittance Scheme (LRS), which governs how much can be sent or converted abroad each financial year for purposes like education, travel, or investment. Rules and limits can change, so check current RBI guidance or with your bank before making a large conversion or transfer, rather than relying on older information."
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'INR to USD', item: new URL('/inr-to-usd', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="INR to USD Converter — Live Rupee to Dollar Rate | UsdtoWorld"
+  description="Convert Indian Rupees to US Dollars with a live exchange rate. Get 1 INR to USD, 1,00,000 INR to USD, and more instantly, for NRIs, students, and investors."
+  path="/inr-to-usd"
+  schema={[breadcrumbSchema, faqSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'INR to USD', href: '/inr-to-usd' }]} />
+  </div>
+
+  <ConverterHero
+    title="INR to USD Converter (Live Exchange Rate)"
+    subtitle="Convert Indian Rupees to US Dollars instantly with a live market rate — built for NRIs, students planning US education costs, and anyone moving money the other direction."
+    defaultFrom="INR"
+    defaultTo="USD"
+  />
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <h2>Who actually needs this direction</h2>
+      <p>
+        Most currency traffic between India and the US flows as dollars converting into rupees — remittances,
+        family support, business payments. But a real and growing group needs the rate the other way around:
+        Indian residents and NRIs figuring out what their rupees are worth in dollars before a US university
+        tuition payment, an investment in US markets, buying property abroad, or simply understanding the
+        dollar value of rupee-denominated savings or a salary.
+      </p>
+
+      <h2>The same forces, viewed from the other side</h2>
+      <p>
+        Because INR/USD and USD/INR are mathematically just inverses of each other, everything that weakens the
+        rupee against the dollar simultaneously means fewer dollars for a given amount of rupees. India's trade
+        deficit, foreign investment flows, Reserve Bank of India policy, and Federal Reserve interest rate
+        decisions all matter here exactly as they do on the USD/INR page — the difference is just which side
+        of the calculation you're solving for. If you're planning a future expense in dollars (like tuition
+        due next year), it's worth knowing that a weakening rupee trend means the same rupee amount buys fewer
+        dollars over time, all else equal.
+      </p>
+
+      <h2>Practical notes for students and NRIs</h2>
+      <p>
+        If you're sending rupees abroad for education costs, comparing specialized education-payment services
+        against your bank's standard forex conversion is worth the extra few minutes — education-focused
+        remittance platforms often negotiate better rates for this specific use case than a generic bank
+        transfer. For NRIs managing recurring transfers (like retirement income or investment proceeds), a
+        service with a locked-in rate option can help with budgeting even if it isn't always the single best
+        rate on a given day, by removing exchange rate uncertainty from your planning.
+      </p>
+
+      <h2>How the Liberalised Remittance Scheme works in practice</h2>
+      <p>
+        India's Liberalised Remittance Scheme sets an annual limit on how much an individual resident can send
+        abroad for permitted purposes such as education, medical treatment, travel, investment, or gifting —
+        the exact limit and the list of permitted purposes have been adjusted over time by the RBI, so it's
+        worth confirming the current figures with your bank rather than relying on a number you saw a few
+        years ago. Banks generally require documentation supporting the purpose of a large transfer under this
+        scheme, and different purposes can carry slightly different reporting or tax requirements. For NRIs (as
+        opposed to resident Indians), different rules and account types — like NRE and NRO accounts — govern
+        how funds move, so the specific process depends heavily on your residency status rather than being a
+        single uniform procedure.
+      </p>
+
+      <h2>Common mistakes people make going this direction</h2>
+      <p>
+        A frequent error is waiting until a payment deadline is imminent to convert a large rupee amount,
+        leaving no room to absorb a bad short-term rate move — spreading a large planned conversion over a few
+        transactions ahead of a known deadline can reduce this risk somewhat, though it won't eliminate it
+        entirely. Another common mistake is not accounting for the bank's own conversion margin when
+        estimating how many dollars a given rupee amount will actually produce, leading to under-budgeting for
+        a fixed dollar expense like tuition. Finally, some people forget that certain transfer purposes require
+        specific paperwork (like Form 15CA/15CB for larger remittances) that can add processing time if not
+        prepared in advance.
+      </p>
+
+      <h2>Planning around a known future expense</h2>
+      <p>
+        If you know you'll need dollars for a specific future date — a tuition installment, a security deposit
+        on US housing, an investment contribution — it's worth thinking about the conversion timeline
+        separately from the payment deadline itself. Converting rupees to dollars well ahead of when the funds
+        are actually needed and holding the dollar balance in an appropriate account can remove last-minute
+        rate risk, though it also means giving up any chance of a more favorable rate closer to the deadline.
+        There's no universally correct answer here — it depends on your own tolerance for rate uncertainty
+        versus the cost of committing funds early — but making the decision deliberately, rather than by
+        default because a deadline arrived, tends to produce better outcomes over time.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="inr-usd-faq"
+    eyebrow="INR/USD FAQ"
+    heading="Common INR to USD questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to INR', href: '/usd-to-inr' },
+      { label: 'USD to PKR', href: '/usd-to-pkr' },
+      { label: 'EUR to USD', href: '/eur-to-usd' },
+      { label: 'GBP to USD', href: '/gbp-to-usd' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

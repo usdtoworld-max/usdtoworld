@@ -1,17 +1,36 @@
 ---
-import { faqs } from '../data/faq.js';
+import { faqs as defaultFaqs } from '../data/faq.js';
+
+export interface FaqItem { q: string; a: string; }
+export interface Props {
+  faqs?: FaqItem[];
+  id?: string;
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  showViewAllLink?: boolean;
+}
+
+const {
+  faqs = defaultFaqs,
+  id = 'faq',
+  eyebrow = 'FAQ',
+  heading = 'Common questions about USD, RMB, and currency conversion',
+  description = 'Straight answers to the questions people ask most before converting or transferring money.',
+  showViewAllLink = false,
+} = Astro.props;
 ---
-<section class="section faq-section" id="faq" aria-labelledby="faq-heading">
+<section class="section faq-section" id={id} aria-labelledby={`${id}-heading`}>
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">FAQ</span>
-      <h2 id="faq-heading">Common questions about USD, RMB, and currency conversion</h2>
-      <p>Straight answers to the questions people ask most before converting or transferring money.</p>
+      <span class="section-eyebrow">{eyebrow}</span>
+      <h2 id={`${id}-heading`}>{heading}</h2>
+      <p>{description}</p>
     </div>
 
     <div class="faq-list">
-      {faqs.map((item, i) => (
-        <details class="faq-item" name="faq-group">
+      {faqs.map((item) => (
+        <details class="faq-item" name={`faq-group-${id}`}>
           <summary>
             <span>{item.q}</span>
             <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -20,6 +39,10 @@ import { faqs } from '../data/faq.js';
         </details>
       ))}
     </div>
+
+    {showViewAllLink && (
+      <a href="/faq" class="faq-view-all">See all FAQs →</a>
+    )}
   </div>
 </section>
 
@@ -27,7 +50,10 @@ import { faqs } from '../data/faq.js';
   .faq-list { max-width: 820px; display: flex; flex-direction: column; gap: 10px; }
   .faq-item {
     border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 4px 20px; background: var(--surface-solid);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 54px;
   }
+  .faq-item[open] { content-visibility: visible; }
   .faq-item summary {
     padding: 16px 0; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center;
     gap: 16px; list-style: none;
@@ -36,4 +62,6 @@ import { faqs } from '../data/faq.js';
   .faq-item p { padding-bottom: 16px; margin: -6px 0 0; }
   .faq-chevron { flex-shrink: 0; transition: transform 0.2s ease; color: var(--accent); }
   .faq-item[open] .faq-chevron { transform: rotate(180deg); }
+  .faq-view-all { display: inline-block; margin-top: 18px; font-weight: 600; color: var(--accent); }
+  .faq-view-all:hover { text-decoration: underline; }
 </style>

@@ -1,12 +1,12 @@
 # Cloudflare Pages headers
 # https://developers.cloudflare.com/pages/configuration/headers/
-https://usdtoworld.usdtoworld.workers.dev/
 
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 # Hashed build assets: safe to cache forever
 /_astro/*
