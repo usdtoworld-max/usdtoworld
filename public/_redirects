@@ -1,8 +1,15 @@
-# Cloudflare Pages redirects file
+# Cloudflare Pages / Workers static-assets redirects file
 # https://developers.cloudflare.com/pages/configuration/redirects/
 #
-# Explicitly force any unmatched route to serve the custom 404 page with a
-# real 404 status. Cloudflare Pages normally auto-detects a top-level
-# 404.html, but this rule guarantees it regardless of project/runtime
-# configuration (classic Pages vs. the newer Workers static-assets model).
-/*   /404.html   404
+# NOTE: A rule forcing /404.html with a literal "404" status code used to
+# live here. That syntax is only valid on classic Cloudflare Pages — this
+# project deploys via `wrangler deploy` (the newer Workers static-assets
+# model, confirmed by the deploy logs), whose _redirects parser only
+# accepts 200/301/302/303/307/308 and hard-fails the whole deploy on any
+# other code. 404 handling for that model is instead configured in
+# wrangler.jsonc via `assets.not_found_handling: "404-page"`, which is the
+# correct mechanism here — so no rule is needed in this file for that.
+#
+# Add real redirect rules below if you need them, using only the status
+# codes listed above, e.g.:
+#   /old-page   /new-page   301

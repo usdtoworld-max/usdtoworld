@@ -51,20 +51,35 @@ Cloudflare's edge before a request ever reaches these files.
 
 ## Deploying to Cloudflare Pages — read this first
 
+**Confirmed from actual deploy logs**: this project deploys via
+`npx wrangler deploy`, i.e. the **newer Workers static-assets model**, not
+classic Cloudflare Pages. Wrangler itself warns about this
+("you have run `wrangler deploy` on a Pages project, `wrangler pages
+deploy` should be used instead") — if you didn't choose this deliberately,
+check your Cloudflare Pages project's build settings for a custom deploy
+command and consider switching it to `npx wrangler pages deploy ./dist`
+instead, which is the more standard path for a Pages project. Both
+`wrangler.jsonc` and `public/_redirects` in this repo are written to work
+correctly either way, but the two models have real behavioral differences
+(see below), so it's worth knowing which one you're actually on.
+
 If custom error pages (404, etc.) or client-side features don't work after
 deploying, check these in order:
 
 1. **Build settings**: Build command `npm run build`, Build output directory
    `dist`. A wrong output directory is the single most common cause of
    "works locally, 404s in production" on Cloudflare Pages.
-2. **`public/_redirects`** (copied to `dist/_redirects` at build time) now
-   explicitly forces any unmatched route to serve `/404.html` with a real
-   404 status. This is a defensive rule — Cloudflare Pages normally
-   auto-detects a top-level `404.html`, but some deployment paths
-   (especially the newer Workers-based static-assets model) don't apply
-   that behavior automatically. See `wrangler.jsonc` at the project root
-   for the equivalent explicit config if you deploy via `wrangler deploy`
-   instead of the Pages git-integration dashboard flow.
+2. **`_redirects` status codes**: the Workers static-assets model's
+   `_redirects` parser only accepts status codes `200`, `301`, `302`,
+   `303`, `307`, `308` — anything else (a `404` rule, most notably) makes
+   the *entire deploy fail*, not just that one rule. This bit us once
+   already: an earlier version of `public/_redirects` had
+   `/* /404.html 404` to force custom 404 handling, which is valid on
+   classic Pages but hard-fails on the Workers model. It's been removed;
+   404 handling for this project now comes entirely from `wrangler.jsonc`'s
+   `assets.not_found_handling: "404-page"`, which is the correct mechanism
+   for `wrangler deploy`. If you add your own redirect rules to
+   `public/_redirects` later, stick to the six status codes above.
 3. **Disable Rocket Loader** (Cloudflare dashboard → Speed → Optimization)
    for this project/domain. Rocket Loader rewrites and defers `<script>`
    tags, including ES modules, and can change their execution order or
