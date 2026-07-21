@@ -1,6 +1,6 @@
 # Cloudflare Pages headers
 # https://developers.cloudflare.com/pages/configuration/headers/
-
+https://usdtoworld.usdtoworld.workers.dev/
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff

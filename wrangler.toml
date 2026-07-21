@@ -1,0 +1,14 @@
+name = "usdtoworld"
+compatibility_date = "2026-07-18"
+
+# Classic Cloudflare Pages (git-connected dashboard deploys, via
+# `wrangler pages deploy`) reads this field directly.
+pages_build_output_dir = "./dist"
+
+# If deployed via `wrangler deploy` on the Workers static-assets model
+# instead, this is what makes dist/404.html actually get served for
+# unmatched routes — on that model, 404 handling is NOT automatic.
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"

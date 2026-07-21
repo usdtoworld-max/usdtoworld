@@ -7,7 +7,7 @@
 # model, confirmed by the deploy logs), whose _redirects parser only
 # accepts 200/301/302/303/307/308 and hard-fails the whole deploy on any
 # other code. 404 handling for that model is instead configured in
-# wrangler.jsonc via `assets.not_found_handling: "404-page"`, which is the
+# wrangler.toml via `assets.not_found_handling: "404-page"`, which is the
 # correct mechanism here — so no rule is needed in this file for that.
 #
 # Add real redirect rules below if you need them, using only the status
