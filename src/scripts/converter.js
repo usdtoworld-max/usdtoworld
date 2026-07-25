@@ -17,6 +17,19 @@ async function getRates() {
     return { rates: JSON.parse(cached), time: cachedTime, offline: false };
   }
 
+  // Layout.astro kicks this fetch off from an inline <head> script the
+  // instant the cache looks stale, in parallel with this module loading —
+  // reuse it instead of issuing a second request.
+  if (window.__ratesPromise) {
+    try {
+      return await window.__ratesPromise;
+    } catch (err) {
+      // fall through to a normal fetch below
+    } finally {
+      window.__ratesPromise = null;
+    }
+  }
+
   try {
     const res = await fetch(RATE_API);
     if (!res.ok) throw new Error('bad-response');

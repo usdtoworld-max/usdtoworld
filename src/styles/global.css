@@ -5,12 +5,11 @@
    monospace (IBM Plex Mono) so rates read like real ticker data.
    ========================================================================== */
 
-/* Fonts are loaded via <link rel="preconnect"> + <link rel="stylesheet"> in
-   Layout.astro's <head>, not @import here. @import forces a second
-   sequential round-trip (browser must fetch+parse this stylesheet before it
-   even discovers the font CSS), which measurably delays LCP for any text
-   using these fonts. <link> tags are discovered immediately by the HTML
-   preload scanner while the page is still being parsed. */
+/* Fonts are self-hosted (see fonts.css) and bundled by Vite, so this
+   @import is resolved and inlined at build time — it does NOT cost a
+   runtime network round trip the way @import-ing a remote Google Fonts
+   stylesheet would. See fonts.css for the full rationale. */
+@import './fonts.css';
 
 :root {
   /* Light mode -- white base, soft blue accent (per brief) */
@@ -31,8 +30,8 @@
   --radius-md: 18px;
   --radius-sm: 10px;
 
-  --font-display: 'Fraunces', 'Iowan Old Style', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces Variable', 'Fraunces', 'Iowan Old Style', serif;
+  --font-body: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
 
   color-scheme: light;
