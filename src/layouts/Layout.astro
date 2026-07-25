@@ -3,6 +3,17 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
+// The two font files actually needed to paint above-the-fold text in their
+// final weight: Fraunces 700 (the H1) and Inter 400 (body/hero-sub copy).
+// Imported directly (not just via the CSS @import in global.css) so we can
+// <link rel="preload"> them from the very top of <head> — this starts the
+// download immediately, in parallel with everything else, instead of
+// waiting for the page's CSS to be discovered/parsed first. The browser
+// automatically matches a preloaded font to its @font-face rule once the
+// CSS does load, so there's no duplicate fetch.
+import frauncesBoldUrl from '@fontsource/fraunces/files/fraunces-latin-700-normal.woff2?url';
+import interRegularUrl from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+
 export interface Props {
   title: string;
   description: string;
@@ -73,12 +84,26 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-    <!-- Fonts (Fraunces / Inter / IBM Plex Mono) are self-hosted and pulled
-         in via global.css -> fonts.css (bundled by Vite, served from this
-         origin, cached immutably under /_astro/*). That removes the
+    <!-- Preload the exact two font files needed to paint the H1 (Fraunces
+         700) and body copy (Inter 400) in their final weight — deliberately
+         first in <head>, ahead of the JSON-LD/meta block below, so these
+         start downloading before anything else is even parsed. This is
+         what actually fixes LCP; self-hosting alone wasn't enough because
+         the bundled page CSS (which contains the @font-face rules) is
+         injected at the very end of <head> by Astro, so without an
+         explicit preload the browser wouldn't discover these files until
+         everything above them had already been parsed. -->
+    <link rel="preload" as="font" type="font/woff2" href={frauncesBoldUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={interRegularUrl} crossorigin />
+
+    <!-- Fonts (Fraunces / Inter / IBM Plex Mono) are self-hosted, static
+         per-weight, latin/latin-ext-only files pulled in via
+         global.css -> fonts.css (bundled by Vite, served from this origin,
+         cached immutably under /_astro/*). That removes the
          fonts.googleapis.com/fonts.gstatic.com round trips entirely instead
-         of just trying to warm them up — no external font request is
-         render-blocking anymore. See src/styles/fonts.css for details. -->
+         of just trying to warm them up. See src/styles/fonts.css for the
+         full rationale, including why static per-weight files were chosen
+         over a variable font. -->
 
     <!-- Warm the connection to the rates API as early as possible. The
          network dependency tree showed the open.er-api.com fetch only
@@ -171,10 +196,6 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <link rel="manifest" href="/favicon/site.webmanifest" />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
 
-    {allSchema.map((s) => (
-      <script type="application/ld+json" set:html={JSON.stringify(s)} />
-    ))}
-
     <script is:inline>
       // Apply saved theme before paint to avoid flash-of-wrong-theme.
       (function () {
@@ -193,6 +214,16 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
       <slot />
     </main>
     <Footer />
+
+    <!-- Structured data: moved here from <head>. Google explicitly supports
+         JSON-LD anywhere in the document (head or body) — see
+         https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data.
+         The FAQ schema alone is several KB of inline script; keeping it out
+         of <head> means the browser reaches the page's real CSS/font
+         preloads sooner instead of parsing through this first. -->
+    {allSchema.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
 
     <script>
       // Critical for correct visible state / immediate interactivity.

@@ -1,47 +1,59 @@
 /* ==========================================================================
-   Self-hosted fonts (replaces the fonts.googleapis.com / fonts.gstatic.com
-   round trip).
+   Self-hosted fonts — v2, static per-weight, latin/latin-ext only.
 
-   Why: the previous setup used <link rel="preconnect"> + a synchronous
-   <link rel="stylesheet" href="https://fonts.googleapis.com/..."> in
-   Layout.astro. Even with preconnect, that's still a *render-blocking*
-   cross-origin stylesheet: the browser must open a connection to
-   fonts.googleapis.com, download the CSS, parse it, then open a *second*
-   connection to fonts.gstatic.com to fetch each woff2 file before text can
-   paint. Lighthouse flagged this directly ("Render-blocking requests" —
-   usdtoworld.com's own CSS plus the Google Fonts CSS cost ~630-750ms, and
-   the network dependency tree showed the woff2 files finishing 260-440ms
-   into the load).
+   Why not variable fonts (what shipped first): @fontsource-variable/inter
+   and @fontsource-variable/fraunces each bundle ONE file that covers every
+   weight (and, for Fraunces, the opsz axis too). That cut request count,
+   but it made the file needed for the *first paint* bigger than the single
+   weight actually used there:
+     - Fraunces variable (latin, opsz+wght):        67 KB
+       vs. the one weight the H1 actually renders in (700, static):  18 KB
+     - Inter variable (latin, wght):                 48 KB
+       vs. the one weight the body text actually renders in (400, static): 24 KB
+   On a throttled mobile connection those extra kilobytes on the
+   LCP-critical path outweigh the saved requests, which is why LCP got
+   *worse* (3.9s -> 4.2s) after that change. Static per-weight files fix
+   this: the browser only ever downloads the exact weight a given piece of
+   text needs, and each one is 2-4x smaller than the variable file was.
 
-   Self-hosting via @fontsource-variable / @fontsource removes both external
-   origins entirely: these files are bundled by Vite, get a content hash,
-   are served from the same origin (no extra DNS/TLS handshake), and are
-   cached forever via the existing "/_astro/* -> immutable" rule in
-   public/_headers. font-display: swap is baked into every @font-face rule
-   below, so text still paints immediately in a fallback font and swaps in
-   once the real font is ready — it never blocks the first paint.
+   Subsetting: only latin + latin-ext are imported. The rest of
+   @fontsource's subsets (cyrillic, greek, vietnamese, ...) are dropped
+   entirely rather than just left undownloaded — this site's Hindi/Chinese/
+   Japanese UI strings don't use Latin-script glyphs from these fonts
+   anyway (the browser falls back to a system CJK/Devanagari font for
+   those regardless of what's declared here), so those subsets were pure
+   dead weight in the render-blocking stylesheet.
 
-   Each package ships one @font-face per Unicode subset (cyrillic, greek,
-   vietnamese, latin-ext, latin, ...). Only the subset(s) that match
-   characters actually used on the page are downloaded — for this
-   English-language site that's effectively just "latin" (+ "latin-ext" for
-   the odd accented character), not the full multi-language set.
+   Weight audit: only the weights actually referenced in the codebase are
+   imported (checked via grep across every component) —
+     Fraunces: 600, 700   (h1-h4 headings + .brand__name only)
+     Inter:    400, 500, 600, 700   (Inter 800 was in the old Google Fonts
+               URL but nothing in the codebase sets font-weight: 800 — cut)
+     IBM Plex Mono: 400, 500, 600, 700
    ========================================================================== */
 
-/* Inter — UI/body text. Variable weight axis only (400–800 used); no
-   italics, no optical-size axis, since the original Google Fonts request
-   didn't specify a `wght` range and no italic weights. */
-@import '@fontsource-variable/inter/wght.css';
+/* Fraunces — headline serif (h1-h4, brand name) */
+@import '@fontsource/fraunces/latin-600.css';
+@import '@fontsource/fraunces/latin-ext-600.css';
+@import '@fontsource/fraunces/latin-700.css';
+@import '@fontsource/fraunces/latin-ext-700.css';
 
-/* Fraunces — headline serif. Keep the `opsz` (optical size) axis alongside
-   `wght`, matching the original request (opsz,wght@9..144,...): Fraunces is
-   designed to get more detailed/display-like at large sizes, which is what
-   the h1/h2 headings rely on. */
-@import '@fontsource-variable/fraunces/opsz.css';
+/* Inter — UI/body text */
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-ext-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-ext-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-ext-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/inter/latin-ext-700.css';
 
-/* IBM Plex Mono — used for rate/number formatting (.mono, .num) and a few
-   labels. Only the 4 weights actually referenced in global.css. */
-@import '@fontsource/ibm-plex-mono/400.css';
-@import '@fontsource/ibm-plex-mono/500.css';
-@import '@fontsource/ibm-plex-mono/600.css';
-@import '@fontsource/ibm-plex-mono/700.css';
+/* IBM Plex Mono — rate/number formatting (.mono, .num) */
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-ext-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';
+@import '@fontsource/ibm-plex-mono/latin-ext-500.css';
+@import '@fontsource/ibm-plex-mono/latin-600.css';
+@import '@fontsource/ibm-plex-mono/latin-ext-600.css';
+@import '@fontsource/ibm-plex-mono/latin-700.css';
+@import '@fontsource/ibm-plex-mono/latin-ext-700.css';
