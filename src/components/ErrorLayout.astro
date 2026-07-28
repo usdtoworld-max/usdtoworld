@@ -14,7 +14,7 @@ export interface Props {
 
 const { code, title, description, path, pageName, tone = 'error', noindex = true } = Astro.props;
 
-const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const site = Astro.site ?? new URL('https://usdtoworld.com');
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

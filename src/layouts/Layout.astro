@@ -5,14 +5,34 @@ import '../styles/global.css';
 
 // The two font files actually needed to paint above-the-fold text in their
 // final weight: Fraunces 700 (the H1) and Inter 400 (body/hero-sub copy).
-// Imported directly (not just via the CSS @import in global.css) so we can
-// <link rel="preload"> them from the very top of <head> — this starts the
-// download immediately, in parallel with everything else, instead of
-// waiting for the page's CSS to be discovered/parsed first. The browser
-// automatically matches a preloaded font to its @font-face rule once the
-// CSS does load, so there's no duplicate fetch.
+// Preloaded explicitly below, and given font-display: swap in the
+// hand-authored @font-face block further down.
 import frauncesBoldUrl from '@fontsource/fraunces/files/fraunces-latin-700-normal.woff2?url';
 import interRegularUrl from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+
+// Every other weight/subset the site uses, NOT preloaded and given
+// font-display: optional instead of swap (see the rationale comment next to
+// the generated <style> block below — this is what fixed the "Forced
+// reflow" / 2.5s of Style & Layout main-thread time that showed up once the
+// font setup moved from 3 variable files to ~20 static per-weight files).
+import frauncesSemiboldUrl from '@fontsource/fraunces/files/fraunces-latin-600-normal.woff2?url';
+import frauncesSemiboldExtUrl from '@fontsource/fraunces/files/fraunces-latin-ext-600-normal.woff2?url';
+import frauncesBoldExtUrl from '@fontsource/fraunces/files/fraunces-latin-ext-700-normal.woff2?url';
+import interRegularExtUrl from '@fontsource/inter/files/inter-latin-ext-400-normal.woff2?url';
+import interMediumUrl from '@fontsource/inter/files/inter-latin-500-normal.woff2?url';
+import interMediumExtUrl from '@fontsource/inter/files/inter-latin-ext-500-normal.woff2?url';
+import interSemiboldUrl from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
+import interSemiboldExtUrl from '@fontsource/inter/files/inter-latin-ext-600-normal.woff2?url';
+import interBoldUrl from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
+import interBoldExtUrl from '@fontsource/inter/files/inter-latin-ext-700-normal.woff2?url';
+import monoRegularUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url';
+import monoRegularExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-400-normal.woff2?url';
+import monoMediumUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2?url';
+import monoMediumExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-500-normal.woff2?url';
+import monoSemiboldUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2?url';
+import monoSemiboldExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-600-normal.woff2?url';
+import monoBoldUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2?url';
+import monoBoldExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-700-normal.woff2?url';
 
 export interface Props {
   title: string;
@@ -32,9 +52,49 @@ const {
   noindex = false,
 } = Astro.props;
 
-const site = Astro.site ?? new URL('https://www.usdtoworld.com');
+const site = Astro.site ?? new URL('https://usdtoworld.com');
 const canonicalURL = new URL(path, site).toString();
 const ogImageURL = new URL(ogImage, site).toString();
+
+// Unicode-range values match exactly what @fontsource ships for these two
+// subsets — copied from node_modules so the browser's subset-matching
+// behaves identically to the package CSS we're replacing.
+const LATIN = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
+const LATIN_EXT = 'U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF';
+
+/** @type {{family: string, weight: number, url: string, range: string, display: 'swap' | 'optional'}[]} */
+const fontFaces = [
+  // Preloaded + critical to the LCP path -> swap (arrives fast, one cheap swap)
+  { family: 'Fraunces', weight: 700, url: frauncesBoldUrl, range: LATIN, display: 'swap' },
+  { family: 'Inter', weight: 400, url: interRegularUrl, range: LATIN, display: 'swap' },
+  // Everything else -> optional (never causes a late swap/reflow; falls
+  // back for this page view if it doesn't arrive almost immediately)
+  { family: 'Fraunces', weight: 700, url: frauncesBoldExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'Fraunces', weight: 600, url: frauncesSemiboldUrl, range: LATIN, display: 'optional' },
+  { family: 'Fraunces', weight: 600, url: frauncesSemiboldExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'Inter', weight: 400, url: interRegularExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'Inter', weight: 500, url: interMediumUrl, range: LATIN, display: 'optional' },
+  { family: 'Inter', weight: 500, url: interMediumExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'Inter', weight: 600, url: interSemiboldUrl, range: LATIN, display: 'optional' },
+  { family: 'Inter', weight: 600, url: interSemiboldExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'Inter', weight: 700, url: interBoldUrl, range: LATIN, display: 'optional' },
+  { family: 'Inter', weight: 700, url: interBoldExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 400, url: monoRegularUrl, range: LATIN, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 400, url: monoRegularExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 500, url: monoMediumUrl, range: LATIN, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 500, url: monoMediumExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 600, url: monoSemiboldUrl, range: LATIN, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 600, url: monoSemiboldExtUrl, range: LATIN_EXT, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 700, url: monoBoldUrl, range: LATIN, display: 'optional' },
+  { family: 'IBM Plex Mono', weight: 700, url: monoBoldExtUrl, range: LATIN_EXT, display: 'optional' },
+];
+
+const fontFaceCSS = fontFaces
+  .map(
+    (f) =>
+      `@font-face{font-family:'${f.family}';font-style:normal;font-weight:${f.weight};font-display:${f.display};src:url(${f.url}) format('woff2');unicode-range:${f.range};}`
+  )
+  .join('\n');
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -96,6 +156,17 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <link rel="preload" as="font" type="font/woff2" href={frauncesBoldUrl} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={interRegularUrl} crossorigin />
 
+    <!-- Self-hosted @font-face rules for every weight the site uses.
+         font-display is set per-file up in the `fontFaces` array above:
+         swap for the two preloaded critical files (Fraunces 700 / Inter
+         400), optional for everything else, to avoid late font-swap
+         reflows. Injected via set:html (real JS-built CSS string) rather
+         than a normal <style> block, because @font-face descriptors can't
+         resolve CSS custom properties (define:vars doesn't work here —
+         there's no element for @font-face to inherit a var() from). -->
+    <style set:html={fontFaceCSS} />
+
+
     <!-- Fonts (Fraunces / Inter / IBM Plex Mono) are self-hosted, static
          per-weight, latin/latin-ext-only files pulled in via
          global.css -> fonts.css (bundled by Vite, served from this origin,
@@ -145,9 +216,13 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
       })();
     </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DXMLTX9F29"></script>
-    <script is:inline>
+    <!-- Google tag (gtag.js) — type="text/partytown" hands this off to the
+         Partytown web worker (configured in astro.config.mjs) instead of
+         running on the main thread. gtag.js reads window.dataLayer/gtag
+         via proxied calls forwarded from the main thread, so behavior is
+         unchanged — it just stops costing main-thread CPU time. -->
+    <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-DXMLTX9F29"></script>
+    <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());

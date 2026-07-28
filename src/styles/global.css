@@ -5,11 +5,10 @@
    monospace (IBM Plex Mono) so rates read like real ticker data.
    ========================================================================== */
 
-/* Fonts are self-hosted (see fonts.css) and bundled by Vite, so this
-   @import is resolved and inlined at build time — it does NOT cost a
-   runtime network round trip the way @import-ing a remote Google Fonts
-   stylesheet would. See fonts.css for the full rationale. */
-@import './fonts.css';
+/* Font @font-face declarations live in Layout.astro (injected via
+   set:html), not here — see the comment above the `fontFaces` array in
+   that file for why. This file just uses the resulting family names via
+   the --font-* tokens below. */
 
 :root {
   /* Light mode -- white base, soft blue accent (per brief) */
