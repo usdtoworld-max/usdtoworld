@@ -37,7 +37,7 @@ const breadcrumbSchema = {
         </ul>
       </div>
 
-      <form class="card contact-form" data-contact-form onsubmit="event.preventDefault(); this.reset(); this.querySelector('[data-form-msg]').hidden = false;">
+      <form class="card contact-form" data-contact-form>
         <h2 class="visually-hidden">Send us a message</h2>
         <div>
           <label for="c-name">Name</label>
@@ -51,13 +51,59 @@ const breadcrumbSchema = {
           <label for="c-message">Message</label>
           <textarea id="c-message" name="message" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Send message</button>
-        <p data-form-msg hidden class="newsletter-msg">Thanks — we'll reply soon.</p>
+        <!-- Honeypot: hidden from real visitors via CSS below; bots that fill
+             every field trip it, and worker/index.js silently no-ops on it. -->
+        <div class="contact-form__hp" aria-hidden="true">
+          <label for="c-company">Company</label>
+          <input id="c-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <button type="submit" class="btn btn-primary" data-submit-btn>Send message</button>
+        <p data-form-msg hidden class="newsletter-msg"></p>
       </form>
     </div>
   </section>
+
+  <script>
+    const form = document.querySelector('[data-contact-form]');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('[data-submit-btn]');
+      const msgEl = form.querySelector('[data-form-msg]');
+      const payload = Object.fromEntries(new FormData(form).entries());
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      msgEl.hidden = true;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.ok) {
+          form.reset();
+          msgEl.textContent = "Thanks — your message is on its way. We'll reply soon.";
+          msgEl.dataset.tone = 'success';
+        } else {
+          throw new Error(data.error || 'send_failed');
+        }
+      } catch (err) {
+        msgEl.textContent = "Note: Please email us directly at usdtoworld@gmail.com instead.";
+        msgEl.dataset.tone = 'error';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+        msgEl.hidden = false;
+      }
+    });
+  </script>
 </Layout>
 
 <style>
   .contact-meta { list-style: none; padding: 0; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 0.92rem; }
+  .contact-form__hp { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+  .newsletter-msg[data-tone='error'] { color: var(--danger, #d92d20); }
 </style>

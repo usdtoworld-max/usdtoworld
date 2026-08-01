@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert British Pounds to US Dollars with a live exchange rate. Get 1 GBP to USD, 100 GBP to USD, and 1000 GBP to USD instantly, on 'cable' from the pound side."
   path="/gbp-to-usd"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'GBP to USD', href: '/gbp-to-usd' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>Starting from pounds instead of dollars</h2>
       <p>
         The dollar-pound relationship works exactly the same whichever direction you start from — this page
@@ -64,7 +66,7 @@ const faqSchema = {
 
       <h2>What tends to move the pound against the dollar</h2>
       <p>
-        Bank of England interest rate decisions, relative to what the Federal Reserve is doing, remain the
+        <a href="https://www.bankofengland.co.uk" target="_blank" rel="noopener noreferrer">Bank of England</a> interest rate decisions, relative to what the Federal Reserve is doing, remain the
         core driver — the same dynamic as on the USD/GBP page, just viewed from the pound's perspective. UK
         inflation and growth data shape expectations for future Bank of England moves, and those expectations
         often move the rate before any actual policy change happens. London's position as one of the world's

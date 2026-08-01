@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert Indian Rupees to US Dollars with a live exchange rate. Get 1 INR to USD, 1,00,000 INR to USD, and more instantly, for NRIs, students, and investors."
   path="/inr-to-usd"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'INR to USD', href: '/inr-to-usd' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>Who actually needs this direction</h2>
       <p>
         Most currency traffic between India and the US flows as dollars converting into rupees — remittances,
@@ -67,7 +69,7 @@ const faqSchema = {
       <p>
         Because INR/USD and USD/INR are mathematically just inverses of each other, everything that weakens the
         rupee against the dollar simultaneously means fewer dollars for a given amount of rupees. India's trade
-        deficit, foreign investment flows, Reserve Bank of India policy, and Federal Reserve interest rate
+        deficit, foreign investment flows, <a href="https://www.rbi.org.in" target="_blank" rel="noopener noreferrer">Reserve Bank of India</a> policy, and Federal Reserve interest rate
         decisions all matter here exactly as they do on the USD/INR page — the difference is just which side
         of the calculation you're solving for. If you're planning a future expense in dollars (like tuition
         due next year), it's worth knowing that a weakening rupee trend means the same rupee amount buys fewer

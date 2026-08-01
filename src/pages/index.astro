@@ -33,6 +33,7 @@ const breadcrumbSchema = {
   description="Convert USD to RMB instantly with live exchange rates. Check 1 USD to RMB, 1000 USD to RMB, and historical trends with our free converter."
   path="/"
   schema={[faqSchema, breadcrumbSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <ConverterHero useI18n={true} />
   <Features />

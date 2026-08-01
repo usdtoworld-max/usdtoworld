@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert Euros to US Dollars with a live exchange rate. Get 1 EUR to USD, 100 EUR to USD, and 1000 EUR to USD instantly, on the world's most-traded pair."
   path="/eur-to-usd"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'EUR to USD', href: '/eur-to-usd' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>Same pair, other direction</h2>
       <p>
         Everything that makes EUR/USD the world's most actively traded currency pair applies just as much
@@ -66,7 +68,7 @@ const faqSchema = {
 
       <h2>What to watch if you're planning around this rate</h2>
       <p>
-        The European Central Bank's interest rate decisions relative to the Federal Reserve's remain the
+        The <a href="https://www.ecb.europa.eu" target="_blank" rel="noopener noreferrer">European Central Bank</a>'s interest rate decisions relative to the Federal Reserve's remain the
         single biggest driver, exactly as on the USD/EUR page — a narrowing rate gap tends to support the
         euro, a widening one tends to support the dollar. Because the eurozone spans multiple national
         economies with a single shared monetary policy, ECB decisions often reflect a compromise across very

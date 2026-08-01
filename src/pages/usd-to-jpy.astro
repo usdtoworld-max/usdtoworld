@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to Japanese Yen with a live exchange rate. Get 1 USD to JPY, 100 USD to JPY, and 1000 USD to JPY instantly, plus what drives yen swings."
   path="/usd-to-jpy"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to JPY', href: '/usd-to-jpy' }]} />
@@ -54,10 +55,11 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>A pair known for sudden moves</h2>
       <p>
         USD/JPY has a reputation among currency traders for occasionally moving faster and further than other
-        major pairs, particularly around Bank of Japan policy announcements or global risk events. That
+        major pairs, particularly around <a href="https://www.boj.or.jp/en/" target="_blank" rel="noopener noreferrer">Bank of Japan</a> policy announcements or global risk events. That
         volatility stems partly from Japan's very different monetary policy path over the past few decades —
         while other major central banks raised rates aggressively in recent years, the Bank of Japan held rates
         near zero far longer than most, creating an unusually wide interest rate gap with the US that shaped

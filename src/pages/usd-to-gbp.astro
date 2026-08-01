@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to British Pounds with a live exchange rate. Get 1 USD to GBP, 100 USD to GBP, and 1000 USD to GBP instantly, plus what moves 'cable'."
   path="/usd-to-gbp"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to GBP', href: '/usd-to-gbp' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>A pair with real history behind it</h2>
       <p>
         The dollar-pound relationship is one of the oldest continuously quoted exchange rates in the world,
@@ -65,7 +67,7 @@ const faqSchema = {
 
       <h2>What moves the pound against the dollar</h2>
       <p>
-        The Bank of England's interest rate decisions are the most direct lever on the pound's value, working
+        The <a href="https://www.bankofengland.co.uk" target="_blank" rel="noopener noreferrer">Bank of England</a>'s interest rate decisions are the most direct lever on the pound's value, working
         the same way Federal Reserve decisions do for the dollar — higher UK rates relative to the US tend to
         support the pound, and vice versa. UK inflation data, GDP growth figures, and the health of London's
         financial sector all feed into how the Bank of England is expected to act, which markets price in

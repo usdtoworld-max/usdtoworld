@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to Euros with a live exchange rate. Get 1 USD to EUR, 100 USD to EUR, and 1000 USD to EUR instantly, plus what drives the world's most-traded pair."
   path="/usd-to-eur"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to EUR', href: '/usd-to-eur' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>Why this pair carries so much weight</h2>
       <p>
         EUR/USD isn't just popular with travelers — it's the backbone of the global foreign exchange market.
@@ -67,7 +69,7 @@ const faqSchema = {
       <h2>What drives the dollar-euro relationship</h2>
       <p>
         Interest rate policy is the biggest lever: when the Federal Reserve holds US rates above what the
-        European Central Bank offers, global capital tends to flow toward dollar assets, strengthening the
+        <a href="https://www.ecb.europa.eu" target="_blank" rel="noopener noreferrer">European Central Bank</a> offers, global capital tends to flow toward dollar assets, strengthening the
         dollar. Economic growth differentials matter too — stronger US data relative to eurozone data tends to
         support the dollar, and vice versa. The eurozone's own internal dynamics add complexity that a single
         national currency doesn't have to deal with: growth and inflation can vary significantly between member

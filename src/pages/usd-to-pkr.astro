@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to Pakistani Rupees with a live exchange rate. Get 1 USD to PKR, 100 USD to PKR, and 1000 USD to PKR instantly, plus remittance tips."
   path="/usd-to-pkr"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to PKR', href: '/usd-to-pkr' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>A corridor shaped by remittances</h2>
       <p>
         Much like USD/INR and USD/PHP, the USD to PKR rate matters most in practice to people sending money
@@ -66,8 +68,8 @@ const faqSchema = {
       <h2>Why the rupee has moved so much</h2>
       <p>
         The Pakistani rupee has experienced significant depreciation against the dollar over the past several
-        years, shaped by a combination of a wide trade deficit, elevated inflation, external debt obligations,
-        and periods of tight foreign currency reserves. The State Bank of Pakistan manages monetary policy and
+        years, shaped by a combination of a wide <a href="https://www.investopedia.com/terms/t/trade_deficit.asp" target="_blank" rel="noopener noreferrer">trade deficit</a>, elevated inflation, external debt obligations,
+        and periods of tight foreign currency reserves. The <a href="https://www.sbp.org.pk" target="_blank" rel="noopener noreferrer">State Bank of Pakistan</a> manages monetary policy and
         intervenes in the currency market at times, but a country facing reserve pressure has limited room to
         defend a specific exchange rate level indefinitely. International financing arrangements, including
         support from the IMF, have also played a role in stabilizing the rupee during periods of acute

@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to Canadian Dollars with a live exchange rate. Get 1 USD to CAD, 100 USD to CAD, and 1000 USD to CAD instantly, plus why oil prices matter."
   path="/usd-to-cad"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to CAD', href: '/usd-to-cad' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>Two economies that trade constantly</h2>
       <p>
         The US and Canada share the world's longest international border and one of its largest bilateral
@@ -65,7 +67,7 @@ const faqSchema = {
 
       <h2>What makes this pair a little different</h2>
       <p>
-        Beyond the usual interest rate story (the Bank of Canada vs. the Federal Reserve), the Canadian dollar
+        Beyond the usual interest rate story (the <a href="https://www.bankofcanada.ca" target="_blank" rel="noopener noreferrer">Bank of Canada</a> vs. the Federal Reserve), the Canadian dollar
         carries a real commodity link that many major currencies don't have to the same degree — Canada is a
         significant exporter of crude oil, and the loonie has historically tended to move with oil prices to a
         noticeable extent. That means USD/CAD can be influenced by energy market news that has little directly

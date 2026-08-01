@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to Indian Rupees with a live exchange rate. Get 1 USD to INR, 100 USD to INR, and 1000 USD to INR instantly, plus what actually moves the rate."
   path="/usd-to-inr"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to INR', href: '/usd-to-inr' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>The most-transferred corridor on this site</h2>
       <p>
         USD to INR isn't just a number people check out of curiosity — it's one of the busiest remittance
@@ -68,8 +70,8 @@ const faqSchema = {
         The rupee's value against the dollar responds to a mix of domestic and global forces. On the Indian
         side: the size of the trade deficit (India imports far more crude oil than it exports in value terms,
         which creates constant dollar demand), foreign institutional investment flows into and out of Indian
-        stock and bond markets, and the Reserve Bank of India's own currency management, which smooths
-        volatility without trying to fight the underlying trend. On the US side: Federal Reserve interest rate
+        stock and bond markets, and the <a href="https://www.rbi.org.in" target="_blank" rel="noopener noreferrer">Reserve Bank of India</a>'s own currency management, which smooths
+        volatility without trying to fight the underlying trend. On the US side: <a href="https://www.federalreserve.gov" target="_blank" rel="noopener noreferrer">Federal Reserve</a> interest rate
         decisions matter enormously, since higher US rates pull global capital toward dollar assets and away
         from emerging markets like India, pushing the rupee down almost as a side effect.
       </p>

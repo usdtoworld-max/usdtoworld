@@ -41,6 +41,14 @@ export interface Props {
   ogImage?: string;
   schema?: object[];
   noindex?: boolean;
+  /** CSS selectors for the WebPage's speakable specification. Defaults to
+   * just the H1, which every page has. Pages that render <ConverterHero />
+   * (and therefore have a .hero-sub element) should pass
+   * ['h1', '.hero-sub'] explicitly — hardcoding .hero-sub globally broke
+   * structured-data validation on every page that doesn't render it (FAQ,
+   * About, Contact, legal pages, etc.), since Speakable's cssSelector must
+   * match a real element on the page. */
+  speakableSelectors?: string[];
 }
 
 const {
@@ -50,6 +58,7 @@ const {
   ogImage = '/og-image.png',
   schema = [],
   noindex = false,
+  speakableSelectors = ['h1'],
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
@@ -111,7 +120,13 @@ const organizationSchema = {
     postalCode: '10003',
     addressCountry: 'US',
   },
-  sameAs: [],
+  sameAs: [
+    'https://x.com/usdtoworldkoj',
+    'https://youtube.com/@usdtoworld',
+    'https://facebook.com/usdtoworld',
+    'https://instagram.com/usdtoworld',
+    'https://linkedin.com/company/usdtoworld',
+  ],
 };
 
 const websiteSchema = {
@@ -131,7 +146,7 @@ const speakableSchema = {
   '@type': 'WebPage',
   speakable: {
     '@type': 'SpeakableSpecification',
-    cssSelector: ['h1', '.hero-sub'],
+    cssSelector: speakableSelectors,
   },
   url: canonicalURL,
 };
@@ -227,6 +242,50 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-DXMLTX9F29');
+    </script>
+
+    <!-- Partytown (above) creates its own sandbox <iframe> at runtime via
+         document.createElement('iframe') to isolate gtag.js on a worker
+         thread — that iframe ships with no title attribute, which is what
+         an accessibility scan flags as "iframe required attributes
+         missing". Partytown doesn't expose a config option for this, so we
+         patch it as soon as it's inserted: watch for iframe nodes being
+         added anywhere in the document, and if one has no title, mark it
+         as a hidden, non-interactive sandbox rather than leaving it
+         unlabeled for screen readers. Runs an immediate sweep first (in
+         case the iframe already exists by the time this executes), then
+         keeps observing for the rest of the page's life — Partytown loads
+         and initializes its worker/sandbox lazily and asynchronously, and
+         on a throttled connection (which is exactly what Lighthouse/PSI
+         simulate) that can take well past a few seconds, so this
+         deliberately does NOT auto-disconnect on a timer; a MutationObserver
+         costs nothing while idle, so there's no ongoing overhead from
+         leaving it attached. -->
+    <script is:inline>
+      (function () {
+        function labelSandboxIframes(node) {
+          if (!(node instanceof Element)) return;
+          var frames = node.tagName === 'IFRAME' ? [node] : node.querySelectorAll ? node.querySelectorAll('iframe') : [];
+          for (var i = 0; i < frames.length; i++) {
+            var f = frames[i];
+            if (!f.getAttribute('title')) {
+              f.setAttribute('title', 'Third-party script sandbox');
+              f.setAttribute('aria-hidden', 'true');
+              f.setAttribute('tabindex', '-1');
+            }
+          }
+        }
+        try {
+          labelSandboxIframes(document.body || document.documentElement);
+          var observer = new MutationObserver(function (mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+              var added = mutations[i].addedNodes;
+              for (var j = 0; j < added.length; j++) labelSandboxIframes(added[j]);
+            }
+          });
+          observer.observe(document.documentElement, { childList: true, subtree: true });
+        } catch (e) {}
+      })();
     </script>
 
     <!--

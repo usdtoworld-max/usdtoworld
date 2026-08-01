@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { Image } from 'astro:assets';
+import editorialProcessImg from '../assets/editorial-process.svg';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const breadcrumbSchema = {
@@ -53,7 +55,7 @@ const breadcrumbSchema = {
         "from" and "to" currency from more than a dozen supported options — including USD, RMB/CNY, PKR, MXN,
         INR, EUR, GBP, JPY, and more — and the result updates instantly using a live market data feed. We've
         also added one-tap shortcuts for the conversions people ask for most: 1 USD to RMB, 100 USD to RMB,
-        1000 USD to RMB, and quick-access buttons for popular pairs like INR to USD and USD to PKR, so you
+        1000 USD to RMB, and quick-access buttons for popular pairs like <a href="/inr-to-usd">INR to USD</a> and <a href="/usd-to-pkr">USD to PKR</a>, so you
         don't have to re-type an amount every time you want to check a common figure.
       </p>
 
@@ -113,6 +115,36 @@ const breadcrumbSchema = {
         <li>Available in English, Hindi, Chinese, Spanish, and Japanese.</li>
       </ul>
 
+      <h2 id="who-writes-and-reviews-this">Who writes and reviews this</h2>
+      <!-- Original artwork drawn for this page (src/assets/editorial-process.svg) — not
+           sourced from anywhere else, so there's no copyright/licensing concern. Routed
+           through astro:assets' Image component (like the header logo) rather than a
+           raw <img src="/...">, so it gets the same build-time optimization/attribute
+           handling instead of being served as an unoptimized static file. -->
+      <figure class="editorial-figure">
+        <Image
+          src={editorialProcessImg}
+          alt="UsdtoWorld editorial process: source live rates from a market data feed, review by the editorial team, then publish and correct openly"
+          width={480}
+          height={280}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <p>
+        Guides and FAQ answers on UsdtoWorld are written and maintained by the UsdtoWorld editorial team,
+        drawing on publicly available central bank data, trade and balance-of-payments statistics, and the
+        same live market rate feed that powers the converter itself. Every currency-pair guide is checked
+        against current data before publishing and re-checked whenever the underlying rate moves meaningfully,
+        rather than written once and left untouched.
+      </p>
+      <p>
+        We aren't a bank, broker, or registered financial advisor, and nothing on this site is personalized
+        financial advice — see the note below. If you spot something that looks wrong or out of date, tell us
+        via the <a href="/contact">Contact page</a> and we'll correct it; corrections are made directly to the
+        live page rather than silently, so the guide stays accurate over time instead of just at publish date.
+      </p>
+
       <h2>A note on accuracy</h2>
       <p>
         We aim for accuracy, but exchange rates shift constantly and every provider — including banks and card
@@ -127,3 +159,20 @@ const breadcrumbSchema = {
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Centers the editorial-process illustration within the prose column,
+     regardless of the column's own width (max-width text measure vs. the
+     image's fixed 480px intrinsic size). */
+  .editorial-figure {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .editorial-figure :global(img) {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border-radius: 16px;
+  }
+</style>

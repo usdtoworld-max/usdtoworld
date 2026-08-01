@@ -40,6 +40,7 @@ const faqSchema = {
   description="Convert US Dollars to Australian Dollars with a live exchange rate. Get 1 USD to AUD, 100 USD to AUD, and 1000 USD to AUD instantly, plus why commodities matter."
   path="/usd-to-aud"
   schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to AUD', href: '/usd-to-aud' }]} />
@@ -54,6 +55,7 @@ const faqSchema = {
 
   <section class="section editorial">
     <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
       <h2>A currency tied to what Australia digs up and grows</h2>
       <p>
         Unlike currencies backed mostly by services and manufacturing economies, the Australian dollar carries
@@ -69,7 +71,7 @@ const faqSchema = {
         economic data — growth figures, industrial output, construction activity — often moves USD/AUD even
         though China isn't part of the currency pair itself. When Chinese demand for raw materials weakens, it
         typically weighs on the Australian dollar too, and the reverse holds when Chinese demand strengthens.
-        Add in the Reserve Bank of Australia's own interest rate decisions relative to the Federal Reserve's,
+        Add in the <a href="https://www.rba.gov.au" target="_blank" rel="noopener noreferrer">Reserve Bank of Australia</a>'s own interest rate decisions relative to the Federal Reserve's,
         and you have the two biggest forces behind this pair's movements.
       </p>
 
