@@ -49,6 +49,15 @@ export interface Props {
    * About, Contact, legal pages, etc.), since Speakable's cssSelector must
    * match a real element on the page. */
   speakableSelectors?: string[];
+  /** ISO date (YYYY-MM-DD) this page's content was last materially updated.
+   * Surfaced as WebPage.dateModified in structured data — AI answer engines
+   * and Google's AI Overviews weight freshness when deciding what to cite,
+   * so an accurate date here is a real (if modest) GEO/AEO signal. Defaults
+   * to the same date already shown as "Last updated" on the legal pages;
+   * bump this on a per-page basis (pass it explicitly) whenever that page's
+   * actual content changes, rather than leaving every page on one fixed date
+   * forever — a date that never moves is worse than no date at all. */
+  dateModified?: string;
 }
 
 const {
@@ -59,6 +68,7 @@ const {
   schema = [],
   noindex = false,
   speakableSelectors = ['h1'],
+  dateModified = '2026-07-17',
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
@@ -132,11 +142,11 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: 'UsdtoWorld — USD to RMB Converter',
   url: site.toString(),
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${site.toString()}search?q={search_term_string}`,
-    'query-input': 'required name=search_term_string',
-  },
+  // No potentialAction/SearchAction here: the site search (SiteSearch.astro)
+  // is a client-side, in-page filter with no /search?q= results route
+  // behind it, so declaring a SearchAction target would assert a URL that
+  // 404s — same problem as the fabricated sameAs links from before, just in
+  // a different schema field.
 };
 
 const speakableSchema = {
@@ -147,6 +157,7 @@ const speakableSchema = {
     cssSelector: speakableSelectors,
   },
   url: canonicalURL,
+  dateModified,
 };
 
 const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema];

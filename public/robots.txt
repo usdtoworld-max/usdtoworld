@@ -1,25 +1,20 @@
 User-agent: *
 Allow: /
 
-# Additional AI-crawler blocks not already covered by Cloudflare's Managed
-# robots.txt / AI Crawl Control feature (Security > AI Crawl Control in the
-# Cloudflare dashboard). If that feature is enabled for this zone, Cloudflare
-# prepends its own block ABOVE this file's content at the edge — it already
-# includes User-agent: * / Content-Signal, plus Disallow rules for GPTBot,
-# Google-Extended, CCBot, ClaudeBot, Bytespider, Amazonbot,
-# Applebot-Extended, and meta-externalagent. This file intentionally does
-# NOT repeat those, since restating them just produces duplicate
-# User-agent/Disallow groups in the final served robots.txt (which is what
-# was getting flagged) without changing the actual policy — Cloudflare's
-# injected rules apply either way. Only bots Cloudflare's managed block
-# doesn't cover are listed here.
-User-agent: ChatGPT-User
-Disallow: /
-
-User-agent: Claude-Web
-Disallow: /
-
-User-agent: PerplexityBot
-Disallow: /
-
+# A note on the two different kinds of "AI bot":
+# - Training crawlers (GPTBot, CCBot, Bytespider, Google-Extended, and
+#   others) bulk-scrape content to train models. Blocking these doesn't cost
+#   this site any visibility in AI answer engines — it just opts out of
+#   being training data. These are blocked via Cloudflare's Managed
+#   robots.txt / AI Crawl Control (Security > AI Crawl Control in the
+#   dashboard), which prepends its own Disallow rules for these at the edge,
+#   so they're intentionally not repeated here (see the earlier note in this
+#   file's git history — restating them just produced duplicate directives).
+# - Answer/citation crawlers (ChatGPT-User, Claude-Web, PerplexityBot,
+#   OAI-SearchBot) are different: they fetch a page in real time specifically
+#   to answer a user's live query and cite this site as the source. Blocking
+#   these doesn't protect against training — it just removes this site from
+#   ever being cited by ChatGPT, Claude, or Perplexity, which is the opposite
+#   of what GEO/AEO wants. They were blocked here previously; unblocked now
+#   for exactly that reason.
 Sitemap: https://usdtoworld.com/sitemap-index.xml
