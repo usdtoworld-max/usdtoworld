@@ -1,29 +1,22 @@
 User-agent: *
 Allow: /
 
-# Block known AI-training crawlers. This is a content-access-layer control
-# and works alongside (not instead of) Cloudflare's AI Labyrinth bot-trap
-# feature, which is enabled separately in the Cloudflare dashboard under
-# Security > Bots.
-User-agent: GPTBot
-Disallow: /
-
+# Additional AI-crawler blocks not already covered by Cloudflare's Managed
+# robots.txt / AI Crawl Control feature (Security > AI Crawl Control in the
+# Cloudflare dashboard). If that feature is enabled for this zone, Cloudflare
+# prepends its own block ABOVE this file's content at the edge — it already
+# includes User-agent: * / Content-Signal, plus Disallow rules for GPTBot,
+# Google-Extended, CCBot, ClaudeBot, Bytespider, Amazonbot,
+# Applebot-Extended, and meta-externalagent. This file intentionally does
+# NOT repeat those, since restating them just produces duplicate
+# User-agent/Disallow groups in the final served robots.txt (which is what
+# was getting flagged) without changing the actual policy — Cloudflare's
+# injected rules apply either way. Only bots Cloudflare's managed block
+# doesn't cover are listed here.
 User-agent: ChatGPT-User
 Disallow: /
 
-User-agent: CCBot
-Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
 User-agent: Claude-Web
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-User-agent: Bytespider
 Disallow: /
 
 User-agent: PerplexityBot

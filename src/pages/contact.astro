@@ -61,6 +61,28 @@ const breadcrumbSchema = {
         <p data-form-msg hidden class="newsletter-msg"></p>
       </form>
     </div>
+
+    <div class="container contact-more prose">
+      <h2>What to include in your message</h2>
+      <p>
+        A few details help us reply faster and get to the right fix sooner:
+      </p>
+      <ul>
+        <li><strong>Reporting a wrong rate?</strong> Tell us the currency pair, the rate you saw, and roughly when you saw it.</li>
+        <li><strong>Requesting a new currency pair?</strong> Name the pair (for example, USD to MXN) and, if it's helpful, why you need it — travel, remittances, business invoicing, and so on.</li>
+        <li><strong>Found something wrong on a guide page?</strong> Link the page and quote the sentence that looks off. We check every report before changing anything, and corrections go straight onto the live page rather than sitting in a queue.</li>
+        <li><strong>General feedback or a bug report?</strong> Screenshots and the browser or device you were using make it much faster for us to reproduce and fix.</li>
+      </ul>
+
+      <h2>What we can't help with</h2>
+      <p>
+        UsdtoWorld is a converter and information site, not a bank, broker, or money transfer service — see
+        our <a href="/disclaimer">disclaimer</a> for the full picture. We can't move money on your behalf,
+        access your bank or transfer accounts, or give personalized financial or tax advice. For an actual
+        transfer or account issue, you'll need to contact your bank or transfer provider directly; we're
+        happy to help with anything about the rates or content on this site itself.
+      </p>
+    </div>
   </section>
 
   <script>
@@ -104,6 +126,7 @@ const breadcrumbSchema = {
 
 <style>
   .contact-meta { list-style: none; padding: 0; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 0.92rem; }
+  .contact-more { margin-top: 56px; }
   .contact-form__hp { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
   .newsletter-msg[data-tone='error'] { color: var(--danger, #d92d20); }
 </style>

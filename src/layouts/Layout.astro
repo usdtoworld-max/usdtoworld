@@ -310,12 +310,25 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Hreflang (site is served in English with client-side UI translation) -->
+    <!-- Hreflang: this site has exactly one URL per page — there are no
+         separate /hi/, /zh/, /es/, /ja/ routes. The language switcher in
+         Header.astro only re-translates strings client-side via JS
+         (src/scripts/i18n.js) after the page has already loaded; the
+         server-rendered HTML a crawler actually fetches is English every
+         time, regardless of hreflang code. Previously this declared
+         hreflang="hi"/"zh"/"es"/"ja" all pointing at this same English URL,
+         which asserts to search engines that Hindi/Chinese/Spanish/Japanese
+         content exists at that URL — it doesn't, which is exactly what a
+         "hreflang language mismatch" check is designed to catch. Per
+         Google's hreflang guidelines, each alternate must point to a URL
+         that actually serves that language; since there's only one URL
+         total, the only valid entries are a self-referencing "en" (the
+         language actually served) and "x-default" (the fallback for
+         unmatched languages/locales) — both pointing at this same URL,
+         which is a normal, valid pattern for a single-URL site. If/when
+         this site gets real per-language routes, add a genuine alternate
+         <link> per route here instead. -->
     <link rel="alternate" hreflang="en" href={canonicalURL} />
-    <link rel="alternate" hreflang="hi" href={canonicalURL} />
-    <link rel="alternate" hreflang="zh" href={canonicalURL} />
-    <link rel="alternate" hreflang="es" href={canonicalURL} />
-    <link rel="alternate" hreflang="ja" href={canonicalURL} />
     <link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
     <meta name="theme-color" content="#3167e8" media="(prefers-color-scheme: light)" />

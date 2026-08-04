@@ -227,6 +227,7 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 .updated-note { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); }
 .editorial-byline { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px; }
 .editorial-byline a { color: var(--text-muted); text-decoration: underline; }
+.plain-summary { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 18px 0 28px; font-size: 0.95rem; }
 
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
 .contact-form { display: flex; flex-direction: column; gap: 14px; }

@@ -1,0 +1,62 @@
+# UsdtoWorld
+
+> UsdtoWorld is a free, live currency converter and set of currency guides,
+> centered on USD to RMB (Chinese yuan) conversion, plus USD/INR, USD/EUR,
+> USD/GBP, USD/CAD, USD/AUD, USD/JPY, and USD/PKR. Rates come from a live
+> market data feed; guides and FAQ answers are written and reviewed by the
+> UsdtoWorld editorial team (see /about).
+
+UsdtoWorld is not a bank, broker, or registered financial advisor, and
+nothing on the site is personalized financial advice — see /disclaimer.
+
+## Converter
+
+- [Home / USD to RMB converter](https://usdtoworld.com/): Live USD-to-RMB
+  (Chinese yuan) converter, plus quick-access shortcuts for common amounts
+  and an exchange-rate table for major currencies.
+
+## Currency pair guides
+
+- [USD to INR](https://usdtoworld.com/usd-to-inr): Converter and guide to
+  the US dollar to Indian rupee rate.
+- [INR to USD](https://usdtoworld.com/inr-to-usd): Converter and guide to
+  the Indian rupee to US dollar rate.
+- [USD to EUR](https://usdtoworld.com/usd-to-eur): Converter and guide to
+  the US dollar to euro rate.
+- [EUR to USD](https://usdtoworld.com/eur-to-usd): Converter and guide to
+  the euro to US dollar rate.
+- [USD to GBP](https://usdtoworld.com/usd-to-gbp): Converter and guide to
+  the US dollar to British pound rate.
+- [GBP to USD](https://usdtoworld.com/gbp-to-usd): Converter and guide to
+  the British pound to US dollar rate.
+- [USD to CAD](https://usdtoworld.com/usd-to-cad): Converter and guide to
+  the US dollar to Canadian dollar rate.
+- [USD to AUD](https://usdtoworld.com/usd-to-aud): Converter and guide to
+  the US dollar to Australian dollar rate.
+- [USD to JPY](https://usdtoworld.com/usd-to-jpy): Converter and guide to
+  the US dollar to Japanese yen rate.
+- [USD to PKR](https://usdtoworld.com/usd-to-pkr): Converter and guide to
+  the US dollar to Pakistani rupee rate.
+
+## Help & reference
+
+- [FAQ](https://usdtoworld.com/faq): Answers to common currency-conversion
+  questions, written for specific long-tail queries rather than general
+  head terms.
+- [About](https://usdtoworld.com/about): What UsdtoWorld is, where rate
+  data comes from, and who writes and reviews the guides.
+- [Contact](https://usdtoworld.com/contact): How to reach UsdtoWorld with
+  questions or corrections.
+
+## Legal
+
+- [Privacy Policy](https://usdtoworld.com/privacy-policy)
+- [Terms of Service](https://usdtoworld.com/terms)
+- [Disclaimer](https://usdtoworld.com/disclaimer): UsdtoWorld is not a
+  bank, broker, or financial advisor; conversions are informational, not
+  financial advice.
+
+## Optional
+
+- [Sitemap](https://usdtoworld.com/sitemap-index.xml): Full machine-readable
+  list of every indexable URL on the site.
