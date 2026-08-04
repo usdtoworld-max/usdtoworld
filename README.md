@@ -59,7 +59,7 @@ deploy` should be used instead") — if you didn't choose this deliberately,
 check your Cloudflare Pages project's build settings for a custom deploy
 command and consider switching it to `npx wrangler pages deploy ./dist`
 instead, which is the more standard path for a Pages project. Both
-`wrangler.jsonc` and `public/_redirects` in this repo are written to work
+`wrangler.toml` and `public/_redirects` in this repo are written to work
 correctly either way, but the two models have real behavioral differences
 (see below), so it's worth knowing which one you're actually on.
 
@@ -76,7 +76,7 @@ deploying, check these in order:
    already: an earlier version of `public/_redirects` had
    `/* /404.html 404` to force custom 404 handling, which is valid on
    classic Pages but hard-fails on the Workers model. It's been removed;
-   404 handling for this project now comes entirely from `wrangler.jsonc`'s
+   404 handling for this project now comes entirely from `wrangler.toml`'s
    `assets.not_found_handling: "404-page"`, which is the correct mechanism
    for `wrangler deploy`. If you add your own redirect rules to
    `public/_redirects` later, stick to the six status codes above.

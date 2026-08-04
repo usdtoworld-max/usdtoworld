@@ -1,14 +1,66 @@
 name = "usdtoworld"
+# Set this to the date you last verified this config against Wrangler's docs.
 compatibility_date = "2026-07-18"
 
-# Classic Cloudflare Pages (git-connected dashboard deploys, via
-# `wrangler pages deploy`) reads this field directly.
+# Classic Cloudflare Pages (git-connected dashboard deploys) reads this field
+# directly and does not need the [assets]/main settings below. NOTE: the
+# main Worker script + send_email binding below (for the contact form, see
+# worker/index.js) is a Workers-assets-model concept and is NOT picked up by
+# classic Pages — if this project is ever deployed via the classic Pages
+# dashboard path instead of `wrangler deploy`, the contact form's
+# /api/contact endpoint would need to be reimplemented as a Pages Function
+# (functions/api/contact.js) instead.
 pages_build_output_dir = "./dist"
 
-# If deployed via `wrangler deploy` on the Workers static-assets model
-# instead, this is what makes dist/404.html actually get served for
-# unmatched routes — on that model, 404 handling is NOT automatic.
+# Entry point for the small Worker that powers POST /api/contact (emails
+# submissions from the Contact page to usdtoworld@gmail.com). Everything
+# else on the site is still served straight from ./dist as static assets —
+# see run_worker_first under [assets] below, which scopes the Worker to just
+# /api/*, so normal page loads never invoke it.
+main = "worker/index.js"
+
+# Cloudflare's native Email Service "send" binding — lets the Worker deliver
+# mail without a third-party email API/key. Requires a one-time Cloudflare
+# dashboard setup (Email Routing/Email Service enabled for usdtoworld.com,
+# usdtoworld@gmail.com verified as a destination address, and a verified
+# custom "from" address on the domain) — see worker/index.js for the exact
+# steps. destination_address restricts this binding so it can only ever send
+# TO usdtoworld@gmail.com, not an arbitrary address.
+[[send_email]]
+name = "CONTACT_EMAIL"
+destination_address = "usdtoworld@gmail.com"
+
+# [assets].not_found_handling is what makes the custom dist/404.html (and
+# the dist/500.html, dist/503.html, dist/rate-limit.html, dist/api-error.html,
+# dist/offline.html error pages) actually get served for unmatched routes —
+# on the Workers static-assets model, 404 handling is NOT automatic and must
+# be declared explicitly, or Cloudflare falls back to its own generic error
+# page instead of this site's own designed ones.
+#
+# html_handling: every folder-style page here (dist/about/index.html,
+# dist/usd-to-inr/index.html, etc.) is a "folder" case in Cloudflare's
+# routing table. Under "auto-trailing-slash" (an earlier value here), the
+# CANONICAL form for a folder is the trailing-slash one — a request for the
+# no-slash form 307s to the slash form:
+#   /about   -> 307 to /about/
+#   /about/  -> 200 (serves dist/about/index.html)
+# But every <link rel="canonical">, every sitemap <loc>, and every internal
+# <a href> in this site uses the NO-slash form (see astro.config.mjs's
+# sitemap serialize() and the built dist/*.html files). That mismatch meant
+# literally every internal link, sitemap URL, and canonical tag pointed at a
+# URL that 307-redirected to a second URL before returning 200 — a redirect
+# hop baked into every page on the site, which is what Google Search Console
+# and SEO crawls were flagging. "drop-trailing-slash" flips the canonical
+# direction to match what the rest of the site already assumes:
+#   /about   -> 200 (serves dist/about/index.html)
+#   /about/  -> 307 to /about
+# so every canonical/sitemap/internal-link URL now resolves directly with no
+# redirect at all.
 [assets]
 directory = "./dist"
 not_found_handling = "404-page"
-html_handling = "auto-trailing-slash"
+html_handling = "drop-trailing-slash"
+# Only /api/* is routed to the Worker (worker/index.js); every other request
+# is served directly from ./dist with no Worker invocation, so this doesn't
+# add latency or cost to normal page loads.
+run_worker_first = ["/api/*"]

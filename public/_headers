@@ -1,12 +1,29 @@
 # Cloudflare Pages headers
 # https://developers.cloudflare.com/pages/configuration/headers/
 https://usdtoworld.usdtoworld.workers.dev/
+# Content-Security-Policy notes:
+# - script-src needs 'unsafe-inline' because several small inline <script>
+#   blocks run without nonces (theme toggle, i18n init, the iframe-title
+#   patch, gtag's config snippet, service worker registration). Static builds
+#   can't easily give each one a per-request nonce, so this is a deliberate
+#   tradeoff: it still blocks loading script from any *other* origin, which
+#   is the main XSS vector this header guards against, just not inline
+#   injection. Switching to nonces/hashes later would tighten this further.
+# - worker-src/child-src/frame-src all include 'blob:' because Partytown
+#   (used to run gtag.js off the main thread) creates its worker and sandbox
+#   iframe from blob: URLs — without this, Partytown breaks and gtag.js
+#   would silently stop firing.
+# - connect-src/img-src allow googletagmanager.com and google-analytics.com
+#   for gtag's own requests; pagead2.googlesyndication.com is pre-allowed
+#   for when AdSense (currently commented out in Layout.astro) is enabled.
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://pagead2.googlesyndication.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 # Hashed build assets: safe to cache forever
 /_astro/*

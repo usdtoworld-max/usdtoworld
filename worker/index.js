@@ -1,8 +1,8 @@
 // Handles POST /api/contact from the Contact page form (src/pages/contact.astro)
 // and emails the submission to usdtoworld@gmail.com using Cloudflare's native
-// Email Routing "send_email" binding (see wrangler.jsonc -> send_email).
+// Email Routing "send_email" binding (see wrangler.toml -> send_email).
 //
-// This only runs for /api/* (see assets.run_worker_first in wrangler.jsonc) —
+// This only runs for /api/* (see assets.run_worker_first in wrangler.toml) —
 // every other request is served directly from the static dist/ build with no
 // Worker invocation at all, so this doesn't add latency to normal page loads.
 //

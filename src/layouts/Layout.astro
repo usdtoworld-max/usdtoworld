@@ -120,13 +120,11 @@ const organizationSchema = {
     postalCode: '10003',
     addressCountry: 'US',
   },
-  sameAs: [
-    'https://x.com/usdtoworldkoj',
-    'https://youtube.com/@usdtoworld',
-    'https://facebook.com/usdtoworld',
-    'https://instagram.com/usdtoworld',
-    'https://linkedin.com/company/usdtoworld',
-  ],
+  // Only list profiles that are confirmed to actually exist — an invented
+  // "plausible" handle here is worse than an empty array: it either 404s
+  // (which is what an SEO crawl just flagged) or, worse, resolves to an
+  // unrelated real account and misattributes this business to it.
+  sameAs: ['https://x.com/usdtoworldkoj'],
 };
 
 const websiteSchema = {
