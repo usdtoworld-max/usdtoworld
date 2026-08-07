@@ -13,7 +13,13 @@ const SHELL_URLS = [
   '/favicon/apple-touch-icon.png',
 ];
 
-const RATE_API_HOST = 'open.er-api.com';
+// The rate fetch is now proxied same-origin through /api/rates (see
+// worker/index.js) rather than called directly against open.er-api.com from
+// the browser, so this matches on path, not an external hostname anymore —
+// this MUST be checked before the generic same-origin cache-first branch
+// below, or /api/rates would get served cache-first like a static asset and
+// never revalidate against the live rate.
+const RATE_API_PATH = '/api/rates';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -44,7 +50,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
 
   // Live exchange rate API: network-first, cache the last good response.
-  if (url.hostname === RATE_API_HOST) {
+  if (url.pathname === RATE_API_PATH) {
     event.respondWith(networkFirstRate(request));
     return;
   }

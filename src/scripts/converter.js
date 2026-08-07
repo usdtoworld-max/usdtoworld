@@ -1,4 +1,4 @@
-const RATE_API = 'https://open.er-api.com/v6/latest/USD';
+const RATE_API = '/api/rates';
 const CACHE_KEY = 'usdtoworld:rates';
 const CACHE_TIME_KEY = 'usdtoworld:rates:time';
 const CACHE_TTL = 1000 * 60 * 30; // 30 minutes

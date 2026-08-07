@@ -1,6 +1,6 @@
 # Cloudflare Pages headers
 # https://developers.cloudflare.com/pages/configuration/headers/
-https://usdtoworld.usdtoworld.workers.dev/
+#https://usdtoworld.usdtoworld.workers.dev/
 # Content-Security-Policy notes:
 # - script-src needs 'unsafe-inline' because several small inline <script>
 #   blocks run without nonces (theme toggle, i18n init, the iframe-title
@@ -13,6 +13,14 @@ https://usdtoworld.usdtoworld.workers.dev/
 #   (used to run gtag.js off the main thread) creates its worker and sandbox
 #   iframe from blob: URLs — without this, Partytown breaks and gtag.js
 #   would silently stop firing.
+# - The rate API (open.er-api.com) is deliberately NOT in connect-src, and
+#   doesn't need to be: the browser now only ever calls same-origin
+#   /api/rates (see worker/index.js), which proxies that fetch server-side.
+#   It used to be listed here directly, which is what caused the "Couldn't
+#   reach the rate service" message — CSP silently blocked the browser's
+#   direct fetch before it left the page. Routing it through the Worker
+#   instead removes this failure mode structurally rather than requiring
+#   this header to keep matching whatever the client-side code calls.
 # - connect-src/img-src allow googletagmanager.com and google-analytics.com
 #   for gtag's own requests; pagead2.googlesyndication.com is pre-allowed
 #   for when AdSense (currently commented out in Layout.astro) is enabled.

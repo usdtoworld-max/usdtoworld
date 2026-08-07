@@ -200,21 +200,24 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
          full rationale, including why static per-weight files were chosen
          over a variable font. -->
 
-    <!-- Warm the connection to the rates API as early as possible. The
-         network dependency tree showed the open.er-api.com fetch only
-         starting after the whole module chain (Layout script -> dynamic
-         import of converter.js) had loaded and parsed — ~360ms in, then
-         taking another ~586ms critical-path total. Preconnecting here lets
-         DNS/TLS finish in the background while the rest of the page is
-         still being parsed, so by the time converter.js actually needs the
-         data the handshake is already done. -->
-    <link rel="preconnect" href="https://open.er-api.com" crossorigin />
+    <!-- Kick off the /api/rates fetch as early as possible, in parallel with
+         the rest of the page loading, rather than waiting for it. The
+         network dependency tree previously showed this fetch only starting
+         after the whole module chain (Layout script -> dynamic import of
+         converter.js) had loaded and parsed — ~360ms in, then taking
+         another ~586ms critical-path total. Firing it here means that by
+         the time converter.js actually needs the data, the request is
+         already in flight or done.
+         /api/rates is this project's own Worker route (worker/index.js),
+         which proxies the exchange-rate fetch server-side and edge-caches
+         it — see that file for why this isn't fetched directly from
+         open.er-api.com in the browser anymore (CSP/CORS reliability). -->
     <script is:inline>
-      // Kick the actual fetch off immediately too (not just DNS/TLS), using
-      // the same cache keys/TTL as scripts/converter.js, and hand the
-      // in-flight promise off via window.__ratesPromise. converter.js reads
-      // this instead of starting its own fetch when present, so the request
-      // and the JS module load happen in parallel instead of in sequence.
+      // Kick the actual fetch off immediately too, using the same cache
+      // keys/TTL as scripts/converter.js, and hand the in-flight promise off
+      // via window.__ratesPromise. converter.js reads this instead of
+      // starting its own fetch when present, so the request and the JS
+      // module load happen in parallel instead of in sequence.
       (function () {
         try {
           var CACHE_KEY = 'usdtoworld:rates';
@@ -224,7 +227,7 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
           var cachedTime = Number(localStorage.getItem(CACHE_TIME_KEY) || 0);
           var isFresh = cached && Date.now() - cachedTime < CACHE_TTL;
           if (!isFresh && navigator.onLine) {
-            window.__ratesPromise = fetch('https://open.er-api.com/v6/latest/USD')
+            window.__ratesPromise = fetch('/api/rates')
               .then(function (res) {
                 if (!res.ok) throw new Error('bad-response');
                 return res.json();
