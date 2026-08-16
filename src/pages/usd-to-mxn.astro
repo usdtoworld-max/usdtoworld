@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'What is the US dollar to peso conversion right now?',
+    a: "The rate moves throughout the trading day, so check the live converter above for the exact current figure rather than a remembered number. As a rough reference point, the peso has recently traded somewhere in the 17–18 pesos per dollar range — but Mexico's peso has been one of the more actively moving major currencies in recent years, so don't assume that range holds indefinitely.",
+  },
+  {
+    q: 'How much is 1000 pesos in US dollars?',
+    a: "It depends on the day's rate — use the converter above for the precise figure. At a rough rate of 17 pesos per dollar, 1000 Mexican pesos works out to approximately 59 US dollars; the table further down this page has a few more common amounts already worked out.",
+  },
+  {
+    q: "Why hasn't the peso weakened the way some other emerging-market currencies have?",
+    a: "Mexico's central bank (Banco de México, or Banxico) has kept interest rates notably high relative to the US and most other major economies, which makes peso-denominated assets attractive to global investors chasing yield — a pattern often called the carry trade. Combine that with strong remittance inflows and a wave of manufacturing investment moving to Mexico (often called nearshoring), and the peso has actually been one of the more resilient emerging-market currencies in recent years, which surprises people expecting it to track other EM currencies downward.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to MXN', item: new URL('/usd-to-mxn', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to MXN Converter — Dollar to Mexican Peso, Live Rate | UsdtoWorld"
+  description="Convert US Dollars to Mexican Pesos with a live exchange rate. See the US dollar to peso conversion, 1000 pesos to USD, and what actually moves the peso."
+  path="/usd-to-mxn"
+  schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to MXN', href: '/usd-to-mxn' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to MXN Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Mexican Pesos instantly with a live market rate — built for cross-border shoppers, travelers, remittances, and businesses on both sides of the border."
+    defaultFrom="USD"
+    defaultTo="MXN"
+  />
+
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="MXN"
+      fromSymbol="$"
+      toSymbol="$"
+      rate={17.04}
+      amounts={[10, 100, 500, 1000, 5000]}
+      asOfDate="2026-08-14"
+    />
+    <AmountTable
+      fromCode="MXN"
+      toCode="USD"
+      fromSymbol="$"
+      toSymbol="$"
+      rate={0.0587}
+      amounts={[100, 1000, 5000, 10000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
+
+      <h2>One of the most crossed borders on earth</h2>
+      <p>
+        The US-Mexico border sees enormous daily traffic — commuters, cross-border shoppers, tourists, and
+        freight all moving both directions. That makes USD/MXN an everyday practical rate, not just a trading
+        pair: border-town shopping trips, resort vacations, remittances from Mexican workers in the US back to
+        family, and a manufacturing relationship that's grown enormously as companies shift supply chains
+        closer to the US.
+      </p>
+
+      <h2>Why the peso has stayed surprisingly strong</h2>
+      <p>
+        Emerging-market currencies often weaken steadily against the dollar, but the peso has bucked that
+        pattern more than most in recent years. A few things explain it:
+      </p>
+      <ul>
+        <li><strong>High interest rates:</strong> Banco de México (Banxico) has kept rates well above the Fed's for years, which draws in foreign investors chasing yield — a pattern traders call the carry trade.</li>
+        <li><strong>Remittance inflows:</strong> money sent home by Mexican workers abroad, mostly from the US, adds up to one of the largest remittance flows into any country in the world.</li>
+        <li><strong>Nearshoring:</strong> as companies move manufacturing closer to US consumers to shorten supply chains, a lot of that investment has landed in Mexico, pulling in foreign capital.</li>
+      </ul>
+      <p>
+        None of this makes the peso immune to swings — it can still move sharply on Fed policy surprises or US
+        trade-policy headlines — but it's part of why the peso hasn't followed the steady-weakening pattern
+        you'll see on some other pairs on this site.
+      </p>
+
+      <h2>The 1994 crisis still shapes how the peso is discussed</h2>
+      <p>
+        Older market commentary on the peso often references the "Tequila Crisis" of December 1994, when
+        Mexico abandoned a fixed exchange rate and the peso lost roughly half its value against the dollar
+        within weeks, triggering a deep recession and a US-led financial rescue package. It's ancient history
+        for anyone converting money today, but it's a big part of why the peso has a reputation among older
+        traders for sudden, sharp moves — a reputation the currency has mostly outgrown since Mexico moved to
+        a freely floating exchange rate and built up much larger foreign reserves.
+      </p>
+
+      <h2>Tips for cross-border shopping and travel</h2>
+      <p>
+        In Mexican resort towns and border cities, it's common for merchants to offer to charge your card in
+        US dollars instead of pesos — this is dynamic currency conversion, and it almost always works out
+        worse than paying in pesos and letting your own card issuer do the conversion. ATMs can be worse: some
+        border-area and resort ATMs advertise attractive-looking rates that include a steep built-in margin,
+        so it's worth comparing the rate an ATM actually gives you against the converter above before
+        withdrawing a large amount.
+      </p>
+
+      <h2>What USMCA changed, and what it didn't</h2>
+      <p>
+        The US-Mexico-Canada Agreement (USMCA), which replaced NAFTA in 2020, doesn't set the exchange rate
+        directly — no trade agreement does. But it governs the rules for a trade relationship large enough
+        that shifts in it can still move the peso: automotive manufacturing in particular has supply chains
+        that cross the border repeatedly before a vehicle is finished, and tariff disputes or renegotiation
+        talk tend to show up as peso volatility even though the agreement itself doesn't touch currency policy.
+      </p>
+
+      <h2>Common mistakes with this pair</h2>
+      <ul>
+        <li><strong>Accepting dollar pricing at checkout:</strong> always choose to pay in pesos when a Mexican merchant or ATM offers a choice — see above.</li>
+        <li><strong>Assuming "emerging market" means "weakening":</strong> the peso's resilience in recent years has surprised people expecting it to trade like other EM currencies; don't extrapolate from other pairs on this site.</li>
+        <li><strong>Not shopping around for remittance services:</strong> the US-Mexico remittance corridor is large enough that competition among transfer services is real — comparing the actual pesos your recipient gets, after fees, across two or three providers is worth the few minutes it takes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-mxn-faq"
+    eyebrow="USD/MXN FAQ"
+    heading="Common USD to MXN questions"
+    description="Quick answers before you convert or send money."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to CAD', href: '/usd-to-cad' },
+      { label: 'USD to PKR', href: '/usd-to-pkr' },
+      { label: 'USD to INR', href: '/usd-to-inr' },
+      { label: 'USD to RMB', href: '/' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

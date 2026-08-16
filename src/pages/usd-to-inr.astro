@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ConverterHero from '../components/ConverterHero.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const pairFaqs = [
@@ -18,6 +19,10 @@ const pairFaqs = [
   {
     q: 'Is it better to send money to India via bank transfer or a remittance app?',
     a: "Dedicated remittance services (Wise, Remitly, Xoom, and similar) generally beat traditional bank wires on both the exchange rate and the fee, since banks often bury a wide margin into the rate itself and still charge a wire fee on top. For a like-for-like comparison, check the rate a service actually quotes you (not just the mid-market rate shown on a converter) against the total rupees your recipient will receive, since that's the number that matters, not the headline exchange rate.",
+  },
+  {
+    q: 'How much is 100 dollars or 500 dollars in rupees?',
+    a: "It depends on the day's rate, so check the converter above for the exact current figure — but as a rough reference, 100 USD has recently converted to roughly ₹8,500–8,700, and 500 USD to roughly ₹42,500–43,500. Multiply the current USD/INR rate by any amount to get your own figure; the table further down this page shows a few common amounts already worked out.",
   },
 ];
 
@@ -36,8 +41,8 @@ const faqSchema = {
 };
 ---
 <Layout
-  title="USD to INR Converter — Live Dollar to Rupee Rate | UsdtoWorld"
-  description="Convert US Dollars to Indian Rupees with a live exchange rate. Get 1 USD to INR, 100 USD to INR, and 1000 USD to INR instantly, plus what actually moves the rate."
+  title="USD to INR Converter — 1 Dollar to Indian Rupees, Live Rate | UsdtoWorld"
+  description="Convert US Dollars to Indian Rupees with a live exchange rate. See 1 dollar to Indian rupees, 100 dollars in rupees, 500 dollars in rupees, and 1000 USD to INR instantly, plus what actually moves the rate."
   path="/usd-to-inr"
   schema={[breadcrumbSchema, faqSchema]}
   speakableSelectors={['h1', '.hero-sub']}
@@ -52,6 +57,18 @@ const faqSchema = {
     defaultFrom="USD"
     defaultTo="INR"
   />
+
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="INR"
+      fromSymbol="$"
+      toSymbol="₹"
+      rate={95.48}
+      amounts={[10, 100, 500, 1000, 2000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
 
   <section class="section editorial">
     <div class="container editorial-body prose">

@@ -7,6 +7,7 @@ import CurrencyGuides from '../components/CurrencyGuides.astro';
 import RateChart from '../components/RateChart.astro';
 import EditorialSections from '../components/EditorialSections.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
+import AmountTable from '../components/AmountTable.astro';
 import { faqs } from '../data/faq.js';
 
 const faqSchema = {
@@ -27,15 +28,46 @@ const breadcrumbSchema = {
     { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
   ],
 };
+
+// Describes the converter tool itself. Generic head terms like "currency
+// converter" and "exchange rate" carry huge search volume but are
+// dominated by XE/Wise/Google's own tool — this isn't meant to rank #1 for
+// those, it's meant to make sure this page's structured data accurately
+// and naturally uses that vocabulary, since AI answer engines and rich
+// snippets read this schema, not just the visible page copy.
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'UsdtoWorld Currency Converter',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Any (web browser)',
+  description: 'Free currency converter with a live exchange rate for USD to RMB (Chinese yuan), plus INR, EUR, GBP, JPY, CAD, AUD, and PKR.',
+  url: site.toString(),
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
 ---
 <Layout
-  title="UsdtoWorld - USD to RMB live Converter"
-  description="Convert USD to RMB instantly with live exchange rates. Check 1 USD to RMB, 1000 USD to RMB, and historical trends with our free converter."
+  title="USD to RMB Currency Converter — Live Exchange Rate | UsdtoWorld"
+  description="Free currency converter with a live USD to RMB exchange rate. Check 1 USD to RMB, 1000 USD to RMB, and historical trends — plus converters for INR, EUR, GBP, JPY, and more."
   path="/"
-  schema={[faqSchema, breadcrumbSchema]}
+  schema={[faqSchema, breadcrumbSchema, webAppSchema]}
   speakableSelectors={['h1', '.hero-sub']}
 >
   <ConverterHero useI18n={true} />
+
+  <div class="container">
+    <p class="amount-table-intro">Common USD to RMB (Chinese Yuan) amounts, worked out below:</p>
+    <AmountTable
+      fromCode="USD"
+      toCode="CNY"
+      fromSymbol="$"
+      toSymbol="¥"
+      rate={6.757}
+      amounts={[10, 100, 500, 1000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
+
   <Features />
   <CurrencyGuides />
   <RateChart />

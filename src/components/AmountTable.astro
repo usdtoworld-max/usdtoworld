@@ -1,0 +1,58 @@
+---
+// A small, semantic, server-rendered conversion table for specific common
+// amounts (e.g. "100 dollars in rupees", "1000 yen to usd"). This exists
+// because the interactive converter above computes amounts entirely
+// client-side after a JS fetch — a crawler sees the quick-amount buttons'
+// labels ($100, $500, etc.) but never the actual converted figure, since
+// that only renders after the live rate loads in the browser. This table
+// bakes real (but explicitly approximate/dated) numbers straight into the
+// server-rendered HTML instead, so both search engines and AI answer
+// engines can read and cite an actual number for these amount-specific
+// queries, not just the tool's UI chrome.
+//
+// Deliberately NOT presented as "today's rate" — it's a snapshot, labeled
+// with the date it was generated, pointing back at the live converter for
+// the current figure. Bake in a real, freshly-checked rate here and bump
+// asOfDate when you do; don't leave this on a rate from months ago, and
+// don't remove the "approximate" framing to make it look more precise than
+// it is.
+export interface Props {
+  fromCode: string;
+  toCode: string;
+  fromSymbol?: string;
+  toSymbol?: string;
+  /** 1 fromCode = rate toCode */
+  rate: number;
+  amounts: number[];
+  /** ISO date (YYYY-MM-DD) this rate snapshot was taken. */
+  asOfDate: string;
+}
+
+const { fromCode, toCode, fromSymbol = '', toSymbol = '', rate, amounts, asOfDate } = Astro.props;
+
+function fmt(n: number) {
+  return n.toLocaleString('en-US', { maximumFractionDigits: n >= 100 ? 0 : 2 });
+}
+---
+<div class="amount-table-wrap">
+  <table class="amount-table">
+    <caption>
+      Common {fromCode} → {toCode} amounts — approximate, based on the rate as of {asOfDate}. Use the
+      converter above for today's exact figure.
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">{fromCode}</th>
+        <th scope="col">{toCode} (approx.)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {amounts.map((a) => (
+        <tr>
+          <td>{fromSymbol}{fmt(a)} {fromCode}</td>
+          <td>{toSymbol}{fmt(a * rate)} {toCode}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

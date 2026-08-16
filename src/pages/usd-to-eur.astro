@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ConverterHero from '../components/ConverterHero.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const pairFaqs = [
@@ -18,6 +19,10 @@ const pairFaqs = [
   {
     q: "What's the difference between the Fed and the ECB on this rate?",
     a: "The US Federal Reserve sets interest rate policy for the dollar, while the European Central Bank does the same for the euro across the eurozone. When the Fed holds rates meaningfully higher than the ECB, dollar-denominated assets become more attractive to global investors, which tends to strengthen the dollar against the euro — and vice versa when the gap narrows or reverses.",
+  },
+  {
+    q: 'Will the euro get stronger against the dollar?',
+    a: "Nobody can reliably predict short-term currency moves, and any source that claims certainty here is worth being skeptical of. What actually drives it: the gap between Fed and ECB interest rates, relative economic growth and inflation in the US versus the eurozone, and broader risk sentiment (the dollar tends to strengthen when markets get nervous, regardless of eurozone-specific news). Rather than trying to time a prediction, check the live converter for today's rate and, for a large planned conversion, consider spreading it across a few transactions instead of betting on a single moment.",
   },
 ];
 
@@ -53,6 +58,17 @@ const faqSchema = {
     defaultTo="EUR"
   />
 
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="EUR"
+      fromSymbol="$"
+      toSymbol="€"
+      rate={0.8671}
+      amounts={[10, 100, 500, 1000, 2000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
   <section class="section editorial">
     <div class="container editorial-body prose">
       <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>

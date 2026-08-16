@@ -229,6 +229,14 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 .editorial-byline a { color: var(--text-muted); text-decoration: underline; }
 .plain-summary { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 18px 0 28px; font-size: 0.95rem; }
 
+.amount-table-wrap { margin: 20px 0 32px; overflow-x: auto; }
+.amount-table-intro { font-size: 0.95rem; color: var(--text-muted); margin: 24px 0 -12px; }
+.amount-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.amount-table caption { text-align: left; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; caption-side: top; }
+.amount-table th, .amount-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.amount-table th { font-weight: 600; color: var(--text-muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.02em; }
+.amount-table tbody tr:hover { background: var(--bg-alt); }
+
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
 .contact-form { display: flex; flex-direction: column; gap: 14px; }
 .contact-form label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px; }

@@ -37,6 +37,8 @@ nothing on the site is personalized financial advice — see /disclaimer.
   the US dollar to Japanese yen rate.
 - [USD to PKR](https://usdtoworld.com/usd-to-pkr): Converter and guide to
   the US dollar to Pakistani rupee rate.
+- [USD to MXN](https://usdtoworld.com/usd-to-mxn): Converter and guide to
+  the US dollar to Mexican peso rate.
 
 ## Help & reference
 

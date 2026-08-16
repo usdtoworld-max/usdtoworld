@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ConverterHero from '../components/ConverterHero.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const pairFaqs = [
@@ -53,6 +54,17 @@ const faqSchema = {
     defaultTo="USD"
   />
 
+  <div class="container">
+    <AmountTable
+      fromCode="GBP"
+      toCode="USD"
+      fromSymbol="£"
+      toSymbol="$"
+      rate={1.3491}
+      amounts={[10, 100, 500, 1000, 2000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
   <section class="section editorial">
     <div class="container editorial-body prose">
       <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>

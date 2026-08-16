@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ConverterHero from '../components/ConverterHero.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const pairFaqs = [
@@ -52,6 +53,27 @@ const faqSchema = {
     defaultFrom="USD"
     defaultTo="JPY"
   />
+
+  <div class="container">
+    <AmountTable
+      fromCode="JPY"
+      toCode="USD"
+      fromSymbol="¥"
+      toSymbol="$"
+      rate={0.006274}
+      amounts={[100, 500, 1000, 2000, 5000, 10000]}
+      asOfDate="2026-08-14"
+    />
+    <AmountTable
+      fromCode="USD"
+      toCode="JPY"
+      fromSymbol="$"
+      toSymbol="¥"
+      rate={159.39}
+      amounts={[10, 100, 500, 1000, 2000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
 
   <section class="section editorial">
     <div class="container editorial-body prose">

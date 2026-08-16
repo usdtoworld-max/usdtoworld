@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ConverterHero from '../components/ConverterHero.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const pairFaqs = [
@@ -36,8 +37,8 @@ const faqSchema = {
 };
 ---
 <Layout
-  title="USD to GBP Converter — Live Dollar to Pound Rate | UsdtoWorld"
-  description="Convert US Dollars to British Pounds with a live exchange rate. Get 1 USD to GBP, 100 USD to GBP, and 1000 USD to GBP instantly, plus what moves 'cable'."
+  title="Convert USD to GBP — Dollar to British Pound Converter | UsdtoWorld"
+  description="Convert US Dollars to British Pounds with a live exchange rate. Convert USD to GBP or USD to pound instantly — see 1, 100, and 1000 USD to GBP, plus what moves 'cable'."
   path="/usd-to-gbp"
   schema={[breadcrumbSchema, faqSchema]}
   speakableSelectors={['h1', '.hero-sub']}
@@ -52,6 +53,18 @@ const faqSchema = {
     defaultFrom="USD"
     defaultTo="GBP"
   />
+
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="GBP"
+      fromSymbol="$"
+      toSymbol="£"
+      rate={0.7413}
+      amounts={[10, 100, 500, 1000, 2000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
 
   <section class="section editorial">
     <div class="container editorial-body prose">
