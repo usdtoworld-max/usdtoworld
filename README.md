@@ -12,10 +12,34 @@ data flow, and integration points.
 
 ```bash
 npm install
-npm run dev       # http://localhost:4321
+npm run dev       # http://localhost:4321 — fast Astro dev server
 npm run build     # → dist/ (static, deploy anywhere)
 npm run preview   # serve the production build locally
 ```
+
+**`npm run dev` cannot reach `/api/rates` or `/api/contact` — this is expected, not a bug.**
+Those two routes are handled by `worker/index.js`, a real Cloudflare Worker, not by Astro
+itself. `astro dev` only serves Astro's own pages/components/static assets; it has no concept
+of `wrangler.toml`, the `main` Worker script, or its bindings, so any request to `/api/*` under
+`npm run dev` will simply fail to connect — the converter will correctly fall back to the last
+cached rate and show "Couldn't reach the rate service." That's the dev server working as
+designed, not the rate service being down.
+
+To test the Worker locally — the converter actually fetching a live rate, and the contact form
+actually attempting to send — run:
+
+```bash
+npm run dev:worker   # builds, then runs `wrangler dev` against ./dist + worker/index.js
+```
+
+This runs the real Workers runtime locally (via `workerd`), so `/api/rates` and `/api/contact`
+behave the same way they will in production. It's slower to iterate with than `npm run dev`
+(no hot reload — rerun it after every source change) and it does **not** need Cloudflare's
+Email Routing dashboard setup to be finished first for `/api/rates` to work — only
+`/api/contact`'s actual email send depends on that; the rates proxy has no such dependency.
+
+Use `npm run dev` for everyday page/style work, and switch to `npm run dev:worker` specifically
+when you need to verify the rate fetch or the contact form.
 
 ## Cloudflare Security Insights — what's fixed here vs. dashboard-only
 

@@ -5,8 +5,12 @@
   "engines": {
     "node": ">=22.12.0"
   },
+  "devDependencies": {
+    "wrangler": "^4.123.0"
+  },
   "scripts": {
     "dev": "astro dev",
+    "dev:worker": "npm run build && wrangler dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
