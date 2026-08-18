@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'How much is 100 HKD to USD?',
+    a: "Because the Hong Kong dollar is pegged to the US dollar within a narrow band, this one barely moves — 100 HKD has recently converted to roughly 12.80 US dollars, and that figure stays close to the same value week to week, unlike most currency pairs. Check the converter above for the exact current figure; the table further down this page has a few more common amounts worked out.",
+  },
+  {
+    q: 'Is the Hong Kong dollar pegged to the US dollar?',
+    a: "Yes — and it's the single most important thing to know about this pair. The Hong Kong Monetary Authority has kept the HKD pegged to the USD since 1983, currently trading within a narrow band of about 7.75 to 7.85 HKD per dollar. Unlike a floating currency, HKMA is committed to buying or selling HKD to keep it inside that band, so the rate simply doesn't move the way EUR/USD or GBP/USD does.",
+  },
+  {
+    q: 'Is Hong Kong dollar the same as Chinese yuan?',
+    a: "No — they're two separate currencies. The Hong Kong dollar (HKD) is Hong Kong's own currency, pegged to the US dollar and managed independently by the Hong Kong Monetary Authority. Mainland China's currency is the yuan/renminbi (CNY), which floats independently and isn't pegged to the US dollar. Hong Kong operates under a \"one country, two systems\" arrangement that keeps its currency and monetary policy separate from mainland China's, even though Hong Kong is part of China.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to HKD', item: new URL('/usd-to-hkd', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to HKD Converter — Dollar to Hong Kong Dollar, Live Rate | UsdtoWorld"
+  description="Convert US Dollars to Hong Kong Dollars with a live exchange rate. See HKD to USD, 100 HKD to USD, and why this is one of the most stable currency pairs in the world."
+  path="/usd-to-hkd"
+  schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to HKD', href: '/usd-to-hkd' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to HKD Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Hong Kong Dollars instantly — one of the few major currency pairs in the world that's pegged, not floating, so the rate stays remarkably stable day to day."
+    defaultFrom="USD"
+    defaultTo="HKD"
+  />
+
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="HKD"
+      fromSymbol="$"
+      toSymbol="$"
+      rate={7.8}
+      amounts={[10, 100, 500, 1000, 5000]}
+      asOfDate="2026-08-14"
+    />
+    <AmountTable
+      fromCode="HKD"
+      toCode="USD"
+      fromSymbol="$"
+      toSymbol="$"
+      rate={0.1282}
+      amounts={[100, 500, 1000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
+
+      <h2>The one pair on this site that doesn't really "move"</h2>
+      <p>
+        Every other currency pair on this site floats — its rate is set by supply and demand, and it can
+        genuinely surprise you day to day. USD/HKD is different. Since 1983, the Hong Kong Monetary
+        Authority (HKMA) has committed to keeping the Hong Kong dollar inside a narrow trading band, roughly
+        7.75 to 7.85 HKD per US dollar, by standing ready to buy or sell HKD whenever the rate presses against
+        either edge of that band. In practice, that means USD/HKD has stayed within a roughly 1.3% range for
+        decades — a level of stability no floating currency pair on this site comes close to.
+      </p>
+
+      <h2>Why Hong Kong runs a peg instead of a floating rate</h2>
+      <p>
+        Hong Kong is a small, extremely open economy built around trade and finance. A peg removes exchange
+        rate risk for the businesses and banks that make up so much of its economy — a Hong Kong exporter
+        pricing in US dollars doesn't have to worry about currency swings eating into a deal. The tradeoff is
+        that Hong Kong effectively imports US monetary policy: when the Federal Reserve moves interest rates,
+        Hong Kong's rates tend to follow, whether or not that's what Hong Kong's own economy needs at the
+        time. This is a deliberate, decades-old policy choice, not an accident.
+      </p>
+
+      <h2>Has the peg ever been tested?</h2>
+      <p>
+        Yes, more than once. During the 1997-98 Asian Financial Crisis, speculators bet heavily against the
+        peg, and the HKMA defended it partly by directly buying up stocks in the local market to counter the
+        pressure — an unusual and controversial move at the time. The peg held. It's been tested again during
+        various periods of market stress since, including bouts of large capital outflow pressure, and has
+        held every time. That track record is a big part of why the peg is trusted enough that most people
+        converting USD to HKD today don't think about it moving at all.
+      </p>
+
+      <h2>What this means practically</h2>
+      <p>
+        If you're traveling to Hong Kong, doing business there, or sending money, you generally don't need to
+        "time" this conversion the way you might with EUR/USD or GBP/USD — the rate you get today will be
+        very close to the rate you'd get next month. That said, "very close" isn't "identical": the rate still
+        moves in a small range, and banks and card networks each apply their own margin on top of the
+        mid-market rate, so it's still worth checking the live converter rather than assuming a fixed number.
+      </p>
+
+      <h2>Common mistakes with this pair</h2>
+      <ul>
+        <li><strong>Confusing HKD with mainland China's currency:</strong> Hong Kong's dollar and the yuan/renminbi are separate currencies with separate central banks — see the FAQ below.</li>
+        <li><strong>Assuming "pegged" means "identical every day":</strong> the rate still moves within its band; check the converter rather than relying on a memorized number like "7.8."</li>
+        <li><strong>Overpaying on card conversion:</strong> even with a stable underlying rate, card networks and ATMs still apply their own margin — a stable peg doesn't mean a stable fee.</li>
+      </ul>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-hkd-faq"
+    eyebrow="USD/HKD FAQ"
+    heading="Common USD to HKD questions"
+    description="Quick answers before you convert or send money."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to JPY', href: '/usd-to-jpy' },
+      { label: 'USD to MXN', href: '/usd-to-mxn' },
+      { label: 'USD to INR', href: '/usd-to-inr' },
+      { label: 'USD to RMB', href: '/' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

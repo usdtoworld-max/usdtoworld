@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'How much is 1000 Singapore dollars in USD?',
+    a: "It depends on the day's rate — check the converter above for the exact current figure. As a rough reference, 1000 Singapore dollars has recently converted to around 770 US dollars; the table further down this page has more common amounts already worked out.",
+  },
+  {
+    q: 'How much is 1000 Swiss francs in USD?',
+    a: "It depends on the day's rate — use the converter above for the precise figure. As a rough reference, 1000 Swiss francs has recently converted to around 1,230 US dollars; the franc has historically traded close to, and sometimes above, parity with the dollar, unlike most currencies on this site.",
+  },
+  {
+    q: 'Why are SGD and CHF often grouped together?',
+    a: "Not because they're related economically — Singapore and Switzerland are very different economies — but because both currencies share a reputation as unusually stable, well-managed \"safe\" currencies backed by large foreign reserves and cautious, conservative central banks. Investors and travelers often think of them the same way: as currencies less likely to see dramatic swings than an emerging-market pair.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to SGD & CHF', item: new URL('/usd-to-sgd', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to SGD & CHF Converter — Singapore Dollar, Swiss Franc | UsdtoWorld"
+  description="Convert US Dollars to Singapore Dollars or Swiss Francs with a live exchange rate. See USD to SGD, USD to CHF, and common amounts for both — two of the world's most stable currencies."
+  path="/usd-to-sgd"
+  schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to SGD & CHF', href: '/usd-to-sgd' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to SGD Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Singapore Dollars instantly with a live market rate. Need Swiss Francs instead? Switch the 'To' currency below, or jump to the CHF section further down this page."
+    defaultFrom="USD"
+    defaultTo="SGD"
+  />
+
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="SGD"
+      fromSymbol="$"
+      toSymbol="S$"
+      rate={1.28}
+      amounts={[10, 100, 500, 1000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
+
+      <h2 id="sgd">The Singapore dollar: managed by a currency band, not an interest rate</h2>
+      <p>
+        Most central banks — the Fed, the ECB, the Bank of England — set an interest rate as their main policy
+        tool and let the currency float on top of it. The Monetary Authority of Singapore (MAS) does something
+        different: it manages the Singapore dollar directly, letting it trade within an undisclosed band
+        against a basket of Singapore's major trading partners' currencies, adjusting the slope and width of
+        that band as needed. Interest rates in Singapore are more of a side effect of this policy than the
+        policy itself — a genuinely unusual setup among the world's major currencies.
+      </p>
+      <p>
+        In practice, this makes the Singapore dollar one of the steadier currencies to convert against, since
+        MAS actively manages against sharp swings rather than reacting after the fact. Singapore's role as a
+        major Asian financial and trade hub, combined with large foreign reserves, reinforces that stability.
+      </p>
+
+      <h2 id="chf">The Swiss franc: the classic "safe haven" currency</h2>
+      <p>
+        The Swiss franc has a long-standing reputation as one of the world's safe-haven currencies — a place
+        investors move money to during global uncertainty, similar to how the US dollar itself often behaves.
+        That reputation rests on Switzerland's political neutrality, a conservative, independent central bank
+        (the Swiss National Bank), and decades of low inflation. It's common enough that the franc actually
+        strengthens during global market stress — the opposite of what happens to many other currencies — that
+        the pattern has its own informal name among traders: "flight to franc."
+      </p>
+      <p>
+        One quirk worth knowing: the Swiss National Bank held interest rates below zero for years — a policy
+        called negative interest rates — specifically to discourage excessive demand for francs from pushing
+        the currency too strong for Swiss exporters to compete internationally. That's a very different
+        problem from what most central banks manage, and it says something about just how much steady demand
+        there is for francs as a safe asset.
+      </p>
+
+      <h2>Common mistakes with either currency</h2>
+      <ul>
+        <li><strong>Assuming "stable" means "identical every day":</strong> both currencies still move, just typically with less drama than an emerging-market pair — check the live converter rather than a memorized figure.</li>
+        <li><strong>Underestimating card and ATM margins:</strong> a stable underlying rate doesn't mean a stable fee — banks and card networks still apply their own markup on both SGD and CHF conversions.</li>
+        <li><strong>Mixing up Singapore dollars with other regional currencies:</strong> Singapore dollars are sometimes confused with Brunei dollars (the two are actually pegged 1:1 to each other, but are still separate currencies) — worth double-checking which one you actually need.</li>
+      </ul>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-sgd-chf-faq"
+    eyebrow="USD/SGD & USD/CHF FAQ"
+    heading="Common USD to SGD and CHF questions"
+    description="Quick answers before you convert."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to HKD', href: '/usd-to-hkd' },
+      { label: 'USD to JPY', href: '/usd-to-jpy' },
+      { label: 'USD to EUR', href: '/usd-to-eur' },
+      { label: 'USD to GBP', href: '/usd-to-gbp' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

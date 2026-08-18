@@ -39,6 +39,14 @@ nothing on the site is personalized financial advice — see /disclaimer.
   the US dollar to Pakistani rupee rate.
 - [USD to MXN](https://usdtoworld.com/usd-to-mxn): Converter and guide to
   the US dollar to Mexican peso rate.
+- [USD to HKD](https://usdtoworld.com/usd-to-hkd): Converter and guide to
+  the US dollar to Hong Kong dollar rate, which is pegged within a narrow
+  band rather than freely floating.
+- [USD to PHP](https://usdtoworld.com/usd-to-php): Converter and guide to
+  the US dollar to Philippine peso rate.
+- [USD to SGD](https://usdtoworld.com/usd-to-sgd): Converter and guide to
+  the US dollar to Singapore dollar rate, with a second section covering
+  US dollar to Swiss franc.
 
 ## Help & reference
 

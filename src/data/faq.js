@@ -59,4 +59,8 @@ export const faqs = [
     q: 'Why is USD so strong?',
     a: "The US dollar's strength typically stems from its role as the world's primary reserve currency, high demand for US Treasury bonds, relatively high Federal Reserve interest rates compared to other major economies, and its status as a safe haven during global uncertainty. Because so much international trade and debt is priced in dollars, demand for the currency stays elevated even outside the US economy itself. Periods of dollar strength often coincide with tighter US monetary policy or global risk-off sentiment, when investors move money out of riskier assets and into dollar-denominated ones. This strength can fluctuate over time as these underlying conditions shift."
   },
+  {
+    q: 'Is renminbi the same as RMB and yuan?',
+    a: "Yes — renminbi, RMB, and yuan all refer to the same Chinese currency, they're just different names for different purposes. Renminbi ('the people's currency') is the currency's official, formal name, similar to how 'sterling' is the formal name for the UK's currency. RMB is simply the abbreviation of renminbi. Yuan is the actual unit the currency is counted in — the way 'dollar' is the unit within 'United States currency.' So '100 yuan' and '100 RMB' mean exactly the same thing, and converting USD to renminbi, USD to RMB, and USD to yuan all give you the identical result. CNY is the ISO currency code you'll see on this site's converter and in banking systems.",
+  },
 ];

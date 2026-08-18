@@ -9,7 +9,7 @@ import AmountTable from '../components/AmountTable.astro';
 const site = Astro.site ?? new URL('https://usdtoworld.com');
 const pairFaqs = [
   {
-    q: 'What is 1 USD in INR right now?',
+    q: 'What is 1 dollar to Indian rupee right now?',
     a: "The dollar-to-rupee rate moves throughout the trading day, so the exact figure is best checked with the live converter above rather than memorized. As a general reference point, the pair has traded roughly in the 83–86 rupee range over recent years, on a long-run trend that has generally favored the dollar. For a transfer or purchase, use the converter for today's number, and remember your bank or payment app will likely apply a small margin on top of it.",
   },
   {
@@ -41,8 +41,8 @@ const faqSchema = {
 };
 ---
 <Layout
-  title="USD to INR Converter — 1 Dollar to Indian Rupees, Live Rate | UsdtoWorld"
-  description="Convert US Dollars to Indian Rupees with a live exchange rate. See 1 dollar to Indian rupees, 100 dollars in rupees, 500 dollars in rupees, and 1000 USD to INR instantly, plus what actually moves the rate."
+  title="USD to INR Converter — 1 Dollar to Indian Rupee, Live Rate | UsdtoWorld"
+  description="Convert US Dollars to Indian Rupees with a live exchange rate. See 1 dollar to Indian rupee, 100 dollars in rupees, 500 dollars in rupees, and 1000 USD to INR instantly, plus what actually moves the rate."
   path="/usd-to-inr"
   schema={[breadcrumbSchema, faqSchema]}
   speakableSelectors={['h1', '.hero-sub']}
@@ -65,7 +65,7 @@ const faqSchema = {
       fromSymbol="$"
       toSymbol="₹"
       rate={95.48}
-      amounts={[10, 100, 500, 1000, 2000, 5000]}
+      amounts={[1, 10, 30, 100, 500, 1000, 2000, 5000]}
       asOfDate="2026-08-14"
     />
   </div>

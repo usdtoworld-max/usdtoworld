@@ -2,15 +2,17 @@ name = "usdtoworld"
 # Set this to the date you last verified this config against Wrangler's docs.
 compatibility_date = "2026-07-18"
 
-# Classic Cloudflare Pages (git-connected dashboard deploys) reads this field
-# directly and does not need the [assets]/main settings below. NOTE: the
-# main Worker script + send_email binding below (for the contact form, see
-# worker/index.js) is a Workers-assets-model concept and is NOT picked up by
-# classic Pages — if this project is ever deployed via the classic Pages
-# dashboard path instead of `wrangler deploy`, the contact form's
-# /api/contact endpoint would need to be reimplemented as a Pages Function
-# (functions/api/contact.js) instead.
-pages_build_output_dir = "./dist"
+# This project deploys via `wrangler deploy` (the Workers static-assets
+# model — see [assets] below), NOT classic Cloudflare Pages. There is
+# deliberately no `pages_build_output_dir` field here: mixing that
+# Pages-only field with the Workers-model `main`/`assets`/`send_email`
+# fields below in one file is unnecessary once you've settled on one deploy
+# path, and risks Wrangler warning or rejecting the config depending on
+# version. If this project ever needs to move to classic Pages instead,
+# that means: add `pages_build_output_dir = "./dist"` back, and reimplement
+# /api/contact and /api/rates as Pages Functions
+# (functions/api/contact.js, functions/api/rates.js) since Pages does not
+# run the `main` Worker script or its bindings at all.
 
 # Entry point for the small Worker that powers POST /api/contact (emails
 # submissions from the Contact page to usdtoworld@gmail.com). Everything

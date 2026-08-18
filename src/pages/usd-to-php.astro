@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+const pairFaqs = [
+  {
+    q: 'What is 100 PHP to USD?',
+    a: "It depends on the day's rate — check the converter above for the exact current figure. As a rough reference, 100 Philippine pesos has recently converted to a little under 2 US dollars; the table further down this page has a few more common amounts already worked out.",
+  },
+  {
+    q: 'What is the PHP to USD exchange rate today?',
+    a: "The rate moves throughout the trading day, so there's no single fixed answer — use the live converter above for the precise current figure. As a rough recent reference point, the peso has generally traded somewhere in the 55–58 pesos per dollar range, but check the converter rather than relying on a remembered number, especially before a larger transfer.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'USD to PHP', item: new URL('/usd-to-php', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="USD to PHP Converter — Dollar to Philippine Peso, Live Rate | UsdtoWorld"
+  description="Convert US Dollars to Philippine Pesos with a live exchange rate. See USD to PHP, PHP to USD, and 100 PHP to USD instantly — built for remittances, travel, and business."
+  path="/usd-to-php"
+  schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'USD to PHP', href: '/usd-to-php' }]} />
+  </div>
+
+  <ConverterHero
+    title="USD to PHP Converter (Live Exchange Rate)"
+    subtitle="Convert US Dollars to Philippine Pesos instantly with a live market rate — built for remittances, travel, and business between the US and the Philippines."
+    defaultFrom="USD"
+    defaultTo="PHP"
+  />
+
+  <div class="container">
+    <AmountTable
+      fromCode="USD"
+      toCode="PHP"
+      fromSymbol="$"
+      toSymbol="₱"
+      rate={56.4}
+      amounts={[10, 100, 500, 1000, 5000]}
+      asOfDate="2026-08-14"
+    />
+    <AmountTable
+      fromCode="PHP"
+      toCode="USD"
+      fromSymbol="₱"
+      toSymbol="$"
+      rate={0.01773}
+      amounts={[100, 1000, 5000]}
+      asOfDate="2026-08-14"
+    />
+  </div>
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Sourced from live market rate data</p>
+
+      <h2>A remittance-driven currency, more than a trading one</h2>
+      <p>
+        Most people looking up USD/PHP aren't day traders — they're Overseas Filipino Workers (OFWs) sending
+        money home, families receiving it, or businesses managing payroll and invoices across both countries.
+        Remittances from OFWs are one of the largest sources of foreign currency flowing into the Philippines,
+        large enough that they meaningfully influence the peso's day-to-day value, not just its long-term
+        trend.
+      </p>
+
+      <h2>What moves this rate</h2>
+      <p>
+        Bangko Sentral ng Pilipinas (BSP), the Philippine central bank, manages a floating exchange rate but
+        does step in occasionally to smooth out unusually sharp moves rather than letting the peso swing
+        freely at all times. Day to day, the rate mostly tracks:
+      </p>
+      <ul>
+        <li><strong>US Federal Reserve policy:</strong> as with most emerging-market pairs, a widening gap between Fed and BSP interest rates tends to pressure the peso.</li>
+        <li><strong>Remittance inflows:</strong> steady, large-volume money transfers from OFWs abroad provide an ongoing source of dollar supply into the local market.</li>
+        <li><strong>The Philippines' trade balance:</strong> the country imports more than it exports in most years, which is a structural headwind for the peso that remittances help offset.</li>
+      </ul>
+
+      <h2>Choosing a remittance service</h2>
+      <p>
+        Because so much of the traffic on this pair is remittances rather than trading, the practical question
+        for most people isn't "where is the rate headed" — it's "which service gets my family the most pesos
+        after fees." Rates and fees vary meaningfully between banks, dedicated remittance apps, and cash
+        pickup services, and the cheapest headline fee isn't always the best deal once the exchange rate
+        markup is factored in. Comparing the actual pesos your recipient receives — not just the advertised
+        rate — across two or three providers is worth the few minutes it takes, especially for a transfer you
+        make regularly.
+      </p>
+
+      <h2>Common mistakes with this pair</h2>
+      <ul>
+        <li><strong>Comparing rates without comparing fees:</strong> a service with a "better" exchange rate can still cost more overall once transfer fees are included — compare the final amount received, not just the rate.</li>
+        <li><strong>Assuming bank transfer and cash pickup use the same rate:</strong> some providers price these delivery methods differently.</li>
+        <li><strong>Sending frequently in small amounts:</strong> if your provider charges a flat fee per transfer, consolidating into fewer, larger transfers can save more than chasing daily rate movements.</li>
+      </ul>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="usd-php-faq"
+    eyebrow="USD/PHP FAQ"
+    heading="Common USD to PHP questions"
+    description="Quick answers before you convert or send money."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to PKR', href: '/usd-to-pkr' },
+      { label: 'USD to INR', href: '/usd-to-inr' },
+      { label: 'USD to MXN', href: '/usd-to-mxn' },
+      { label: 'USD to HKD', href: '/usd-to-hkd' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>
