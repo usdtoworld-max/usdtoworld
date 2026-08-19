@@ -17,4 +17,4 @@ Allow: /
 #   ever being cited by ChatGPT, Claude, or Perplexity, which is the opposite
 #   of what GEO/AEO wants. They were blocked here previously; unblocked now
 #   for exactly that reason.
-Sitemap: https://usdtoworld.com/sitemap.xml
+Sitemap: https://usdtoworld.com/sitemap-index.xml

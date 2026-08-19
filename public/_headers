@@ -1,6 +1,6 @@
 # Cloudflare Pages headers
 # https://developers.cloudflare.com/pages/configuration/headers/
-https://usdtoworld.usdtoworld.workers.dev/
+#
 # Content-Security-Policy notes:
 # - script-src needs 'unsafe-inline' because several small inline <script>
 #   blocks run without nonces (theme toggle, i18n init, the iframe-title
@@ -24,6 +24,18 @@ https://usdtoworld.usdtoworld.workers.dev/
 # - connect-src/img-src allow googletagmanager.com and google-analytics.com
 #   for gtag's own requests; pagead2.googlesyndication.com is pre-allowed
 #   for when AdSense (currently commented out in Layout.astro) is enabled.
+#
+# X-Robots-Tag: index, follow — reinforces the <meta name="robots"> tag at
+# the HTTP header level. Set to "index, follow" here because that's every
+# page's current default (see Layout.astro's `noindex` prop, which no page
+# currently sets to true — including the error pages: 404.astro, 500.astro,
+# 503.astro, offline.astro, rate-limit.astro, api-error.astro are all
+# indexable by default right now). If a page's meta tag and this header
+# ever disagree, search engines follow whichever is more restrictive
+# (noindex wins), so this blanket header is safe even for those pages —
+# but making the error pages noindex explicitly (both here with a
+# path-specific override, and via Layout's noindex prop) would be a more
+# correct long-term setup than relying on that fallback behavior.
 
 /*
   X-Frame-Options: SAMEORIGIN
@@ -31,6 +43,7 @@ https://usdtoworld.usdtoworld.workers.dev/
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Robots-Tag: index, follow
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://pagead2.googlesyndication.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 # Hashed build assets: safe to cache forever
