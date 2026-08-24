@@ -36,7 +36,7 @@
 # but making the error pages noindex explicitly (both here with a
 # path-specific override, and via Layout's noindex prop) would be a more
 # correct long-term setup than relying on that fallback behavior.
-https://usdtoworld.usdtoworld.workers.dev/
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
