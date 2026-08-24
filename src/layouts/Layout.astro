@@ -124,11 +124,11 @@ const organizationSchema = {
   email: 'usdtoworld@gmail.com',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '93 2nd Ave',
-    addressLocality: 'New York',
-    addressRegion: 'NY',
-    postalCode: '10003',
-    addressCountry: 'US',
+    streetAddress: 'Office No. 202, P4, Ground, Shagun Tower, AB Rd, Near Vijay Nagar Square, Scheme 54 PU4',
+    addressLocality: 'Indore',
+    addressRegion: 'Madhya Pradesh',
+    postalCode: '452010',
+    addressCountry: 'IN',
   },
   // Only list profiles that are confirmed to actually exist — an invented
   // "plausible" handle here is worse than an empty array: it either 404s
@@ -300,11 +300,8 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
       })();
     </script>
 
-    <!--
-      Google AdSense: uncomment once approved and replace ca-pub-XXXXXXXXXXXXXXXX
-      with your real publisher ID. public/ads.txt already has a matching placeholder line.
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-    -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4088751665413869"
+     crossorigin="anonymous"></script>
 
     <title>{title}</title>
     <meta name="description" content={description} />

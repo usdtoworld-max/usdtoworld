@@ -9,12 +9,18 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !['503', 'offline', 'rate-limit', 'api-error'].some((slug) => page.includes(`/${slug}/`)),
+        // All six error/utility pages are noindex by default (see
+        // ErrorLayout.astro) — Google's own sitemap guidance says not to
+        // list noindex URLs in a sitemap, since it's a contradictory
+        // signal. This previously excluded only 4 of the 6 (missing '404'
+        // and '500'), so those two were very likely being listed despite
+        // being noindex.
+        !['404', '500', '503', 'offline', 'rate-limit', 'api-error'].some((slug) => page.includes(`/${slug}/`)),
       // @astrojs/sitemap mirrors Astro's directory-style build output
       // (dist/about/index.html), so by default it lists every URL with a
       // trailing slash (https://usdtoworld.com/about/). Every page's own
       // <link rel="canonical"> declares the NO-slash form instead
-      // (https://usdtoworld.com/about), and wrangler.jsonc now sets
+      // (https://usdtoworld.com/about), and wrangler.toml now sets
       // html_handling to "drop-trailing-slash" specifically so that
       // no-slash form is what the live host serves as 200 (the trailing
       // slash form 307s to it). So every URL in the sitemap was one
@@ -23,7 +29,7 @@ export default defineConfig({
       // destination URLs, not URLs that redirect — this strips the
       // trailing slash here (except on the root) so the sitemap always
       // lists the exact URL that returns 200 with a matching canonical
-      // tag, no hop required. See wrangler.jsonc for the corresponding
+      // tag, no hop required. See wrangler.toml for the corresponding
       // html_handling fix and full rationale.
       serialize(item) {
         if (item.url !== 'https://usdtoworld.com/' && item.url.endsWith('/')) {
