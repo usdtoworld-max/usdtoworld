@@ -13,3 +13,5 @@
 # Add real redirect rules below if you need them, using only the status
 # codes listed above, e.g.:
 #   /old-page   /new-page   301
+/rub-to-inr  /russian-currency-to-inr  301
+/rub-to-inr/  /russian-currency-to-inr  301

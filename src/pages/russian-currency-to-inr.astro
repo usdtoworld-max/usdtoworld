@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ConverterHero from '../components/ConverterHero.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import RelatedPairs from '../components/RelatedPairs.astro';
+import AmountTable from '../components/AmountTable.astro';
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+
+const pairFaqs = [
+  {
+    q: 'What is 1 Russian ruble in Indian rupees?',
+    a: "On 2 October 2026 one Russian ruble was worth roughly ₹1.15 at the mid-market rate, so 100 rubles came to about ₹115. The pair moves every day, so use the live converter at the top of this page for the current figure, and remember that a bank, forex counter, or transfer service will quote a different, less favourable rate once its margin is added.",
+  },
+  {
+    q: 'How much is 1,000 or 5,000 rubles in rupees?',
+    a: "At the 2 October 2026 snapshot of about ₹1.153 per ruble, 1,000 RUB is roughly ₹1,153 and 5,000 RUB is roughly ₹5,767. To work out any other amount, multiply the number of rubles by the current RUB to INR rate, or type it into the converter above. The table on this page lists several common amounts already calculated, and is dated so you can see how old the snapshot is.",
+  },
+  {
+    q: 'Is the Russian ruble stronger than the Indian rupee?',
+    a: "In unit terms, one ruble currently buys slightly more than one rupee, but that has not always been true: within the last year the pair has dipped to roughly ₹1 per ruble and risen to roughly ₹1.4. A currency's face value per unit says very little about the strength of its economy, because it reflects history, inflation and monetary policy rather than output. Comparing inflation, growth and trade balances is a far better way to judge economic health.",
+  },
+  {
+    q: 'Can I exchange Russian rubles in India?',
+    a: "Only to a limited extent. Rubles are not widely stocked by Indian banks or money changers, so you may need to order them in advance from an RBI-authorised dealer, and the retail rate usually carries a wide margin over the mid-market figure shown here. If you are travelling to Russia, ask your bank early about availability, the all-in rupee cost per ruble, and whether your Indian-issued cards will work at your destination.",
+  },
+  {
+    q: 'Will the ruble get stronger against the rupee?',
+    a: "Nobody can say reliably. The pair depends on oil and gas revenue, Bank of Russia interest rate decisions, sanctions and capital controls, and on the dollar-rupee rate that sits inside the calculation. Published forecasts for this pair often disagree with each other, which is a good reason not to build a budget around any single prediction. If you must pay in rubles at a future date, ask a bank or authorised dealer about locking in a rate instead of guessing.",
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'Currency Converters', item: new URL('/currency-converters', site).toString() },
+    { '@type': 'ListItem', position: 3, name: 'Russian Currency to INR', item: new URL('/russian-currency-to-inr', site).toString() },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pairFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="Russian Currency to INR: Live RUB to INR Rate | UsdtoWorld"
+  description="Convert Russian rubles to Indian rupees at a live RUB to INR rate. See 100 or 1,000 rubles in rupees, what moves the ruble, and how to exchange ₽ in India."
+  path="/russian-currency-to-inr"
+  schema={[breadcrumbSchema, faqSchema]}
+  speakableSelectors={['h1', '.hero-sub']}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'Currency Converters', href: '/currency-converters' }, { name: 'Russian Currency to INR', href: '/russian-currency-to-inr' }]} />
+  </div>
+
+  <ConverterHero
+    title="Russian Currency to INR: RUB to INR Converter"
+    subtitle="Convert Russian rubles (₽) to Indian rupees (₹) at a live mid-market rate. Built for students, travellers, traders and anyone budgeting between the two currencies."
+    defaultFrom="RUB"
+    defaultTo="INR"
+  />
+
+  <div class="container">
+    <AmountTable
+      fromCode="RUB"
+      toCode="INR"
+      fromSymbol="₽"
+      toSymbol="₹"
+      rate={1.1533}
+      amounts={[1, 10, 100, 500, 1000, 5000, 10000, 50000]}
+      asOfDate="2026-10-02"
+    />
+  </div>
+
+  <section class="section editorial">
+    <div class="container editorial-body prose">
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a> · Rate snapshot dated 2 October 2026</p>
+
+      <h2>Russian currency to INR: what you are actually converting</h2>
+      <p>
+        The Russian currency is the ruble, written RUB in international markets and ₽ on price tags. One
+        ruble is divided into 100 kopecks and the currency is issued by the
+        <a href="https://www.cbr.ru/eng/" target="_blank" rel="noopener noreferrer">Bank of Russia</a>. The Indian rupee
+        (INR, ₹) is divided into 100 paise and issued by the
+        <a href="https://www.rbi.org.in" target="_blank" rel="noopener noreferrer">Reserve Bank of India</a>. The converter above shows the
+        mid-market rate, which is the midpoint between the prices at which banks buy and sell a currency in the
+        wholesale market. Because there is no deep, direct market in ruble-rupee trades, the figure is built by
+        chaining two rates through the US dollar: rubles into dollars, then dollars into rupees. That is how most
+        rate providers calculate this pair, and it means a move in either currency against the dollar shows up in
+        the result. On 2 October 2026 one ruble was worth about ₹1.15, so 100 rubles came to roughly ₹115 and
+        1,000 rubles to roughly ₹1,153. The table above works out more amounts from the same snapshot.
+      </p>
+
+      <h2>Who needs the Russian currency to INR rate</h2>
+      <p>
+        Searches for the Russian currency in rupees come from a few distinct groups. Indian students, many of them
+        studying medicine or engineering in Russia, compare tuition and living costs quoted in rubles with
+        savings held in rupees. Importers and exporters price contracts in one currency and need to understand
+        what that means in the other. Business travellers and tourists want to know what a hotel, a train ticket or
+        a dinner will cost in familiar terms. Freelancers and families receiving or sending support want to
+        know how many rupees a given payment is worth. All of them benefit from the same habit: treat the converter
+        as a reference point, then compare it with the amount a real provider will actually deliver.
+      </p>
+
+      <h2>What moves the ruble against the rupee</h2>
+      <p>
+        Four forces do most of the work. First, energy exports: oil and gas revenue is a large source of foreign
+        currency for Russia, so falling energy prices tend to weigh on the ruble while rising prices support it.
+        Second, interest rates: the Bank of Russia has used high policy rates to fight inflation, and rate
+        decisions at its board meetings can move the currency quickly. Third, sanctions and capital controls,
+        which limit which banks, payment channels and counterparties can be used, and can make the ruble trade
+        differently from what its fundamentals alone would suggest. Fourth, the rupee itself: the dollar-rupee rate
+        sits inside every RUB to INR calculation, and the rupee has been under pressure against the dollar over the
+        past year, as the <a href="/usd-to-inr">USD to INR guide</a> explains. The result is a pair that
+        has been unusually volatile. Over the twelve months to mid-2026 it ranged from roughly ₹1.0 to roughly
+        ₹1.4 per ruble, which means a rate quoted a few months ago can be far from today's.
+      </p>
+
+      <h2>Why the rate you get in India is different</h2>
+      <p>
+        The converter shows a wholesale reference, not a price you can transact at. Rubles are thinly stocked in
+        India, so the rates offered to individual customers carry large margins. On 3 October 2026, one large
+        Indian forex platform's published retail quotes for buying ruble notes and for sending a ruble wire were
+        roughly 25% above that day's mid-market rate. The practical test is simple: divide the total rupees you
+        will pay, fees included, by the total rubles the recipient or counter will give you. That all-in
+        rupee cost per ruble is the only number worth comparing between providers. Use banks and money changers
+        authorised by the RBI; informal channels outside the authorised system are not just risky, they can breach
+        India's foreign exchange rules.
+      </p>
+
+      <h2>Sending money to Russia or paying Russian fees from India</h2>
+      <p>
+        Resident individuals in India can generally send money abroad for education, travel and family support
+        under the RBI's Liberalised Remittance Scheme, which has an annual limit per person; check the RBI's
+        current rules before you plan a large payment. Since 2022, sanctions-related restrictions on parts of the
+        Russian banking system have meant that banks may ask for extra documents, take longer, or decline
+        payments linked to Russia, so start early and keep invoices and admission letters ready. Card access is
+        another surprise: Visa and Mastercard suspended operations in Russia in 2022, so Indian-issued cards
+        generally do not work at Russian shops or ATMs, and travellers often rely on cash. Confirm the current
+        position with your bank before you travel. On the trade side, the RBI introduced a framework in July 2022
+        that lets importers and exporters settle in rupees through special rupee vostro accounts, and Sberbank and
+        VTB were among the Russian banks that opened them, which is one reason bilateral trade settlement no longer
+        depends only on the dollar.
+      </p>
+
+      <h2>Russian currency to INR: a quick mental shortcut</h2>
+      <p>
+        With one ruble near ₹1.15, you can estimate rubles to rupees by adding about 15%: 1,000 rubles is about
+        ₹1,150 and 200 rubles is about ₹230. Going the other way, ₹100 buys roughly 87 rubles. The shortcut is
+        only as good as the rate behind it, so refresh the figure from the converter whenever the amount matters.
+        Everything on this page is for information only and is not financial advice; see our
+        <a href="/disclaimer">disclaimer</a> for the full picture, and the <a href="/faq">FAQ</a> for answers on other pairs.
+      </p>
+    </div>
+  </section>
+
+  <FAQAccordion
+    faqs={pairFaqs}
+    id="rub-inr-faq"
+    eyebrow="RUB/INR FAQ"
+    heading="Common Russian ruble to INR questions"
+    description="Quick answers before you convert, travel or send money."
+  />
+
+  <RelatedPairs
+    links={[
+      { label: 'USD to INR', href: '/usd-to-inr' },
+      { label: 'INR to USD', href: '/inr-to-usd' },
+      { label: 'USD to RMB', href: '/' },
+      { label: 'USD to EUR', href: '/usd-to-eur' },
+    ]}
+  />
+
+  <script>
+    import '../scripts/converter.js';
+  </script>
+</Layout>
+
+<style>
+  .editorial-body { max-width: 780px; }
+</style>

@@ -18,10 +18,7 @@ async function getRates() {
   }
 
   try {
-    const res = await fetch(RATE_API);
-    if (!res.ok) throw new Error('bad-response');
-    const data = await res.json();
-    if (!data.rates) throw new Error('no-rates');
+    const data = await fetchRatesJson();
     localStorage.setItem(CACHE_KEY, JSON.stringify(data.rates));
     localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
     return { rates: data.rates, time: Date.now(), offline: false };

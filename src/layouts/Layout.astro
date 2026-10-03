@@ -232,6 +232,13 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
                 if (!res.ok) throw new Error('bad-response');
                 return res.json();
               })
+              .catch(function () {
+                // /api/rates missing (static-only host, astro dev) or failing: go direct.
+                return fetch('https://open.er-api.com/v6/latest/USD').then(function (r) {
+                  if (!r.ok) throw new Error('bad-response');
+                  return r.json();
+                });
+              })
               .then(function (data) {
                 if (!data.rates) throw new Error('no-rates');
                 localStorage.setItem(CACHE_KEY, JSON.stringify(data.rates));
@@ -300,8 +307,13 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
       })();
     </script>
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4088751665413869"
-     crossorigin="anonymous"></script>
+  {/* AdSense policy: ads must not appear on error/status screens or pages without
+      real publisher content. Every such page is rendered with noindex (see
+      ErrorLayout.astro), so the ad script is only emitted on indexable content pages. */}
+  {!noindex && (
+    <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4088751665413869"
+       crossorigin="anonymous"></script>
+  )}
 
     <title>{title}</title>
     <meta name="description" content={description} />

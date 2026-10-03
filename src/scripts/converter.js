@@ -1,4 +1,21 @@
 const RATE_API = '/api/rates';
+const RATE_API_FALLBACK = 'https://open.er-api.com/v6/latest/USD';
+
+// Same-origin Worker route first (edge-cached). If it is missing or failing
+// (404 on static-only hosting / `astro dev`, 5xx upstream), fall back to the
+// provider directly so the converter never shows a 404 for rates.
+async function fetchRatesJson() {
+  for (const url of [RATE_API, RATE_API_FALLBACK]) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (data && data.rates) return data;
+    } catch (e) { /* try next source */ }
+  }
+  throw new Error('rates-unavailable');
+}
+
 const CACHE_KEY = 'usdtoworld:rates';
 const CACHE_TIME_KEY = 'usdtoworld:rates:time';
 const CACHE_TTL = 1000 * 60 * 30; // 30 minutes
@@ -31,10 +48,7 @@ async function getRates() {
   }
 
   try {
-    const res = await fetch(RATE_API);
-    if (!res.ok) throw new Error('bad-response');
-    const data = await res.json();
-    if (!data.rates) throw new Error('no-rates');
+    const data = await fetchRatesJson();
     localStorage.setItem(CACHE_KEY, JSON.stringify(data.rates));
     localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
     return { rates: data.rates, time: Date.now(), offline: false };

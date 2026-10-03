@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+
+const groups = [
+  {
+    heading: 'US dollar and Chinese yuan',
+    intro: 'The core of the site: the dollar against the currencies people convert most often.',
+    pairs: [
+      { label: 'USD to RMB', href: '/', note: 'US dollar to Chinese yuan, our flagship converter. The yuan trades within a managed band set by the People\'s Bank of China, so it tends to move more gradually than freely floating currencies.' },
+      { label: 'USD to EUR', href: '/usd-to-eur', note: 'Dollar to euro, the most traded currency pair in the world, useful for European travel and eurozone invoices.' },
+      { label: 'EUR to USD', href: '/eur-to-usd', note: 'The same pair quoted the other way round, which is how most financial news reports it.' },
+      { label: 'USD to GBP', href: '/usd-to-gbp', note: 'Dollar to British pound, for UK travel, tuition fees and cross-Atlantic business payments.' },
+      { label: 'GBP to USD', href: '/gbp-to-usd', note: 'Pound to dollar, often called cable by traders, quoted as dollars per pound.' },
+      { label: 'USD to JPY', href: '/usd-to-jpy', note: 'Dollar to Japanese yen, a pair strongly shaped by the gap between US and Japanese interest rates.' },
+    ],
+  },
+  {
+    heading: 'India, Pakistan and the Russian ruble',
+    intro: 'South Asian corridors are among the busiest remittance routes in the world.',
+    pairs: [
+      { label: 'USD to INR', href: '/usd-to-inr', note: 'Dollar to Indian rupee, for NRI transfers, freelance invoices and study abroad budgeting.' },
+      { label: 'INR to USD', href: '/inr-to-usd', note: 'Rupee to dollar, for Indian travellers and anyone pricing imports or overseas subscriptions.' },
+      { label: 'RUB to INR', href: '/russian-currency-to-inr', note: 'Russian ruble to Indian rupee, for students, traders and travellers, with notes on why retail rates differ.' },
+      { label: 'USD to PKR', href: '/usd-to-pkr', note: 'Dollar to Pakistani rupee, a major remittance corridor with a long record of depreciation.' },
+    ],
+  },
+  {
+    heading: 'Americas, Asia-Pacific and beyond',
+    intro: 'Neighbouring and regional currencies that matter for work, family and travel.',
+    pairs: [
+      { label: 'USD to CAD', href: '/usd-to-cad', note: 'Dollar to Canadian dollar, closely tied to oil prices and cross-border trade.' },
+      { label: 'USD to MXN', href: '/usd-to-mxn', note: 'Dollar to Mexican peso, central to remittances and nearshoring costs.' },
+      { label: 'USD to AUD', href: '/usd-to-aud', note: 'Dollar to Australian dollar, a commodity-linked currency popular with travellers and students.' },
+      { label: 'USD to HKD', href: '/usd-to-hkd', note: 'Dollar to Hong Kong dollar, which is pegged within a narrow band rather than freely floating.' },
+      { label: 'USD to PHP', href: '/usd-to-php', note: 'Dollar to Philippine peso, driven heavily by overseas worker remittances.' },
+      { label: 'USD to SGD & CHF', href: '/usd-to-sgd', note: 'Dollar to Singapore dollar, with a second section on the Swiss franc, both regarded as stable currencies.' },
+    ],
+  },
+];
+
+const allPairs = groups.flatMap((g) => g.pairs);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'Currency Converters', item: new URL('/currency-converters', site).toString() },
+  ],
+};
+const listSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Currency converters and guides',
+  url: new URL('/currency-converters', site).toString(),
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: allPairs.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.label,
+      url: new URL(p.href, site).toString(),
+    })),
+  },
+};
+---
+<Layout
+  title="Currency Converters: USD, RMB, INR, RUB, EUR and More | UsdtoWorld"
+  description="Browse every UsdtoWorld currency converter and guide: USD to RMB, INR, EUR, GBP, JPY, PKR, RUB to INR and more, each with a live rate and plain-English context."
+  path="/currency-converters"
+  schema={[breadcrumbSchema, listSchema]}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'Currency Converters', href: '/currency-converters' }]} />
+  </div>
+
+  <section class="section section--tight">
+    <div class="container prose">
+      <span class="section-eyebrow">All converters</span>
+      <h1>Currency converters and guides</h1>
+      <p class="editorial-byline">Reviewed by the <a href="/about#who-writes-and-reviews-this">UsdtoWorld editorial team</a></p>
+      <p>
+        Every page below combines a live converter with a written guide to that currency pair: what moves the
+        rate, what the figure means in practice, and what to watch for if you are sending or spending real money.
+        Pick the pair you need, or start with the <a href="/#converter">main USD to RMB converter</a> and change the
+        currencies from the drop-down menus. The converter on every page can convert any supported currency into any
+        other, so the pair pages exist mainly to give you context, worked examples and answers to the questions
+        people actually ask about that corridor.
+      </p>
+    </div>
+  </section>
+
+  {groups.map((g) => (
+    <section class="section section--tight">
+      <div class="container prose">
+        <h2>{g.heading}</h2>
+        <p>{g.intro}</p>
+        <ul class="pair-list">
+          {g.pairs.map((p) => (
+            <li><a href={p.href}><strong>{p.label}</strong></a> — {p.note}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--tight">
+    <div class="container prose">
+      <h2>How to read a currency pair</h2>
+      <p>
+        A pair such as USD/INR is quoted as the price of one unit of the first currency, called the base, in units of
+        the second, called the quote currency. If USD/INR is 96, one US dollar buys 96 Indian rupees. A higher number
+        means the base currency has become stronger against the quote currency, and a lower number means it has
+        weakened. Reversing the pair simply divides one by the rate, which is why INR to USD is a small decimal such
+        as 0.0104. Pairs that do not involve the dollar, like RUB to INR, are normally calculated through it, so
+        they depend on two separate exchange rates at once.
+      </p>
+
+      <h2>Mid-market rates and the rate you actually get</h2>
+      <p>
+        The figure shown on every converter here is a mid-market rate, the midpoint between the wholesale buy and
+        sell prices. Banks, card networks, airport counters and transfer apps all add their own margin or fee,
+        so the amount that lands in a recipient's account is almost always lower than a converter suggests.
+        The size of that gap varies enormously between providers and between currencies: widely traded pairs are
+        cheap to convert, while thinly traded ones can carry margins of 20% or more. Before any transfer, compare
+        the total you pay with the total the recipient receives, and ignore the advertised rate in isolation.
+      </p>
+
+      <h2>Where our rates come from</h2>
+      <p>
+        Rates are fetched from a market data provider and cached briefly so the converter stays fast and works with
+        your last saved rate if you go offline. Worked examples in the tables on each guide are dated snapshots and
+        are labelled as approximate; the live converter is always the source for today's number. Read our
+        <a href="/about">About page</a> for how the guides are written and reviewed, and the
+        <a href="/disclaimer">disclaimer</a> for the limits of the data. If a pair you need is missing,
+        <a href="/contact">tell us</a> and we will consider adding it.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .pair-list { padding-left: 1.2em; }
+  .pair-list li { margin-bottom: 10px; }
+</style>

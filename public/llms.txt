@@ -21,6 +21,9 @@ nothing on the site is personalized financial advice — see /disclaimer.
   the US dollar to Indian rupee rate.
 - [INR to USD](https://usdtoworld.com/inr-to-usd): Converter and guide to
   the Indian rupee to US dollar rate.
+- [RUB to INR](https://usdtoworld.com/russian-currency-to-inr): Converter and guide to
+  the Russian ruble to Indian rupee rate, including why retail rates in India
+  differ from the mid-market rate.
 - [USD to EUR](https://usdtoworld.com/usd-to-eur): Converter and guide to
   the US dollar to euro rate.
 - [EUR to USD](https://usdtoworld.com/eur-to-usd): Converter and guide to
@@ -50,6 +53,8 @@ nothing on the site is personalized financial advice — see /disclaimer.
 
 ## Help & reference
 
+- [All currency converters](https://usdtoworld.com/currency-converters): Index of
+  every converter and pair guide on the site.
 - [FAQ](https://usdtoworld.com/faq): Answers to common currency-conversion
   questions, written for specific long-tail queries rather than general
   head terms.

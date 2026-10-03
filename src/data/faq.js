@@ -5,7 +5,7 @@ export const faqs = [
   },
   {
     q: 'What is Indian 1 ₹ in China?',
-    a: "One Indian rupee converts to a very small fraction of a Chinese yuan, typically somewhere around 0.085 to 0.09 CNY, because the rupee is a much lower-value currency unit than the yuan. The exact figure moves daily with the INR/USD and USD/CNY rates, so it's best checked live rather than memorized. In practical terms, this means Indian travelers heading to China should expect to exchange a relatively large number of rupees for a comparatively small stack of yuan. Most exchange counters and apps quote INR to CNY indirectly through USD, so travelers may notice the number differs slightly depending on where they check it."
+    a: "One Indian rupee converts to a very small fraction of a Chinese yuan, typically somewhere around 0.07 CNY, because the rupee is a much lower-value currency unit than the yuan. The exact figure moves daily with the INR/USD and USD/CNY rates, so it's best checked live rather than memorized. In practical terms, this means Indian travelers heading to China should expect to exchange a relatively large number of rupees for a comparatively small stack of yuan. Most exchange counters and apps quote INR to CNY indirectly through USD, so travelers may notice the number differs slightly depending on where they check it."
   },
   {
     q: 'Will RMB get stronger?',
@@ -13,7 +13,7 @@ export const faqs = [
   },
   {
     q: 'Is Chinese Yuan stronger than INR?',
-    a: "Yes, the Chinese yuan is worth considerably more than the Indian rupee unit-for-unit, with 1 yuan typically converting to somewhere around 11 to 12 Indian rupees, though the exact figure moves daily. It's important to note that a currency being 'stronger' in this sense just reflects how each country historically set its unit value, not which economy is performing better; a currency's nominal value per unit says little about a country's economic strength on its own. Comparing GDP growth, inflation, and trade balances gives a far more meaningful picture of economic health than simply comparing exchange rates between two currencies with different historical baselines."
+    a: "Yes, the Chinese yuan is worth considerably more than the Indian rupee unit-for-unit, with 1 yuan typically converting to somewhere around 14 Indian rupees, though the exact figure moves daily. It's important to note that a currency being 'stronger' in this sense just reflects how each country historically set its unit value, not which economy is performing better; a currency's nominal value per unit says little about a country's economic strength on its own. Comparing GDP growth, inflation, and trade balances gives a far more meaningful picture of economic health than simply comparing exchange rates between two currencies with different historical baselines."
   },
   {
     q: 'What was the highest USD to RMB exchange rate ever?',
@@ -25,7 +25,7 @@ export const faqs = [
   },
   {
     q: 'How much is 1 US to RMB?',
-    a: "One US dollar typically converts to somewhere in the range of 7.0 to 7.3 Chinese yuan, though the exact figure changes throughout each trading day based on interbank market activity and the People's Bank of China's daily reference rate. Using a live converter is the most reliable way to get today's figure, since exchange rates are never static. If you're planning a purchase or transfer, remember that banks and money-changers usually apply a small spread above the mid-market rate shown on financial websites, so the amount you receive in practice will be slightly less favorable than the headline number."
+    a: "One US dollar typically converts to somewhere in the range of 6.7 to 6.9 Chinese yuan, though the exact figure changes throughout each trading day based on interbank market activity and the People's Bank of China's daily reference rate. Using a live converter is the most reliable way to get today's figure, since exchange rates are never static. If you're planning a purchase or transfer, remember that banks and money-changers usually apply a small spread above the mid-market rate shown on financial websites, so the amount you receive in practice will be slightly less favorable than the headline number."
   },
   {
     q: 'Is the USD rising or falling?',
@@ -37,7 +37,7 @@ export const faqs = [
   },
   {
     q: 'Will 1 USD become 100 INR?',
-    a: "The USD/INR rate has been on a long-term upward trend, and it has traded above 83 to 86 rupees per dollar in recent years, so a move toward 100 is a question of continued gradual depreciation rather than a dramatic jump. Whether it happens depends on India's inflation, current account balance, foreign investment flows, and Reserve Bank of India intervention, all of which can slow or accelerate the trend. No source can promise a specific future rate, and anyone suggesting certainty is overstating what's knowable. If this matters for a financial decision, look at a long-term historical chart and consider consulting a financial advisor rather than treating any single prediction as fact."
+    a: "The USD/INR rate has been on a long-term upward trend, and it has already moved into the mid-90s per dollar in 2026, so a move toward 100 is a question of continued gradual depreciation rather than a dramatic jump. Whether it happens depends on India's inflation, current account balance, foreign investment flows, and Reserve Bank of India intervention, all of which can slow or accelerate the trend. No source can promise a specific future rate, and anyone suggesting certainty is overstating what's knowable. If this matters for a financial decision, look at a long-term historical chart and consider consulting a financial advisor rather than treating any single prediction as fact."
   },
   {
     q: 'Is USD to PHP going up?',

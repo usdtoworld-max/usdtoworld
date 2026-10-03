@@ -44,7 +44,7 @@ https://usdtoworld.usdtoworld.workers.dev/
   Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Robots-Tag: index, follow
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://pagead2.googlesyndication.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://pagead2.googlesyndication.com; font-src 'self'; connect-src 'self' https://open.er-api.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 # Hashed build assets: safe to cache forever
 /_astro/*
