@@ -1,7 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import partytown from '@astrojs/partytown';
+import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { transform } from 'esbuild';
 
 // https://astro.build/config
 export default defineConfig({
@@ -38,19 +41,25 @@ export default defineConfig({
         return item;
       },
     }),
-    // Runs gtag.js/GTM inside a web worker instead of the main thread.
-    // Lighthouse traced Google Tag Manager at ~1.5s of main-thread CPU time
-    // (1,009ms script evaluation + 500ms parse) on its own — a large chunk
-    // of the page's 1,650ms Total Blocking Time. Partytown proxies the
-    // script's DOM/API calls across a worker boundary so gtag.js still
-    // works exactly the same (dataLayer, page views, events all still
-    // fire), it just doesn't compete with the page's own JS for main-thread
-    // time. See https://partytown.builder.io/google-tag-manager
-    partytown({
-      config: {
-        forward: ['dataLayer.push', 'gtag'],
+    // Minifies plain JS/CSS files that Vite never touches because they live in
+    // /public and are copied to dist as-is (the service worker, mainly).
+    {
+      name: 'minify-public-assets',
+      hooks: {
+        'astro:build:done': async ({ dir }) => {
+          const root = fileURLToPath(dir);
+          for (const file of await readdir(root)) {
+            if (!/\.(js|css)$/.test(file)) continue;
+            const full = join(root, file);
+            const src = await readFile(full, 'utf8');
+            const out = await transform(src, { loader: file.endsWith('.css') ? 'css' : 'js', minify: true, legalComments: 'none' });
+            await writeFile(full, out.code);
+          }
+        },
       },
-    }),
+    },
   ],
   compressHTML: true,
+  build: { inlineStylesheets: 'auto' },
+  vite: { build: { minify: true, cssMinify: true } },
 });

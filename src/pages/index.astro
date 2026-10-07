@@ -20,37 +20,12 @@ const faqSchema = {
   })),
 };
 
-const site = Astro.site ?? new URL('https://usdtoworld.com');
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
-  ],
-};
-
-// Describes the converter tool itself. Generic head terms like "currency
-// converter" and "exchange rate" carry huge search volume but are
-// dominated by XE/Wise/Google's own tool — this isn't meant to rank #1 for
-// those, it's meant to make sure this page's structured data accurately
-// and naturally uses that vocabulary, since AI answer engines and rich
-// snippets read this schema, not just the visible page copy.
-const webAppSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: 'UsdtoWorld Currency Converter',
-  applicationCategory: 'FinanceApplication',
-  operatingSystem: 'Any (web browser)',
-  description: 'Free currency converter with a live exchange rate for USD to RMB (Chinese yuan), plus INR, EUR, GBP, JPY, CAD, AUD, and PKR.',
-  url: site.toString(),
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-};
 ---
 <Layout
   title="USD to RMB Currency Calculator — Live Exchange | UsdtoWorld"
   description="Free live USD to RMB currency calculator. Check 1 USD to RMB, 1000 USD to RMB, historical trends, and converters for INR, EUR, GBP, JPY, and more."
   path="/"
-  schema={[faqSchema, breadcrumbSchema, webAppSchema]}
+  schema={[faqSchema]}
   speakableSelectors={['h1', '.hero-sub']}
 >
   <ConverterHero useI18n={true} />

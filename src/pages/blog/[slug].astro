@@ -1,0 +1,120 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { posts, wordCount } from '../../data/blog.js';
+import { renderInline, formatDate } from '../../utils/blog-markup.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const covers = import.meta.glob('../../assets/blog/*.jpg', { eager: true, import: 'default' });
+const cover = covers[`../../assets/blog/${post.image}.jpg`];
+const ogImage = await getImage({ src: cover, width: 1200, height: 630, format: 'jpeg' });
+
+const site = Astro.site ?? new URL('https://usdtoworld.com');
+const url = new URL(`/blog/${post.slug}`, site).toString();
+const words = wordCount(post);
+const minutes = Math.max(1, Math.round(words / 200));
+const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.toString() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: new URL('/blog', site).toString() },
+    { '@type': 'ListItem', position: 3, name: post.title, item: url },
+  ],
+};
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  headline: post.title,
+  description: post.description,
+  image: [new URL(ogImage.src, site).toString()],
+  datePublished: post.date,
+  dateModified: post.date,
+  wordCount: words,
+  keywords: post.keyword,
+  inLanguage: 'en',
+  author: { '@type': 'Organization', name: 'UsdtoWorld Team', url: new URL('/about', site).toString() },
+  publisher: { '@id': new URL('/#organization', site).toString() },
+};
+---
+<Layout
+  title={`${post.title} | UsdtoWorld`}
+  description={post.description}
+  path={`/blog/${post.slug}`}
+  ogImage={ogImage.src}
+  schema={[breadcrumbSchema, articleSchema]}
+  speakableSelectors={['h1', '.post-intro']}
+  dateModified={post.date}
+>
+  <div class="container page-hero">
+    <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'Blog', href: '/blog' }, { name: post.title, href: `/blog/${post.slug}` }]} />
+  </div>
+
+  <article class="section section--tight">
+    <div class="container prose post">
+      <span class="section-eyebrow">{post.category}</span>
+      <h1>{post.title}</h1>
+      <p class="post-meta">By <a href="/about#who-writes-and-reviews-this">UsdtoWorld Team</a> · {formatDate(post.date)} · {minutes} min read</p>
+      <Image
+        class="post-cover"
+        src={cover}
+        alt={post.imageAlt}
+        widths={[640, 960, 1200]}
+        sizes="(min-width: 900px) 760px, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <p class="post-intro" set:html={renderInline(post.intro)} />
+      {post.sections.map((s) => (
+        <>
+          <h2>{s.h}</h2>
+          {s.p.map((para) => <p set:html={renderInline(para)} />)}
+        </>
+      ))}
+      <p class="post-note">Example rates in this article are illustrative. Use the <a href="/currency-converters">live converters</a> for current figures. This article is for information only and is not financial advice.</p>
+    </div>
+  </article>
+
+  <section class="section section--tight">
+    <div class="container">
+      <h2 class="related-title">Keep reading</h2>
+      <div class="related-grid">
+        {related.map((p) => (
+          <a class="related-card" href={`/blog/${p.slug}`}>
+            <Image
+              src={covers[`../../assets/blog/${p.image}.jpg`]}
+              alt={p.imageAlt}
+              widths={[320, 480]}
+              sizes="(min-width: 900px) 25vw, 100vw"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>{p.title}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .post { max-width: 760px; }
+  .post-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+  .post :global(.post-cover) { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 26px; display: block; }
+  .post-intro { font-size: 1.12rem; line-height: 1.7; }
+  .post-note { margin-top: 34px; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--bg-alt); border-radius: var(--radius-sm); font-size: 0.9rem; color: var(--text-muted); }
+  .related-title { font-size: 1.3rem; margin-bottom: 18px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
+  .related-card { display: flex; flex-direction: column; gap: 10px; color: inherit; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--surface-solid); }
+  .related-card img { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; display: block; }
+  .related-card span { padding: 0 16px 16px; font-weight: 600; line-height: 1.35; }
+</style>

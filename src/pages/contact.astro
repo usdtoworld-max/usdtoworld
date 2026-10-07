@@ -51,8 +51,6 @@ const breadcrumbSchema = {
           <label for="c-message">Message</label>
           <textarea id="c-message" name="message" required></textarea>
         </div>
-        <!-- Honeypot: hidden from real visitors via CSS below; bots that fill
-             every field trip it, and worker/index.js silently no-ops on it. -->
         <div class="contact-form__hp" aria-hidden="true">
           <label for="c-company">Company</label>
           <input id="c-company" name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -108,6 +106,15 @@ const breadcrumbSchema = {
         <a href="/russian-currency-to-inr">RUB to INR</a>, explains what moves that rate. The
         <a href="/currency-converters">converters index</a> lists every pair, and the <a href="/about">About page</a>
         explains where our rates come from and who writes and reviews the guides.
+      </p>
+
+      <h2>Tips for a faster reply, and what not to send</h2>
+      <p>
+        Keep each message to one topic, give it a clear first line, and say which page or converter you were using.
+        If your question is about a conversion, include the amount and the two currencies, for example 500 EUR to
+        USD, so we can check the same figure on our side. Please do not send passwords, card numbers, bank account
+        details or copies of identity documents by form or email; we never need them, and we will not ask for
+        them. If you are unsure whether something is safe to share, leave it out and describe the problem in words.
       </p>
 
       <h2>Privacy requests, press and business enquiries</h2>

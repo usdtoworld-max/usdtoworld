@@ -51,6 +51,16 @@ nothing on the site is personalized financial advice — see /disclaimer.
   the US dollar to Singapore dollar rate, with a second section covering
   US dollar to Swiss franc.
 
+## Blog
+
+- [Blog](https://usdtoworld.com/blog): Plain-English guides to EUR a USD, 1 dollar to euro,
+  Russian currency to INR, what moves EUR/USD, and mid-market vs bank rates.
+- [eur-a-usd-convert-euros-to-dollars](https://usdtoworld.com/blog/eur-a-usd-convert-euros-to-dollars)
+- [1-dollar-to-euro-what-one-usd-is-worth](https://usdtoworld.com/blog/1-dollar-to-euro-what-one-usd-is-worth)
+- [russian-currency-to-inr-rubles-to-rupees](https://usdtoworld.com/blog/russian-currency-to-inr-rubles-to-rupees)
+- [what-moves-eur-usd-exchange-rate](https://usdtoworld.com/blog/what-moves-eur-usd-exchange-rate)
+- [mid-market-vs-bank-exchange-rate](https://usdtoworld.com/blog/mid-market-vs-bank-exchange-rate)
+
 ## Help & reference
 
 - [All currency converters](https://usdtoworld.com/currency-converters): Index of

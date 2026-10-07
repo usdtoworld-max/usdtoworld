@@ -1,4 +1,4 @@
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL_CACHE = `usdtoworld-shell-${VERSION}`;
 const RUNTIME_CACHE = `usdtoworld-runtime-${VERSION}`;
 const RATE_CACHE = `usdtoworld-rate-${VERSION}`;

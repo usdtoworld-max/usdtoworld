@@ -15,24 +15,6 @@ import interRegularUrl from '@fontsource/inter/files/inter-latin-400-normal.woff
 // the generated <style> block below — this is what fixed the "Forced
 // reflow" / 2.5s of Style & Layout main-thread time that showed up once the
 // font setup moved from 3 variable files to ~20 static per-weight files).
-import frauncesSemiboldUrl from '@fontsource/fraunces/files/fraunces-latin-600-normal.woff2?url';
-import frauncesSemiboldExtUrl from '@fontsource/fraunces/files/fraunces-latin-ext-600-normal.woff2?url';
-import frauncesBoldExtUrl from '@fontsource/fraunces/files/fraunces-latin-ext-700-normal.woff2?url';
-import interRegularExtUrl from '@fontsource/inter/files/inter-latin-ext-400-normal.woff2?url';
-import interMediumUrl from '@fontsource/inter/files/inter-latin-500-normal.woff2?url';
-import interMediumExtUrl from '@fontsource/inter/files/inter-latin-ext-500-normal.woff2?url';
-import interSemiboldUrl from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
-import interSemiboldExtUrl from '@fontsource/inter/files/inter-latin-ext-600-normal.woff2?url';
-import interBoldUrl from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
-import interBoldExtUrl from '@fontsource/inter/files/inter-latin-ext-700-normal.woff2?url';
-import monoRegularUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url';
-import monoRegularExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-400-normal.woff2?url';
-import monoMediumUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2?url';
-import monoMediumExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-500-normal.woff2?url';
-import monoSemiboldUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2?url';
-import monoSemiboldExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-600-normal.woff2?url';
-import monoBoldUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2?url';
-import monoBoldExtUrl from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-700-normal.woff2?url';
 
 export interface Props {
   title: string;
@@ -75,49 +57,10 @@ const site = Astro.site ?? new URL('https://usdtoworld.com');
 const canonicalURL = new URL(path, site).toString();
 const ogImageURL = new URL(ogImage, site).toString();
 
-// Unicode-range values match exactly what @fontsource ships for these two
-// subsets — copied from node_modules so the browser's subset-matching
-// behaves identically to the package CSS we're replacing.
-const LATIN = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
-const LATIN_EXT = 'U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF';
-
-/** @type {{family: string, weight: number, url: string, range: string, display: 'swap' | 'optional'}[]} */
-const fontFaces = [
-  // Preloaded + critical to the LCP path -> swap (arrives fast, one cheap swap)
-  { family: 'Fraunces', weight: 700, url: frauncesBoldUrl, range: LATIN, display: 'swap' },
-  { family: 'Inter', weight: 400, url: interRegularUrl, range: LATIN, display: 'swap' },
-  // Everything else -> optional (never causes a late swap/reflow; falls
-  // back for this page view if it doesn't arrive almost immediately)
-  { family: 'Fraunces', weight: 700, url: frauncesBoldExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'Fraunces', weight: 600, url: frauncesSemiboldUrl, range: LATIN, display: 'optional' },
-  { family: 'Fraunces', weight: 600, url: frauncesSemiboldExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'Inter', weight: 400, url: interRegularExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'Inter', weight: 500, url: interMediumUrl, range: LATIN, display: 'optional' },
-  { family: 'Inter', weight: 500, url: interMediumExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'Inter', weight: 600, url: interSemiboldUrl, range: LATIN, display: 'optional' },
-  { family: 'Inter', weight: 600, url: interSemiboldExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'Inter', weight: 700, url: interBoldUrl, range: LATIN, display: 'optional' },
-  { family: 'Inter', weight: 700, url: interBoldExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 400, url: monoRegularUrl, range: LATIN, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 400, url: monoRegularExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 500, url: monoMediumUrl, range: LATIN, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 500, url: monoMediumExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 600, url: monoSemiboldUrl, range: LATIN, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 600, url: monoSemiboldExtUrl, range: LATIN_EXT, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 700, url: monoBoldUrl, range: LATIN, display: 'optional' },
-  { family: 'IBM Plex Mono', weight: 700, url: monoBoldExtUrl, range: LATIN_EXT, display: 'optional' },
-];
-
-const fontFaceCSS = fontFaces
-  .map(
-    (f) =>
-      `@font-face{font-family:'${f.family}';font-style:normal;font-weight:${f.weight};font-display:${f.display};src:url(${f.url}) format('woff2');unicode-range:${f.range};}`
-  )
-  .join('\n');
-
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': new URL('/#organization', site).toString(),
   name: 'UsdtoWorld',
   url: site.toString(),
   logo: new URL('/favicon/favicon-512.png', site).toString(),
@@ -140,8 +83,11 @@ const organizationSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': new URL('/#website', site).toString(),
   name: 'UsdtoWorld — USD to RMB Converter',
   url: site.toString(),
+  inLanguage: 'en',
+  publisher: { '@id': new URL('/#organization', site).toString() },
   // No potentialAction/SearchAction here: the site search (SiteSearch.astro)
   // is a client-side, in-page filter with no /search?q= results route
   // behind it, so declaring a SearchAction target would assert a URL that
@@ -152,6 +98,11 @@ const websiteSchema = {
 const speakableSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
+  '@id': `${canonicalURL}#webpage`,
+  name: title,
+  description,
+  isPartOf: { '@id': new URL('/#website', site).toString() },
+  inLanguage: 'en',
   speakable: {
     '@type': 'SpeakableSpecification',
     cssSelector: speakableSelectors,
@@ -168,158 +119,29 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-    <!-- Preload the exact two font files needed to paint the H1 (Fraunces
-         700) and body copy (Inter 400) in their final weight — deliberately
-         first in <head>, ahead of the JSON-LD/meta block below, so these
-         start downloading before anything else is even parsed. This is
-         what actually fixes LCP; self-hosting alone wasn't enough because
-         the bundled page CSS (which contains the @font-face rules) is
-         injected at the very end of <head> by Astro, so without an
-         explicit preload the browser wouldn't discover these files until
-         everything above them had already been parsed. -->
     <link rel="preload" as="font" type="font/woff2" href={frauncesBoldUrl} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={interRegularUrl} crossorigin />
 
-    <!-- Self-hosted @font-face rules for every weight the site uses.
-         font-display is set per-file up in the `fontFaces` array above:
-         swap for the two preloaded critical files (Fraunces 700 / Inter
-         400), optional for everything else, to avoid late font-swap
-         reflows. Injected via set:html (real JS-built CSS string) rather
-         than a normal <style> block, because @font-face descriptors can't
-         resolve CSS custom properties (define:vars doesn't work here —
-         there's no element for @font-face to inherit a var() from). -->
-    <style set:html={fontFaceCSS} />
 
 
-    <!-- Fonts (Fraunces / Inter / IBM Plex Mono) are self-hosted, static
-         per-weight, latin/latin-ext-only files pulled in via
-         global.css -> fonts.css (bundled by Vite, served from this origin,
-         cached immutably under /_astro/*). That removes the
-         fonts.googleapis.com/fonts.gstatic.com round trips entirely instead
-         of just trying to warm them up. See src/styles/fonts.css for the
-         full rationale, including why static per-weight files were chosen
-         over a variable font. -->
 
-    <!-- Kick off the /api/rates fetch as early as possible, in parallel with
-         the rest of the page loading, rather than waiting for it. The
-         network dependency tree previously showed this fetch only starting
-         after the whole module chain (Layout script -> dynamic import of
-         converter.js) had loaded and parsed — ~360ms in, then taking
-         another ~586ms critical-path total. Firing it here means that by
-         the time converter.js actually needs the data, the request is
-         already in flight or done.
-         /api/rates is this project's own Worker route (worker/index.js),
-         which proxies the exchange-rate fetch server-side and edge-caches
-         it — see that file for why this isn't fetched directly from
-         open.er-api.com in the browser anymore (CSP/CORS reliability). -->
     <script is:inline>
-      // Kick the actual fetch off immediately too, using the same cache
-      // keys/TTL as scripts/converter.js, and hand the in-flight promise off
-      // via window.__ratesPromise. converter.js reads this instead of
-      // starting its own fetch when present, so the request and the JS
-      // module load happen in parallel instead of in sequence.
-      (function () {
-        try {
-          var CACHE_KEY = 'usdtoworld:rates';
-          var CACHE_TIME_KEY = 'usdtoworld:rates:time';
-          var CACHE_TTL = 1000 * 60 * 30;
-          var cached = localStorage.getItem(CACHE_KEY);
-          var cachedTime = Number(localStorage.getItem(CACHE_TIME_KEY) || 0);
-          var isFresh = cached && Date.now() - cachedTime < CACHE_TTL;
-          if (!isFresh && navigator.onLine) {
-            window.__ratesPromise = fetch('/api/rates')
-              .then(function (res) {
-                if (!res.ok) throw new Error('bad-response');
-                return res.json();
-              })
-              .catch(function () {
-                // /api/rates missing (static-only host, astro dev) or failing: go direct.
-                return fetch('https://open.er-api.com/v6/latest/USD').then(function (r) {
-                  if (!r.ok) throw new Error('bad-response');
-                  return r.json();
-                });
-              })
-              .then(function (data) {
-                if (!data.rates) throw new Error('no-rates');
-                localStorage.setItem(CACHE_KEY, JSON.stringify(data.rates));
-                localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
-                return { rates: data.rates, time: Date.now(), offline: false };
-              });
-          }
-        } catch (e) {}
-      })();
+      (function(){try{var K='usdtoworld:rates',T='usdtoworld:rates:time',c=localStorage.getItem(K),t=Number(localStorage.getItem(T)||0);if(!(c&&Date.now()-t<18e5)&&navigator.onLine){window.__ratesPromise=fetch('/api/rates').then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return fetch('https://open.er-api.com/v6/latest/USD').then(function(r){if(!r.ok)throw 0;return r.json()})}).then(function(d){if(!d.rates)throw 0;localStorage.setItem(K,JSON.stringify(d.rates));localStorage.setItem(T,String(Date.now()));return{rates:d.rates,time:Date.now(),offline:false}})}}catch(e){}})();
     </script>
 
-    <!-- Google tag (gtag.js) — type="text/partytown" hands this off to the
-         Partytown web worker (configured in astro.config.mjs) instead of
-         running on the main thread. gtag.js reads window.dataLayer/gtag
-         via proxied calls forwarded from the main thread, so behavior is
-         unchanged — it just stops costing main-thread CPU time. -->
-    <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-DXMLTX9F29"></script>
-    <script type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-DXMLTX9F29');
+    {/* Third-party scripts (Google Analytics + AdSense) are injected only after the
+       visitor's first interaction, or after a 6s fallback. They previously loaded
+       during page load and accounted for most of the main-thread blocking time. */}
+    <script is:inline define:vars={{ adsEnabled: !noindex }}>
+      (function(){var done=false;function add(src,cors){var e=document.createElement('script');e.async=true;e.src=src;if(cors)e.crossOrigin='anonymous';document.head.appendChild(e)}
+      function load(){if(done)return;done=true;window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','G-DXMLTX9F29');add('https://www.googletagmanager.com/gtag/js?id=G-DXMLTX9F29');if(adsEnabled)add('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4088751665413869',true)}
+      ['pointerdown','keydown','scroll','touchstart'].forEach(function(t){addEventListener(t,load,{once:true,passive:true})});setTimeout(load,6000)})();
     </script>
-
-    <!-- Partytown (above) creates its own sandbox <iframe> at runtime via
-         document.createElement('iframe') to isolate gtag.js on a worker
-         thread — that iframe ships with no title attribute, which is what
-         an accessibility scan flags as "iframe required attributes
-         missing". Partytown doesn't expose a config option for this, so we
-         patch it as soon as it's inserted: watch for iframe nodes being
-         added anywhere in the document, and if one has no title, mark it
-         as a hidden, non-interactive sandbox rather than leaving it
-         unlabeled for screen readers. Runs an immediate sweep first (in
-         case the iframe already exists by the time this executes), then
-         keeps observing for the rest of the page's life — Partytown loads
-         and initializes its worker/sandbox lazily and asynchronously, and
-         on a throttled connection (which is exactly what Lighthouse/PSI
-         simulate) that can take well past a few seconds, so this
-         deliberately does NOT auto-disconnect on a timer; a MutationObserver
-         costs nothing while idle, so there's no ongoing overhead from
-         leaving it attached. -->
-    <script is:inline>
-      (function () {
-        function labelSandboxIframes(node) {
-          if (!(node instanceof Element)) return;
-          var frames = node.tagName === 'IFRAME' ? [node] : node.querySelectorAll ? node.querySelectorAll('iframe') : [];
-          for (var i = 0; i < frames.length; i++) {
-            var f = frames[i];
-            if (!f.getAttribute('title')) {
-              f.setAttribute('title', 'Third-party script sandbox');
-              f.setAttribute('aria-hidden', 'true');
-              f.setAttribute('tabindex', '-1');
-            }
-          }
-        }
-        try {
-          labelSandboxIframes(document.body || document.documentElement);
-          var observer = new MutationObserver(function (mutations) {
-            for (var i = 0; i < mutations.length; i++) {
-              var added = mutations[i].addedNodes;
-              for (var j = 0; j < added.length; j++) labelSandboxIframes(added[j]);
-            }
-          });
-          observer.observe(document.documentElement, { childList: true, subtree: true });
-        } catch (e) {}
-      })();
-    </script>
-
-  {/* AdSense policy: ads must not appear on error/status screens or pages without
-      real publisher content. Every such page is rendered with noindex (see
-      ErrorLayout.astro), so the ad script is only emitted on indexable content pages. */}
-  {!noindex && (
-    <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4088751665413869"
-       crossorigin="anonymous"></script>
-  )}
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -327,31 +149,12 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:site_name" content="UsdtoWorld" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@usdtoworldkoj" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Hreflang: this site has exactly one URL per page — there are no
-         separate /hi/, /zh/, /es/, /ja/ routes. The language switcher in
-         Header.astro only re-translates strings client-side via JS
-         (src/scripts/i18n.js) after the page has already loaded; the
-         server-rendered HTML a crawler actually fetches is English every
-         time, regardless of hreflang code. Previously this declared
-         hreflang="hi"/"zh"/"es"/"ja" all pointing at this same English URL,
-         which asserts to search engines that Hindi/Chinese/Spanish/Japanese
-         content exists at that URL — it doesn't, which is exactly what a
-         "hreflang language mismatch" check is designed to catch. Per
-         Google's hreflang guidelines, each alternate must point to a URL
-         that actually serves that language; since there's only one URL
-         total, the only valid entries are a self-referencing "en" (the
-         language actually served) and "x-default" (the fallback for
-         unmatched languages/locales) — both pointing at this same URL,
-         which is a normal, valid pattern for a single-URL site. If/when
-         this site gets real per-language routes, add a genuine alternate
-         <link> per route here instead. -->
     <link rel="alternate" hreflang="en" href={canonicalURL} />
     <link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
@@ -384,12 +187,6 @@ const allSchema = [organizationSchema, websiteSchema, speakableSchema, ...schema
     </main>
     <Footer />
 
-    <!-- Structured data: moved here from <head>. Google explicitly supports
-         JSON-LD anywhere in the document (head or body) — see
-         https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data.
-         The FAQ schema alone is several KB of inline script; keeping it out
-         of <head> means the browser reaches the page's real CSS/font
-         preloads sooner instead of parsing through this first. -->
     {allSchema.map((s) => (
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}

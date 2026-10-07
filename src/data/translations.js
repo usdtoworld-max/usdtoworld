@@ -5,7 +5,7 @@
 export const translations = {
   en: {
     nav_home: 'Home', nav_convert: 'Converters', nav_rates: 'Exchange Rates',
-    nav_faq: 'FAQ', nav_about: 'About', nav_contact: 'Contact',
+    nav_faq: 'FAQ', nav_blog: 'Blog', nav_about: 'About', nav_contact: 'Contact',
     hero_title: 'USD to RMB Converter (Live Exchange Rates)',
     hero_sub: 'Convert US Dollars to Chinese Yuan (RMB) instantly using real-time exchange rates. Fast, accurate, and mobile-friendly currency conversion.',
     amount_label: 'Amount', from_label: 'From', to_label: 'To',
@@ -29,7 +29,7 @@ export const translations = {
   },
   hi: {
     nav_home: 'होम', nav_convert: 'कन्वर्टर', nav_rates: 'विनिमय दरें',
-    nav_faq: 'सवाल-जवाब', nav_about: 'हमारे बारे में', nav_contact: 'संपर्क करें',
+    nav_faq: 'सवाल-जवाब', nav_blog: 'ब्लॉग', nav_about: 'हमारे बारे में', nav_contact: 'संपर्क करें',
     hero_title: 'USD से RMB कनवर्टर (लाइव विनिमय दर)',
     hero_sub: 'वास्तविक समय की दरों से अमेरिकी डॉलर को चीनी युआन (RMB) में तुरंत बदलें। तेज़, सटीक और मोबाइल-फ्रेंडली।',
     amount_label: 'राशि', from_label: 'से', to_label: 'में',
@@ -53,7 +53,7 @@ export const translations = {
   },
   zh: {
     nav_home: '首页', nav_convert: '货币换算器', nav_rates: '汇率',
-    nav_faq: '常见问题', nav_about: '关于我们', nav_contact: '联系我们',
+    nav_faq: '常见问题', nav_blog: '博客', nav_about: '关于我们', nav_contact: '联系我们',
     hero_title: '美元兑人民币换算器（实时汇率）',
     hero_sub: '使用实时汇率即时将美元换算为人民币。快速、准确、移动端友好。',
     amount_label: '金额', from_label: '从', to_label: '到',
@@ -77,7 +77,7 @@ export const translations = {
   },
   es: {
     nav_home: 'Inicio', nav_convert: 'Conversores', nav_rates: 'Tipos de cambio',
-    nav_faq: 'Preguntas', nav_about: 'Nosotros', nav_contact: 'Contacto',
+    nav_faq: 'Preguntas', nav_blog: 'Blog', nav_about: 'Nosotros', nav_contact: 'Contacto',
     hero_title: 'Conversor de USD a RMB (tipos de cambio en vivo)',
     hero_sub: 'Convierte dólares estadounidenses a yuanes chinos (RMB) al instante con tipos de cambio en tiempo real. Rápido, preciso y adaptado a móviles.',
     amount_label: 'Importe', from_label: 'De', to_label: 'A',
@@ -101,7 +101,7 @@ export const translations = {
   },
   ja: {
     nav_home: 'ホーム', nav_convert: '通貨換算', nav_rates: '為替レート',
-    nav_faq: 'よくある質問', nav_about: '概要', nav_contact: 'お問い合わせ',
+    nav_faq: 'よくある質問', nav_blog: 'ブログ', nav_about: '概要', nav_contact: 'お問い合わせ',
     hero_title: 'USD→RMB 換算ツール（リアルタイム為替レート）',
     hero_sub: 'リアルタイムの為替レートで米ドルを中国人民元（RMB）に即座に換算。高速・正確・モバイル対応。',
     amount_label: '金額', from_label: '通貨（元）', to_label: '通貨（先）',

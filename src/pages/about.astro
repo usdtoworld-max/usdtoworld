@@ -5,6 +5,18 @@ import { Image } from 'astro:assets';
 import editorialProcessImg from '../assets/editorial-process.svg';
 
 const site = Astro.site ?? new URL('https://usdtoworld.com');
+const GRAVATAR_URL = 'https://gravatar.com/zany38addcf11c9';
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': new URL('/about#kamlesh-mohabe', site).toString(),
+  name: 'Kamlesh Mohabe',
+  jobTitle: 'Proprietor, Software Engineer',
+  url: new URL('/about', site).toString(),
+  sameAs: [GRAVATAR_URL],
+  worksFor: { '@id': new URL('/#organization', site).toString() },
+};
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -18,7 +30,7 @@ const breadcrumbSchema = {
   title="About Us | UsdtoWorld Currency Converter"
   description="Learn about UsdtoWorld, a free live currency converter for USD to RMB and 180+ other currency pairs."
   path="/about"
-  schema={[breadcrumbSchema]}
+  schema={[breadcrumbSchema, personSchema]}
 >
   <div class="container page-hero">
     <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about' }]} />
@@ -116,11 +128,6 @@ const breadcrumbSchema = {
       </ul>
 
       <h2 id="who-writes-and-reviews-this">Who writes and reviews this</h2>
-      <!-- Original artwork drawn for this page (src/assets/editorial-process.svg) — not
-           sourced from anywhere else, so there's no copyright/licensing concern. Routed
-           through astro:assets' Image component (like the header logo) rather than a
-           raw <img src="/...">, so it gets the same build-time optimization/attribute
-           handling instead of being served as an unoptimized static file. -->
       <figure class="editorial-figure">
         <Image
           src={editorialProcessImg}
@@ -145,6 +152,21 @@ const breadcrumbSchema = {
         live page rather than silently, so the guide stays accurate over time instead of just at publish date.
       </p>
 
+      <h2 id="platform-managed-by">Platform managed by</h2>
+      <div class="manager-card">
+        <div>
+          <h3>Kamlesh Mohabe</h3>
+          <p class="manager-role">Proprietor | Software Engineer</p>
+          <p>
+            Kamlesh is a software developer and digital entrepreneur with more than ten years of professional
+            experience across JavaScript, Angular, Node.js, Express, Python, databases and cloud technologies,
+            covering both frontend and backend development. He manages the UsdtoWorld platform, including how the
+            converter is built and kept fast and accessible.
+          </p>
+          <p><a href={GRAVATAR_URL} rel="me noopener" target="_blank">View profile on Gravatar</a></p>
+        </div>
+      </div>
+
       <h2>A note on accuracy</h2>
       <p>
         We aim for accuracy, but exchange rates shift constantly and every provider — including banks and card
@@ -161,6 +183,10 @@ const breadcrumbSchema = {
 </Layout>
 
 <style>
+  .manager-card { display: flex; gap: 20px; align-items: flex-start; padding: 22px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-solid); margin: 12px 0 8px; }
+  .manager-card h3 { margin: 0 0 2px; font-size: 1.2rem; }
+  .manager-card p { margin: 0 0 10px; }
+  .manager-role { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); }
   /* Centers the editorial-process illustration within the prose column,
      regardless of the column's own width (max-width text measure vs. the
      image's fixed 480px intrinsic size). */
