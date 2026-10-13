@@ -22,8 +22,8 @@ const faqSchema = {
 
 ---
 <Layout
-  title="USD to RMB Currency Calculator — Live Exchange | UsdtoWorld"
-  description="Free live USD to RMB currency calculator. Check 1 USD to RMB, 1000 USD to RMB, historical trends, and converters for INR, EUR, GBP, JPY, and more."
+  title="USD to RMB Converter: Live Dollar to Yuan Rate | UsdtoWorld"
+  description="Convert USD to RMB with a live exchange rate. Check 1 USD to RMB, 1000 USD to RMB, 12-month trends and what moves the dollar to yuan rate."
   path="/"
   schema={[faqSchema]}
   speakableSelectors={['h1', '.hero-sub']}
@@ -42,6 +42,28 @@ const faqSchema = {
       asOfDate="2026-08-14"
     />
   </div>
+
+  <section class="section section--tight">
+    <div class="container prose">
+      <h2>How to convert USD to RMB</h2>
+      <p>
+        To convert USD to RMB, multiply the dollar amount by the current USD to RMB exchange rate. The result is the
+        value in Chinese yuan (CNY). For example, at an illustrative rate of 7.00, 100 USD is 700 RMB; to go back,
+        divide the yuan amount by the same rate.
+      </p>
+      <ol>
+        <li>Enter the amount in US dollars in the converter above.</li>
+        <li>Check that USD is selected as the "From" currency and CNY (RMB) as the "To" currency.</li>
+        <li>Read the live result, then compare it with the offer from your bank or transfer provider.</li>
+      </ol>
+      <p>
+        Banks and exchange services usually add a margin to the mid-market rate shown here, so the yuan you receive
+        can be slightly lower than the converter result. Our guide to
+        <a href="/blog/mid-market-vs-bank-exchange-rate">mid-market and bank exchange rates</a> shows how to work out
+        the real cost.
+      </p>
+    </div>
+  </section>
 
   <Features />
   <CurrencyGuides />

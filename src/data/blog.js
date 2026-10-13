@@ -54,9 +54,10 @@ export const posts = [
   },
   {
     slug: '1-dollar-to-euro-what-one-usd-is-worth',
+    metaTitle: '1 Dollar to Euro: What 1 USD Is Worth',
     title: '1 Dollar to Euro: What One US Dollar Is Worth in Euros',
     description:
-      'What is 1 dollar to euro today? Learn how the USD to EUR rate works, how to scale it to any amount, and how to check a live rate instead of relying on old figures.',
+      'What is 1 dollar to euro today? Learn how the USD to EUR rate works, how to scale it to any amount and how to check a live rate.',
     keyword: '1 dollar to euro',
     category: 'Euro & Dollar',
     date: '2026-10-07',
@@ -104,6 +105,7 @@ export const posts = [
   },
   {
     slug: 'russian-currency-to-inr-rubles-to-rupees',
+    metaTitle: 'Russian Currency to INR: Rubles to Rupees',
     title: 'Russian Currency to INR: Converting Rubles to Indian Rupees',
     description:
       'Russian currency to INR explained: how the ruble to rupee rate works, why it is calculated through the US dollar, and how to convert RUB to INR sensibly.',
@@ -203,6 +205,7 @@ export const posts = [
   },
   {
     slug: 'mid-market-vs-bank-exchange-rate',
+    metaTitle: 'Mid-Market vs Bank Exchange Rate',
     title: 'Mid-Market Rate vs Bank Rate: Where Conversion Costs Hide',
     description:
       'Why the exchange rate on Google differs from your bank\'s, how margins and fees work, and how to calculate the true cost of any currency conversion.',

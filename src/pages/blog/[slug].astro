@@ -46,7 +46,7 @@ const articleSchema = {
 };
 ---
 <Layout
-  title={`${post.title} | UsdtoWorld`}
+  title={`${post.metaTitle ?? post.title} | UsdtoWorld`}
   description={post.description}
   path={`/blog/${post.slug}`}
   ogImage={ogImage.src}

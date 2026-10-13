@@ -6,8 +6,8 @@ export const translations = {
   en: {
     nav_home: 'Home', nav_convert: 'Converters', nav_rates: 'Exchange Rates',
     nav_faq: 'FAQ', nav_blog: 'Blog', nav_about: 'About', nav_contact: 'Contact',
-    hero_title: 'USD to RMB Converter (Live Exchange Rates)',
-    hero_sub: 'Convert US Dollars to Chinese Yuan (RMB) instantly using real-time exchange rates. Fast, accurate, and mobile-friendly currency conversion.',
+    hero_title: 'USD to RMB Converter: Live Dollar to Yuan Rate',
+    hero_sub: 'USD to RMB converts US dollars into Chinese yuan (RMB, currency code CNY). Enter an amount to see the live USD to RMB rate and your result instantly.',
     amount_label: 'Amount', from_label: 'From', to_label: 'To',
     swap: 'Swap currencies', convert: 'Convert',
     result_label: 'Converted amount', updated_label: 'Last updated',
